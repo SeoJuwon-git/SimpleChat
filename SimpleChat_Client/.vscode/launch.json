@@ -5,7 +5,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "args": ["Client1"],
+            "args": ["Client"],
             "type": "java",
             "name": "Launch Current File",
             "request": "launch",

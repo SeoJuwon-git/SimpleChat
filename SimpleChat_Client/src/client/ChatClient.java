@@ -5,20 +5,18 @@ import common.*;
 import java.io.*;
 
 public class ChatClient extends AbstractClient {
+
     ChatIF clientUI;
 
-    String loginID; //이번에 추가된 로그인 아이디
-
-    public ChatClient(String host, int port, String login, ChatIF clientUI) {
+    public ChatClient(String host, int port, ChatIF clientUI) {
         super(host, port);
         this.clientUI = clientUI;
-        loginID = login;    //콘솔에서 생성된 대로 로그인 아이디를 변수로 저장
 
         try {
             openConnection();   //서버에의 연결 시도
-            sendToServer("#login " + login);    //성공시 서버에 로그인 했음을 메시지로 보냄
         } catch (IOException e) {
-            clientUI.display("Cannot open connection. Awaiting command.");  //정상적으로 연결되지 않았을 경우
+            handleMessageFromClientUI("#logoff");
+            clientUI.display("Cannot open connection.  Awaiting command.");  //정상적으로 연결되지 않았을 경우
         }
     }
 
@@ -27,11 +25,11 @@ public class ChatClient extends AbstractClient {
     }
     
     public void handleMessageFromClientUI(String message) { //자신이 입력하는 메시지에 대해서
-        if (message.startsWith("#login") && !isConnected()) {   //로그인 시도 명령어일 경우+처음 시도일 경우만(요구사항)
+        if (message.startsWith("#login") ) {
             try {
                 openConnection();   //연결 시도
             } catch (IOException e) {   //로그인 시 연결을 실패했을 경우
-                clientUI.display("Cannot establish connection." + " Awaiting command.");
+                clientUI.display("Cannot establish connection.  Awaiting command.");
                 return;
             }
         }
@@ -43,11 +41,9 @@ public class ChatClient extends AbstractClient {
             try {
                 closeConnection();  //연결 해제 시도
             } catch (IOException e) {   //연결 해제가 실패할 경우 프로그램 강제 종료
-                clientUI.display("Cannot logoff normally. Terminating client.");
+                clientUI.display("Cannot logoff normally.  Terminating client.");
                 quit();
             }
-
-            connectionClosed(false);    //연결 해제 후 정상 혹은 비정상 해제인지에 따른 메시지 표시
             return;
         }
 
@@ -69,7 +65,7 @@ public class ChatClient extends AbstractClient {
                     setHost(message.substring(9));  //#sethost <host>에서 <host>부터인 메시지의 9번째 문자부터를
                     clientUI.display("Host set to: " + getHost());  //변경된 호스트 자신에게 표시
                 } catch(IndexOutOfBoundsException e) {  //변경할 호스트를 쓰지 않은 경우임(띄어쓰기 후 아무것도 입력이 없어도 변경되는 문제점->ip형식을 지키도록?)
-                    clientUI.display("Invalid host. Use #sethost <host>.");
+                    clientUI.display("Invalid host.  Use #sethost <host>.");
                 }
             }
             return;
@@ -84,35 +80,73 @@ public class ChatClient extends AbstractClient {
                     port = Integer.parseInt(message.substring(9));
 
                     if((port < 1024) || (port > 65535)) {   //포트 번호의 범위 안인지, well-known 포트가 아닌지
-                        clientUI.display("Invalid port number. Port unchanged");
+                        clientUI.display("Invalid port number.  Port unchanged");
                     } else {    //정상적인 포트 번호라면 변경 및 자신에게 표시
                         setPort(port);
                         clientUI.display("Port set to " + port);
                     }
                 } catch(Exception e) {  //호스트 변경과 달리 아무 입력도 없을 경우도 걸러져 에러 처리가 됨.
-                    clientUI.display("Invalid port. Use #setport <port>.");
+                    clientUI.display("Invalid port.  Use #setport <port>.");
                     clientUI.display("Port unchanged.");
                 }
             }
             return;
         }
-        //로그인(위에선 연결시도만 하고 return;가 없음) 혹은 메시지 전송일 경우에 대해서
-        if ((message.startsWith("#login")) || (!(message.startsWith("#")))) {
+
+        if (message.startsWith("#help") || message.startsWith("#?")) {
+            clientUI.display("\nClient-side command list:"
+            + "\n#block <loginID> -- Block messages from the specified client."
+            + "\n#channel <channel> -- Connects to the specified channel."
+            + "\n#fwd <loginID> -- Forward all messages to the specified client"
+            + "\n#getchannel -- Gets the channel the client is currently connected to."
+            + "\n#gethost -- Gets the host to which the client will connect/is connected."
+            + "\n#getport -- Gets the port on which the client will connect/is connected."
+            + "\n#help OR #? -- Lists all commands and their use."
+            + "\n#login -- Connects to a server."
+            + "\n#logoff -- Disconnects from a server."
+            + "\n#nochannel -- Returns the client to the main channel."
+            + "\n#private <loginID> <msg> -- Sends a private message to the specified client."
+            + "\n#pub -- Sends a public message."
+            + "\n#quit -- Terminates the client and disconnects from server."
+            + "\n#sethost <newhost> -- Specify the host to connect to."
+            + "\n#setport <newport> -- Specify the port on which to connect."
+            + "\n#unblock -- Unblock messages from all blocked clients."
+            + "\n#unblock <loginID> -- Unblock messages from a specific client."
+            + "\n#unfwd -- Stop forwarding messages."
+            + "\n#whoblocksme -- List all the users who are blocking messages from you."
+            + "\n#whoiblock -- List all users you are blocking message from."
+            + "\n#whoison -- Gets a list of all users and the channel they are connected to.");
+            return;
+        }
+
+        if ((!(message.startsWith("#")))
+            || message.startsWith("#whoison")
+            || message.startsWith("#private")
+            || message.startsWith("#channel")
+            || message.startsWith("#pub")
+            || message.startsWith("#nochannel")
+            || message.startsWith("#getchannel")
+            || message.startsWith("#fwd")
+            || message.startsWith("#unfwd")
+            || message.startsWith("#block")
+            || message.startsWith("#unblock")
+            || message.startsWith("#whoiblock")
+            || message.startsWith("#whoblocksme")) {
+            
             try {
-                sendToServer(message);  //클라이언트에서 처리하는 것이 아니라 서버로 보내짐(요구사항)
-            } catch (IOException e) {   //로그인 혹은 메시지 전송 시도가 실패할 경우 연결 끊음 시도
-                clientUI.display("Cannot send the message to the server." + " Disconnecting."); 
+                sendToServer(message);
+            } catch (IOException e) {
+                clientUI.display("Cannot send the message to the server.  Disconnecting.");
 
                 try {
-                    closeConnection();  //연결 끊음 시도
-                }catch (IOException ex) { //실패 시 프로그램 종료
-                    clientUI.display("Cannot logoff normally. Terminating client.");
-                    quit();
+                    closeConnection();
+                } catch (IOException ex) {
+                    clientUI.display("Cannot logoff normally.  Terminating client.");
                 }
             }
-        }else { //위의 올바른 명령들도 아니고, 메시지 전송도 아닌 경우 = 올바르지 않은 명령어만.
-            clientUI.display("Invalid command");
-        } 
+        } else {
+            clientUI.display("Invalid command.");
+        }
     }
 
     public void quit() {    //종료 과정(연결 끊기->시스템 종료)
@@ -129,11 +163,11 @@ public class ChatClient extends AbstractClient {
             clientUI.display("Connection closed.");
     }
 
-    protected void connectionEstablished() {    //openConnection()이 정상적으로 이루어졌을 때 클라이언트에게 표시할 수 있는 메시지로 추측되나 사용되지 않은 것 같음
+    protected void connectionEstablished() {    //openConnection()이 정상적으로 이루어졌을 때 클라이언트에게 표시할 수 있는 메시지로 사용되는 ocsf 메소드 구현
         clientUI.display("Connection established with " + getHost() + " on port "+ getPort());
     }
 
-    protected void connectionException(Exception exception) {  //어떠한 예외로 서버에의 연결을 끊었을 때의 메시지로 추정되나 사용되지 않은 것 같음
+    protected void connectionException(Exception exception) {  //서버가 연결을 끊었을 때의 메시지로 사용되는 ocsf 메소드 구현
         clientUI.display("Connection to sever terminated.");
     }
 }
