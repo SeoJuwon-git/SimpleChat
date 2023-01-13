@@ -3,54 +3,61 @@ import client.*;
 import common.*;
 
 public class ClientConsole implements ChatIF{
-    final public static int DEFAULT_PORT = 5555;    //기본 포트 설정
+    final public static int DEFAULT_PORT = 5555;
 
-    ChatClient client;  //채팅을 하는 클라이언트 본인. 콘솔은 자신을 사용하는 클라이언트를 객체로 가지고 있음
+    ChatClient client;
 
-    public ClientConsole(String host, int port)
-    {
-        try {
-            client = new ChatClient(host, port, this);  //호스트명, 포트, 콘솔 자신의 정보로 채팅 클라이언트 객체 생성
-        } catch(IOException exception) {    //입출력 오류로 인해 연결 불가. 프로그램 종료
-            System.out.println("Error: Can't setup connection!" + " Terminating client.");
-            System.exit(1);     //비정상종료
-        }
+    public ClientConsole(String host, int port, String login) { //생성자에서 클라이언트 객체 생성 및 호스트, 포트, 로그인아이디, 자신의 문맥을 넘겨줌
+        client = new ChatClient(host, port, login, this);
     }
 
-    public void accept()
-    {
-        try{
-            BufferedReader fromConsole = new BufferedReader(new InputStreamReader(System.in));  //입력 스트림 읽어 버퍼스트림으로 저장
+    public void accept() {  //채팅 입력 대기 함수
+        try {
+            BufferedReader fromConsole = new BufferedReader(new InputStreamReader(System.in));
+        
+                String message;
 
-            String message;
-
-            while (true){   //프로그램 실행 후 연결이 정상적으로 이루어진다면 이 부분을 반복함.
-                message = fromConsole.readLine();   //한 줄마다 읽어
-                client.handleMessageFromClientUI(message);  //서버로 메시지 전송하는 함수 호출
-            }
-        } catch(Exception ex){
+                try {
+                    while (true) {      //채팅중. 무한 반복
+                        message = fromConsole.readLine();
+                        client.handleMessageFromClientUI(message);
+                    }
+                } catch (NullPointerException e) { }
+        } catch (Exception ex) {
             System.out.println("Unexpected error while reading from console!");
         }
     }
-    
-    public void display(String message) //ChatIF의 추상 함수 구현. 밑 형식으로 메시지 표시
-    {
-        System.out.println("> " + message);
+
+    public void display(String message) {   //클라이언트 콘솔에 표시하는 형식에 대한 메소드
+        System.out.println(message);
     }
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         String host = "";
         int port = 0;
+        String loginID = null;
 
-        try{
-            host = args[0]; //호스트명은 외부 매개변수 입력으로
-        } catch (ArrayIndexOutOfBoundsException e) {    //매개변수 입력이 없어 배열 인덱스 오류시 자동으로 로컬호스트로 호스트명 지정
-            host = "localhost";
+        try {
+            loginID = args[0];  //첫 번째 파라미터를 로그인 아이디로 받음
+        } catch (ArrayIndexOutOfBoundsException e) {    //ID 파라미터가 없다면 연결되지 않고 종료됨(ID가 필수라는 요구사항 충족)
+            System.out.println("ERROR - No login ID specified . Connection aborted.");
+            System.exit(1);
         }
-        //System.out.println(host);   //외부 매개변수로 받은 것이 없어 localhost로 되는 것 확인
-        ClientConsole chat = new ClientConsole(host, DEFAULT_PORT); //호스트명과 기본포트로 콘솔 객체 생성
-        //서버에선 매개변수로 입력되는 포트가 없을 때 기본 포트를 사용하지만 여기선 그냥 기본포트를 사용하도록 되어있음
-        chat.accept();  //연결이 제대로 이루어졌다면 채팅을 서버로 보내는 메소드 실행
+
+        try {
+            host = args[1]; //두 번째 파라미터를 호스트로 받음. 호스트는 dns 또는 ip주소. 클라이언트가 서버에 접속하기 위해선 서버의 ip주소가 필요.
+        } catch (ArrayIndexOutOfBoundsException e) { //파라미터 입력이 없었다면 자기 자신으로.
+           host = "localhost";
+        }
+        
+        try {
+            port = Integer.parseInt(args[2]);   //세 번째 파라미터를 포트 번호로 받음. 문자열로 들어오므로 변환 필요
+        } catch (Throwable t) {
+            port = DEFAULT_PORT;    //기본 포트 번호
+        }
+        //System.out.println(loginID+" "+host+" "+port);
+
+        ClientConsole chat = new ClientConsole(host, port, loginID);
+        chat.accept();
     }
 }
