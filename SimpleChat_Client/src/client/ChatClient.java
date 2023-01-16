@@ -109,7 +109,7 @@ public class ChatClient extends AbstractClient {
             + "\n#pub -- Sends a public message."
             + "\n#quit -- Terminates the client and disconnects from server."
             + "\n#sethost <newhost> -- Specify the host to connect to."
-            + "\n#setport <newport> -- Specify the port on which to connect."
+            + "\n#setport <newport> -- Specify the por Unblock messages from all blocked clients."
             + "\n#unblock -- Unblock messages from all blocked clients."
             + "\n#unblock <loginID> -- Unblock messages from a specific client."
             + "\n#unfwd -- Stop forwarding messages."
@@ -142,6 +142,7 @@ public class ChatClient extends AbstractClient {
                     closeConnection();
                 } catch (IOException ex) {
                     clientUI.display("Cannot logoff normally.  Terminating client.");
+                    quit();
                 }
             }
         } else {
