@@ -1,5 +1,4 @@
 import java.io.*;
-import ocsf.server.*;   //아직 사용되진 않는듯
 import common.*;
 import server.*;
 
