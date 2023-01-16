@@ -2,9 +2,6 @@ package server;
 
 import java.io.*;
 import java.util.*;
-
-import javax.imageio.IIOException;
-
 import ocsf.server.*;
 import common.*;
 
@@ -186,13 +183,18 @@ public class EchoServer extends AbstractServer {
             return;
         }
 
-        if (message.startWith("#whoison")) {
+        if (message.startsWith("#whoison")) {
             sendListOfClients(null);
             return;
         }
 
-        if (message.startsWith("#punt")) {  //?
+        if (message.startsWith("#punt")) {  //추방
             handleServerCmdPunt(message);
+            return;
+        }
+
+        if (message.startsWith("#warn")) {
+            handleServerCmdWarn(message);
             return;
         }
 
@@ -292,7 +294,7 @@ public class EchoServer extends AbstractServer {
 
         if (!(message.startsWith("#"))) {   //#으로 시작하지 않는 모든 입력은 서버가 하는 메시지 전송이 됨.
             serverUI.display("SERVER MESSAGE> " + message);
-            sendToChannelMessage("SERVER MESSAGE> " + message, (serverChannel == null? "main" : serverChannel), "server");
+            sendChannelMessage("SERVER MESSAGE> " + message, (serverChannel == null? "main" : serverChannel), "server");
         } else {    //메시지 전송도 아니고 올바른 명렁어도 아닌 경우(클라이언트의 코드와 비슷한 if문 구조인듯)
             serverUI.display("Invalid command.");
         }
@@ -375,7 +377,7 @@ public class EchoServer extends AbstractServer {
         }
     }
 
-    private void handleCmdUnBlock(String command, ConnectionToClient client) {
+    private void handleCmdUnblock(String command, ConnectionToClient client) {
         Vector blocked = null;
         boolean removedUser = false;
         String userToUnblock = null;
@@ -493,7 +495,7 @@ public class EchoServer extends AbstractServer {
                         client.sendToClient("ERROR - Can't forward to SERVER");
                         return;
                     } else {
-                        if (getclient(destineeName) == null) {
+                        if (getClient(destineeName) == null) {
                             client.sendToClient("ERROR - Client does not exist");
                             return;
                         }
@@ -717,21 +719,377 @@ public class EchoServer extends AbstractServer {
     private void clientLoggingIn(String message, ConnectionToClient client) {
         if (message.equals(""))
             return;
-
+        //게스트로 로그인 할 경우
         if ((client.getInfo("loginID").equals("")) && (message.equals("guest"))) {
             client.setInfo("creatngNewAccount", new Boolean(true));
 
             try {
-                client.sendToClient("\n*** CREATING NEW ACCOUNT ***\nEnter new LoginID");
+                client.sendToClient("\n*** CREATING NEW ACCOUNT ***\nEnter new LoginID :");
+            } catch (IOException e) {
+                try {
+                    client.close();
+                } catch (IOException ex) { }
+            }
+        //로그인 아이디가 있거나 게스트가 아닌 로그인을 할 경우
+        } else {
+            //로그인 아이디가 없고 계정 생성을 하는 중인 경우
+            if ((client.getInfo("loginID").equals("") && ((Boolean)(client.getInfo("creatingNewAccount"))).booleanValue())) {
+                client.setInfo("loginID", message); //메세지=로그인아이디
+
+                try {
+                    client.sendToClient("Enter new password :");
+                } catch (IOException e) {
+                    try {
+                        client.close();
+                    }catch (IOException ex) { }
+                }
+            //로그인 아이디가 있거나 계정생성을 하지 않는 경우
+            } else {
+                //로그인 아이디가 있고 계정 생성을 하는 중인 경우
+                if ((!client.getInfo("loginID").equals("")) && (((Boolean)(client.getInfo("creatingNewAccount"))).booleanValue())) {
+                    //로그인에 사용된 적이 없는 아이디일 경우
+                    if (!isLoginUsed((String)(client.getInfo("loginID")))) {
+                        client.setInfo("passwordVerified", new Boolean(true));
+                        client.setInfo("creatingNewAccount", new Boolean(false));
+                        client.setInfo("channel", "main");
+                        addClientToRegistry((String)(client.getInfo("loginID")), message);
+                        serverUI.display(client.getInfo("loginID") + " has logged on.");
+                        sendToAllClients(client.getInfo("loginID") + " has logged on.");
+                    //로그인에 사용된 적이 있는 아이디였을 경우
+                    } else {
+                        client.setInfo("loginID", "");
+                        client.setInfo("creatingNewAccount", new Boolean(false));
+
+                        try{
+                            client.sendToClient("login already in use.   Enter login ID:");
+                        } catch (IOException e) {
+                            try {
+                                client.close();
+                            } catch (IOException ex) { }
+                        }
+                    }
+                //로그인 아이디가 없거나 계정 생성을 하지 않는 경우
+                } else {
+                    //로그인 아이디가 없는 경우
+                    if (client.getInfo("loginID").equals("")) {
+                        client.setInfo("loginID", message);
+
+                        try {
+                            client.sendToClient("Enter password:");
+                        } catch (IOException e) {
+                            try {
+                                client.close();
+                            } catch (IOException ex) { }
+                        }
+                    //로그인 아이디가 있는 경우
+                    } else {
+                        if ((isValidPwd((String)(client.getInfo("loginID")), message, true)) 
+                        && (!isLoginBeingUsed((String)(client.getInfo("loginID")), true))) {
+                                client.setInfo("passwordVerified", new Boolean(true));
+                                client.setInfo("channel", "main");
+                                serverUI.display(client.getInfo("loginID") + " has logged on.");
+                                sendToAllClients(client.getInfo("loginID") + " has logged on.");
+                        } else {
+                            try {
+                                if (isLoginBeingUsed((String)(client.getInfo("loginID")), true)) {
+                                    client.setInfo("loginID", "");
+                                    client.sendToClient("Login ID is already logged on.\nEnter LoginID:");
+                                } else {
+                                    client.setInfo("loginID", "");
+                                    client.sendToClient("\nIncorrect login or password\nEnter LoginID:");
+                                }
+                            } catch (IOException e) {
+                                try {
+                                    client.close();
+                                } catch (IOException ex) { }
+                            }
+                        }
+                    }
+                }
+            }
+        } 
+    }
+
+    private void addClientToRegistry(String clientLoginID, String clientPassword) {
+        try {
+            FileInputStream inputFile = new FileInputStream(PASSWORDFILE);
+            byte buff[] = new byte[inputFile.available()];  //현재 읽기 가능한 바이트 수
+
+            for (int i = 0; i < buff.length; i++) {
+                int character = inputFile.read();
+                buff[i] = (byte)character;
+            }
+            inputFile.close();
+
+            File fileToBeDeleted = new File(PASSWORDFILE);
+            fileToBeDeleted.delete();
+
+            FileOutputStream outputFile = new FileOutputStream(PASSWORDFILE);
+
+            for (int i = 0; i< buff.length; i++)
+                outputFile.write(buff[i]);
+
+            for (int i = 0; i < clientLoginID.length(); i++)
+                outputFile.write(clientLoginID.charAt(i));
+            
+            outputFile.write(SPACE);
+
+            for (int i = 0; i < clientPassword.length(); i++)
+                outputFile.write(clientPassword.charAt(i));
+
+            outputFile.write(RETURN);
+            outputFile.write(LINEBREAK);
+            outputFile.close();
+        } catch (IOException e) {
+            serverUI.display("ERROR - Password File Not Found");
+        }
+    }
+
+    private boolean isLoginUsed(String loginID) {
+        return isValidPwd(loginID, "", false);
+    }
+
+    private boolean isValidPwd(String loginID, String password, boolean verifyPassword) {
+        try {
+            FileInputStream inputFile = new FileInputStream(PASSWORDFILE);
+            boolean eoln = false;
+            boolean eof = false;
+
+            while (!eof) {
+                eoln = false;
+                String str = "";
+
+                while (!eoln) {
+                    int character = inputFile.read();
+
+                    if (character == -1) {
+                        eof = true;
+                        break;
+                    } else {
+                        if (character == LINEBREAK) {
+                            eoln = true;
+
+                            if ((str.substring(0, str.indexOf(" ")).equals(loginID)) 
+                             && ((str.substring(str.indexOf(" ") + 1).equals(password)) || (!verifyPassword))){
+                                return true;
+                            }
+                        } else {
+                            if (character != RETURN) {
+                                str = str + (char)character;
+                            }
+                        }
+                    }
+                }
+            }
+            inputFile.close();
+        } catch (IOException e) {
+            serverUI.display("ERROR - Password File Not Found");
+        }
+        return false;
+    }
+
+    private boolean isLoginBeingUsed(String loginID, boolean checkForDup) {
+        boolean used = !checkForDup;
+
+        if (loginID.toLowerCase().equals("server"))
+            return true;
+
+        Thread[] clients = getClientConnections();
+
+        for (int i = 0; i < clients.length; i++) {
+            ConnectionToClient tempc = (ConnectionToClient)(clients[i]);
+            if (tempc.getInfo("loginID").equals(loginID)) {
+                if (used)   //지금 계정 생성 중일 때(하나만 있음)
+                    return true;
+                used = true;    //안에서 한 번 거치고 2번째가 있을 때
+            }
+        }
+        return false;
+    }
+
+    private void sendChannelMessage(String message, String channel, String login) {
+        Thread[] clients = getClientConnections();
+
+        for (int i = 0; i < clients.length; i++) {
+            ConnectionToClient c = (ConnectionToClient)(clients[i]);
+
+            if (c.getInfo("channel").equals(channel) && !(((Vector)(c.getInfo("blockedUsers"))).contains(login))) {
+                try {
+                    if (!(c.getInfo("fwdClient").equals(""))) {
+                        getFwdClient(c, login).sendToClient("Forwarded> " + message);
+                    } else {
+                        c.sendToClient(message);
+                    }
+                } catch (IOException e) {
+                    serverUI.display("Warning: Error sending message.");
+                }
             }
         }
     }
 
+    private ConnectionToClient getFwdClient(ConnectionToClient c, String sender) {
+        Vector pastRecipients = new Vector();
+        pastRecipients.addElement(((String)(c.getInfo("loginID"))));
 
-    private void disconnectionNotify(ConnectionToClient client) {   //연결을 해제당한 클라이언트(null은 제외)를 제외하고, 서버 및 연결된 클라이언트들에게 메세지를 보내는 메소드
-        if (client.getInfo("loginID") != null) {
-            sendToAllClients(client.getInfo("loginID") +" has disconnected.");
-            serverUI.display(client.getInfo("loginID") +" has disconnected.");
+        while (!c.getInfo("fwdClient").equals("")) {
+            Thread[] clients = getClientConnections();
+
+            for (int i = 0; i < clients.length; i++) {
+                ConnectionToClient tempc = (ConnectionToClient)(clients[i]);
+            
+                if (tempc.getInfo("loginID").equals(c.getInfo("fwdClient"))) {
+                    if (!(((Vector)(tempc.getInfo("blockedUsers"))).contains(sender))) {
+                        Iterator pastIterator = pastRecipients.iterator();
+
+                        while (pastIterator.hasNext()) {
+                            String pastRecipient = (String)pastIterator.next();
+                            if (((Vector)(tempc.getInfo("blockedUsers"))).contains(pastRecipient)) {
+                                try {
+                                    c.sendToClient("Cannot forward message.  A past " 
+                                    + "recipient of this message is blocked by "
+                                    + (String)(tempc.getInfo("loginID")));
+                                } catch (IOException e) {
+                                    serverUI.display("Warning: Error sending message.");
+                                }
+                                return c;
+                            }
+                        }
+
+                        if (!tempc.getInfo("fwdClient").equals("")) {
+                            c = tempc;
+                            pastRecipients.addElement(((String)(c.getInfo("loginID"))));
+                        } else {
+                            return tempc;
+                        }
+                    } else {
+                        try {
+                            c.sendToClient("Cannot forward message.  Original sender is blocked by "
+                            + ((String)(c.getInfo("fwdClient"))));
+                        } catch (IOException e) {
+                            serverUI.display("Warning: Error sending message.");
+                        }
+                        return c;
+                    }
+                }
+            }
+        }
+        return c;
+    }
+
+    private void sendListOfClients(ConnectionToClient c) {
+        Vector clientInfo = new Vector();
+        Thread[] clients = getClientConnections();
+        for (int i = 0; i < clients.length; i++) {
+            ConnectionToClient tempc = (ConnectionToClient)(clients[i]);
+            clientInfo.addElement((String)(tempc.getInfo("loginID"))
+            + " --- on channel: " + (String)(tempc.getInfo("channel")));
+        }
+
+        Collections.sort(clientInfo);
+
+        if (isListening() || getNumberOfClients() != 0) {
+            sendToClientOrServer(c, "SERVER --- on channel: "
+                + (serverChannel == null ? "main" : serverChannel));
+        } else {
+            serverUI.display("SERVER --- no active cahnnels");
+        }
+
+        Iterator toReturn = clientInfo.iterator();
+
+        while (toReturn.hasNext()) {
+            sendToClientOrServer(c, (String)toReturn.next());
+        }
+    }
+
+    private void handleServerCmdBlock(String message) {
+        try {
+            String userToBlock = message.substring(7);
+
+            if (userToBlock.toLowerCase().equals("server")) {
+                serverUI.display("Cannot block the sending of message to yourself.");
+                return;
+            } else {
+                if (isLoginUsed(userToBlock)) {
+                    blockedUsers.addElement(userToBlock);
+                } else {
+                    serverUI.display("User " + userToBlock + " does not exist.");
+                    return;
+                }
+            }
+            serverUI.display("Messages from " + userToBlock + " will be blocked.");
+        } catch (StringIndexOutOfBoundsException e) {
+            serverUI.display("ERROR - usage #block <loginID>");
+        }
+    }
+
+    private void handleServerCmdPunt(String message) {
+        Thread[] clients = getClientConnections();
+
+        try {
+            for (int i = 0; i < clients.length; i++) {
+                ConnectionToClient c = (ConnectionToClient)(clients[i]);
+
+                if (c.getInfo("loginID").equals(message.substring(6))) {
+                    try {
+                        c.sendToClient("You have been expelled from this server.");
+                    } catch (IOException e) { }
+                }
+            }
+        } catch (StringIndexOutOfBoundsException ex) {
+            serverUI.display("Invalid use of the #punt command");
+        }
+    }
+
+    private void handleServerCmdWarn(String message) {
+        Thread[] clients = getClientConnections();
+
+        try {
+            for (int i = 0; i < clients.length; i++) {
+                ConnectionToClient c = (ConnectionToClient)(clients[i]);
+
+                if (c.getInfo("loginID").equals(message.substring(6))) {
+                    try {
+                        c.sendToClient("Continue and you WILL be expelled.");
+                    } catch (IOException e) {
+                        try {
+                            c.close();
+                        } catch (IOException ex) { }
+                    }
+                }
+            }
+        } catch (StringIndexOutOfBoundsException ex) {
+            serverUI.display("Invalid use of the #warn command");
+        }
+    }
+
+    private void sendToClientOrServer(ConnectionToClient client, String message) {
+        try {
+            client.sendToClient(message);
+        } catch (NullPointerException npe) {
+            serverUI.display(message);
+        } catch (IOException ex) {
+            serverUI.display("Warning: Error sending message.");
+        }
+    }
+
+    private void handleDisconnect(ConnectionToClient client) {
+        if (!client.getInfo("loginID").equals("")) {
+            try {
+                Thread[] clients = getClientConnections();
+
+                for (int i = 0; i < clients.length; i++) {
+                    ConnectionToClient c = (ConnectionToClient)(clients[i]);
+    
+                    if (client.getInfo("loginID").equals(c.getInfo("fwdClient"))) {
+                        c.setInfo("fwdClient", "");
+                        c.sendToClient("Forwarding to " + client.getInfo("loginID") + " has disconnected");
+                    }
+                }
+                sendToAllClients(((client.getInfo("loginID") == null) ? "" : client.getInfo("loginID")) + " has disconnected.");
+            } catch (IOException e) {
+                serverUI.display("Warning: Error sending message.");
+            }
+            serverUI.display(client.getInfo("loginID") + " has disconnected.");
         }
     }
 }
