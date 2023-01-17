@@ -993,7 +993,7 @@ public class EchoServer extends AbstractServer {
             sendToClientOrServer(c, "SERVER --- on channel: "
                 + (serverChannel == null ? "main" : serverChannel));
         } else {
-            serverUI.display("SERVER --- no active cahnnels");
+            serverUI.display("SERVER --- no active channels");
         }
 
         Iterator toReturn = clientInfo.iterator();
@@ -1008,7 +1008,7 @@ public class EchoServer extends AbstractServer {
             String userToBlock = message.substring(7);
 
             if (userToBlock.toLowerCase().equals("server")) {
-                serverUI.display("Cannot block the sending of message to yourself.");
+                serverUI.display("Cannot block the sending of messages to yourself.");
                 return;
             } else {
                 if (isLoginUsed(userToBlock)) {
@@ -1035,6 +1035,11 @@ public class EchoServer extends AbstractServer {
                     try {
                         c.sendToClient("You have been expelled from this server.");
                     } catch (IOException e) { }
+                    finally {
+                        try {
+                            c.close();
+                        } catch (IOException ex) { }
+                    }
                 }
             }
         } catch (StringIndexOutOfBoundsException ex) {
