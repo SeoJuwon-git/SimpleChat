@@ -13,7 +13,7 @@ public class ChatClient extends AbstractClient {
         this.clientUI = clientUI;
 
         try {
-            openConnection();   //서버에의 연결 시도
+            openConnection();   //콘솔 프로그램 시작 시 서버에의 연결 시도
         } catch (IOException e) {
             handleMessageFromClientUI("#logoff");
             clientUI.display("Cannot open connection.  Awaiting command.");  //정상적으로 연결되지 않았을 경우
@@ -31,7 +31,7 @@ public class ChatClient extends AbstractClient {
             } catch (IOException e) {   //로그인 시 연결을 실패했을 경우
                 clientUI.display("Cannot establish connection.  Awaiting command.");
             }
-            return;
+            return; //심플채팅2와의 차이점. 이전에는 연결할 수 없었을 때 메소드를 종료했으나 지금은 맨 아래의 Invalid command로 가지 못하게 하는 차이.
         }
 
         if (message.startsWith("#quit"))    //종료 명령어인 경우 그에 대한 메소드 실행
@@ -79,7 +79,7 @@ public class ChatClient extends AbstractClient {
                     int port = 0;
                     port = Integer.parseInt(message.substring(9));
 
-                    if((port < 1024) || (port > 65535)) {   //포트 번호의 범위 안인지, well-known 포트가 아닌지
+                    if((port < 1024) || (port > 65535)) {   //포트 번호의 범위 안인지, well-known 포트가 아닌지 확인해 부적합하면 메시지만 표시
                         clientUI.display("Invalid port number.  Port unchanged");
                     } else {    //정상적인 포트 번호라면 변경 및 자신에게 표시
                         setPort(port);
@@ -119,23 +119,23 @@ public class ChatClient extends AbstractClient {
             return;
         }
 
-        if ((!(message.startsWith("#")))
-            || message.startsWith("#whoison")
-            || message.startsWith("#private")
-            || message.startsWith("#channel")
-            || message.startsWith("#pub")
-            || message.startsWith("#nochannel")
-            || message.startsWith("#getchannel")
-            || message.startsWith("#fwd")
-            || message.startsWith("#unfwd")
-            || message.startsWith("#block")
-            || message.startsWith("#unblock")
-            || message.startsWith("#whoiblock")
-            || message.startsWith("#whoblocksme")) {
+        if ((!(message.startsWith("#")))    //일반 메시지거나 서버의 도움이 필요한 명령어들의 경우
+            || message.startsWith("#whoison")   //현재 채널에 누가 있는지
+            || message.startsWith("#private")   //개인적인 메시지
+            || message.startsWith("#channel")   //채널 바꾸기
+            || message.startsWith("#pub")   //공적인 메시지
+            || message.startsWith("#nochannel") //메인 채널로
+            || message.startsWith("#getchannel")    //현재 채널
+            || message.startsWith("#fwd")   //메시지 전달
+            || message.startsWith("#unfwd") //메시지 전달 취소
+            || message.startsWith("#block") //블록
+            || message.startsWith("#unblock")   //블록해제
+            || message.startsWith("#whoiblock") //내가 블록한
+            || message.startsWith("#whoblocksme")) {    //나를 블록한
             
             try {
-                sendToServer(message);
-            } catch (IOException e) {
+                sendToServer(message);  //위 종류들의 메시지들은 서버로 전송하여 처리함.
+            } catch (IOException e) {   //전송 실패 및 연결 종료. 이 또한 실패시 관련 메시지 표시 후 프로그램 종료.
                 clientUI.display("Cannot send the message to the server.  Disconnecting.");
 
                 try {
@@ -145,7 +145,7 @@ public class ChatClient extends AbstractClient {
                     quit();
                 }
             }
-        } else {
+        } else {    //잘못된 # 명령어의 메시지들.
             clientUI.display("Invalid command.");
         }
     }

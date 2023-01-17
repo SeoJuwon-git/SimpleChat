@@ -26,7 +26,7 @@ public class ServerConsole implements ChatIF {
                     server.handleMessageFromServerUI(message);
                 }
             } catch (NullPointerException e) { }
-        } catch (Exception ex) {
+        } catch (Exception ex) {    //널포인터 예외를 제외한 예외 상황의 에러 스택 출력 및 메시지 표시
             ex.printStackTrace();
             display("ERROR!");
         }
