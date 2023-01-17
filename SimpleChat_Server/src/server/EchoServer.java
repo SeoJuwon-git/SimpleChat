@@ -747,12 +747,10 @@ public class EchoServer extends AbstractServer {
                 }
             //로그인 아이디가 있거나 계정생성을 하지 않는 경우
             } else {
-                System.out.println("여기로 들어왔다고 알리기1");
                 //로그인 아이디가 있고 계정 생성을 하는 중인 경우
                 if ((!client.getInfo("loginID").equals("")) && (((Boolean)(client.getInfo("creatingNewAccount"))).booleanValue())) {
                     //로그인에 사용된 적이 없는 아이디일 경우
                     if (!isLoginUsed((String)(client.getInfo("loginID")))) {
-                        System.out.println(client.getInfo("loginID")+"임");
                         client.setInfo("passwordVerified", new Boolean(true));
                         client.setInfo("creatingNewAccount", new Boolean(false));
                         client.setInfo("channel", "main");
