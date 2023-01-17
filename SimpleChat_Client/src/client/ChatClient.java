@@ -30,8 +30,8 @@ public class ChatClient extends AbstractClient {
                 openConnection();   //연결 시도
             } catch (IOException e) {   //로그인 시 연결을 실패했을 경우
                 clientUI.display("Cannot establish connection.  Awaiting command.");
-                return;
             }
+            return;
         }
 
         if (message.startsWith("#quit"))    //종료 명령어인 경우 그에 대한 메소드 실행
@@ -169,6 +169,6 @@ public class ChatClient extends AbstractClient {
     }
 
     protected void connectionException(Exception exception) {  //서버가 연결을 끊었을 때의 메시지로 사용되는 ocsf 메소드 구현
-        clientUI.display("Connection to sever terminated.");
+        clientUI.display("Connection to server terminated.");
     }
 }

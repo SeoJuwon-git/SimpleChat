@@ -72,7 +72,7 @@ public class EchoServer extends AbstractServer {
                 handleCmdChannel(command, client);
 
             if (command.startsWith("#nochannel"))
-                handleCmdPrivate("#channel main", client);
+                handleCmdChannel("#channel main", client);
 
             if (command.startsWith("#pub"))
                 handleCmdPub(command, client);
@@ -586,7 +586,7 @@ public class EchoServer extends AbstractServer {
         }
 
         if (serverChannel == null || serverChannel.equals(client.getInfo("channel"))) {
-            serverUI.display(client.getInfo("loginID") + " has joined cahnnel: " + newChannel);
+            serverUI.display(client.getInfo("loginID") + " has joined channel: " + newChannel);
         }
     }
 
