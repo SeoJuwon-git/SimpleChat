@@ -9,7 +9,7 @@ public class EchoServer extends AbstractServer {
 
     final public static int DEFAULT_PORT = 5555;
 
-    static final String PASSWORDFILE = "C:\\workspace\\vscode\\SimpleChat\\SimpleChat_Server\\src\\passwards.txt";   //경로 임의 설정함.
+    static final String PASSWORDFILE = "C:\\workspace\\vscode\\SimpleChat\\SimpleChat_Server\\src\\passwords.txt";   //경로 임의 설정함.
 
     static final int LINEBREAK = 10;
     static final int RETURN = 13;
@@ -721,9 +721,9 @@ public class EchoServer extends AbstractServer {
     private void clientLoggingIn(String message, ConnectionToClient client) {
         if (message.equals(""))
             return;
-        //게스트로 로그인 할 경우
+        //게스트로 로그인 할 경우 새 계정 만들기 실행
         if ((client.getInfo("loginID").equals("")) && (message.equals("guest"))) {
-            client.setInfo("creatngNewAccount", new Boolean(true));
+            client.setInfo("creatingNewAccount", new Boolean(true));
 
             try {
                 client.sendToClient("\n*** CREATING NEW ACCOUNT ***\nEnter new LoginID :");
@@ -811,7 +811,7 @@ public class EchoServer extends AbstractServer {
             }
         } 
     }
-//////////////////////////
+
     private void addClientToRegistry(String clientLoginID, String clientPassword) {
         try {
             FileInputStream inputFile = new FileInputStream(PASSWORDFILE);
@@ -868,7 +868,7 @@ public class EchoServer extends AbstractServer {
                         eof = true;
                         break;
                     } else {
-                        if (character == LINEBREAK) {
+                        if (character == LINEBREAK) {   //이후 줄바꿈 필요.
                             eoln = true;
 
                             if ((str.substring(0, str.indexOf(" ")).equals(loginID)) 
