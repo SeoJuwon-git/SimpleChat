@@ -169,6 +169,6 @@ public class ChatClient extends AbstractClient {
     }
 
     protected void connectionException(Exception exception) {  //서버가 연결을 끊었을 때의 메시지로 사용되는 ocsf 메소드 구현
-        clientUI.display("Connection to sever terminated.");
+        clientUI.display("Connection to server terminated.");
     }
 }
