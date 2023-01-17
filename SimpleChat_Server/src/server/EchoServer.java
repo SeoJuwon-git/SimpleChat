@@ -292,6 +292,7 @@ public class EchoServer extends AbstractServer {
             + "\n#whoblocksme -- List clients who are blocking messages from the server."   //책 오타?
             + "\n#whoiblock -- List all clients that the server is blocking messages from."
             + "\n#whoison -- Gets a list of all users and the channel they are connected to.");
+            return; //교재는 없으나 이게 없으면 Invalid command 조건문으로 들어가는 문제
         }
 
         if (!(message.startsWith("#"))) {   //#으로 시작하지 않는 모든 입력은 서버가 하는 메시지 전송이 됨.
