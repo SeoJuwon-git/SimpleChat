@@ -36,7 +36,7 @@ public class EchoServer extends AbstractServer {
             ConnectionToClient c = (ConnectionToClient)(clients[i]);
 
             try {
-                if (((Boolean)(c.getInfo("passwordVerfied"))).booleanValue())       //불린 객체의 값을 불린 기본형 값으로
+                if (((Boolean)(c.getInfo("passwordVerified"))).booleanValue())       //불린 객체의 값을 불린 기본형 값으로
                     c.sendToClient(msg);
             } catch (IOException e) {
                 serverUI.display("WARNING - Cannot send message to a client.");
@@ -49,7 +49,7 @@ public class EchoServer extends AbstractServer {
         
         if (!blockedUsers.contains(((String)(client.getInfo("loginID"))))) {
             if (serverChannel == null || serverChannel.equals(client.getInfo("channel"))) {
-                serverUI.display("Message : \"" +command +"\" from " + client.getInfo("loginID"));  //받은 메시지 정보 표시
+                serverUI.display("Message : \"" + command + "\" from " + client.getInfo("loginID"));  //받은 메시지 정보 표시
             }
         }
 
@@ -120,19 +120,20 @@ public class EchoServer extends AbstractServer {
             if (isListening()) {    //현재 서버가 리스닝 중이었다면 리스닝을 정지.
                 stopListening();
             } else {    //아니라면 이미 정지되거나 종료되어 서버가 재시작된 후에야 유효한 명령어임을 서버에게 알리는 메시지 표시
-                serverUI.display("cannot stop the server before it is restarted.");
+                serverUI.display("Cannot stop the server before it is restarted.");
             }
             return;
         }
 
         if (message.startsWith("#start")) { //서버 재시작 명령어인 경우
             closing = false;    //닫히고 있지 않다는 불린
+
             if (!isListening()) {   //서버가 리스닝 되고 있지 않을 때
                 try {
                     listen();   //리스닝 메소드 실행
                     serverChannel = null;   //처음 채널 메인으로
                 } catch (IOException e) {   //예외 발생의 경우 서버를 종료함
-                    serverUI.display("Cannot listen. Terminating server.");
+                    serverUI.display("Cannot listen.  Terminating server.");
                     quit();
                 }
             } else {    //이미 리스닝 되고 있을 경우 이에 대한 메시지를 서버에게 표시
@@ -169,7 +170,8 @@ public class EchoServer extends AbstractServer {
                     int port = 0;
                     port = Integer.parseInt(message.substring(9));  //"#setport " 이후의 문자열
 
-                    if((port < 1024) || (port > 65535)) {   //well-known이거나 정상 포트 범위가 아닌 경우 
+                    if ((port < 1024) || (port > 65535)) {   //well-known이거나 정상 포트 범위가 아닌 경우 
+                        setPort(5555);  //DEFAULT_PORT가 아니라?
                         serverUI.display("Invalid port number.  Port unchanged.");
                     } else {    //가능한 정상 포트인 경우
                         setPort(port);
@@ -286,8 +288,8 @@ public class EchoServer extends AbstractServer {
             + "\n#stop -- Makes the server stop accepting new connections."
             + "\n#unblock -- Unblock messages from all blocked clients."
             + "\n#unblock <loginID> -- Unblock messages from the specific client."
-            + "\n#warn <loginID> -- Sends a warning message to the specified clients."
-            + "\n#whoblocksme -- List clients who are blocking messages from the server."
+            + "\n#warn <loginID> -- Sends a warning message to the specified client."
+            + "\n#whoblocksme -- List clients who are blocking messages from the server."   //책 오타?
             + "\n#whoiblock -- List all clients that the server is blocking messages from."
             + "\n#whoison -- Gets a list of all users and the channel they are connected to.");
         }
@@ -320,7 +322,7 @@ public class EchoServer extends AbstractServer {
     protected void serverStopped() {    //서버가 정지될 때 서버와 연결된 클라이언트들에게 표시되는 메시지 메소드
         serverUI.display("Server has stopped listening for connections.");
         
-        if (!closing)
+        if (!closing)   //서버가 닫히는 중이라면 굳이 이 메시지를 표시하지 않게 되는듯.
             sendToAllClients("WARNING - Server has stopped accepting clients.");
     }
 
@@ -329,7 +331,7 @@ public class EchoServer extends AbstractServer {
     }
 
     protected void clientConnected(ConnectionToClient client) { //새로운 클라이언트가 서버와의 연결을 시도할 때 서버에게 표시되는 메시지 메소드
-        serverUI.display("A new client is attempting to connect " + "to the server.");
+        serverUI.display("A new client is attempting to connect to the server.");
         client.setInfo("loginID", "");
         client.setInfo("channel", "");
         client.setInfo("passwordVerified", new Boolean(false));
@@ -345,8 +347,8 @@ public class EchoServer extends AbstractServer {
             } catch (IOException ex) { }
         }
     }
-//////////////////////////////////////////////
-    protected void clientDisconnected(ConnectionToClient client){   //서버와의 연결이 끊겼을 때 서버 및 다른 연결되어 있는 클라이언트들에게 보내는 메시지 메소드 
+
+    protected synchronized void clientDisconnected(ConnectionToClient client){   //서버와의 연결이 끊겼을 때 서버 및 다른 연결되어 있는 클라이언트들에게 보내는 메시지 메소드 
         handleDisconnect(client);
     }
 
@@ -382,10 +384,10 @@ public class EchoServer extends AbstractServer {
         boolean removedUser = false;
         String userToUnblock = null;
 
-        if (client != null) {
-            blocked = new Vector((Vector)(client.getInfo("blockedUsers")));
+        if (client != null) {   //whoiblock과의 차이는?
+            blocked = (Vector)(client.getInfo("blockedUsers"));
         } else {
-            blocked = new Vector(blockedUsers);
+            blocked = blockedUsers;
         }
 
         if (blocked.size() == 0) {
@@ -431,7 +433,7 @@ public class EchoServer extends AbstractServer {
 
             if (userToBlock.equals(client.getInfo("loginID"))) {
                 try {
-                    client.sendToClient("Cannot block the sending of mesages to yourself.");
+                    client.sendToClient("Cannot block the sending of messages to yourself.");
                 } catch (IOException ex) {
                     serverUI.display("Warning: Error sending message.");
                 }
@@ -450,7 +452,7 @@ public class EchoServer extends AbstractServer {
                                     + " has been cancelled because "
                                     + client.getInfo("loginID") + " is now blocking messages from you.");
                                 client.sendToClient("Forwarding from "
-                                + client.getInfo("loginID") + " to you has been terminated.");
+                                + toBlock.getInfo("loginID") + " to you has been terminated.");
                             } catch (IOException ioe) {
                                 serverUI.display("Warning: Error sending message.");
                             }
@@ -468,7 +470,7 @@ public class EchoServer extends AbstractServer {
                 }
 
                 try {
-                    client.sendToClient("Messages from " + userToBlock + " will be bocked.");
+                    client.sendToClient("Messages from " + userToBlock + " will be blocked.");
                 } catch (IOException ex) {
                     serverUI.display("Warning: Error sending message.");
                 }
@@ -533,7 +535,7 @@ public class EchoServer extends AbstractServer {
             try {
                 client.sendToClient("ERROR - usage: #fwd <loginID>");
             } catch (IOException ex) {
-                serverUI.display("Warning: Error sendgin message.");
+                serverUI.display("Warning: Error sending message.");
             }
         }
     }
@@ -559,7 +561,7 @@ public class EchoServer extends AbstractServer {
             }
 
             if (!blockedUsers.contains(sender)) {
-                serverUI.display("PPUBLIC MESSAGE from " + sender + "> " + command.substring(5));
+                serverUI.display("PUBLIC MESSAGE from " + sender + "> " + command.substring(5));
             }
         } catch (IOException e) {
             serverUI.display("Warning: Error sending message.");
@@ -575,7 +577,7 @@ public class EchoServer extends AbstractServer {
         
         client.setInfo("channel", newChannel);
 
-        if (!newChannel.equals("main")) {
+        if (!oldChannel.equals("main")) {
             sendChannelMessage(client.getInfo("loginID") + " has left channel: " + oldChannel, oldChannel, "");
         }
 
@@ -584,7 +586,7 @@ public class EchoServer extends AbstractServer {
         }
 
         if (serverChannel == null || serverChannel.equals(client.getInfo("channel"))) {
-            serverUI.display(client.getInfo("loginID") + "has joined cahnnel: "+newChannel);
+            serverUI.display(client.getInfo("loginID") + " has joined cahnnel: " + newChannel);
         }
     }
 
@@ -608,14 +610,14 @@ public class EchoServer extends AbstractServer {
                     serverUI.display("PRIVATE MESSAGE from " + sender + "> " + message);
                 } else {
                     try {
-                        client.sendToClient("Cannot send message because" + loginID + " is blocking messages from you.");
+                        client.sendToClient("Cannot send message because " + loginID + " is blocking messages from you.");
                     } catch (IOException e) {
                         serverUI.display("Warning: Error sending message.");
                     }
                 }
             } else {
                 try {
-                    Thread[]clients = getClientConnections();
+                    Thread[] clients = getClientConnections();
 
                     for (int i = 0; i < clients.length; i++) {
                         ConnectionToClient c = (ConnectionToClient)(clients[i]);
@@ -623,14 +625,14 @@ public class EchoServer extends AbstractServer {
                         if (c.getInfo("loginID").equals(loginID)) {
                             if (!(((Vector)(c.getInfo("blockedUsers"))).contains(sender))) {
                                 if (!c.getInfo("fwdClient").equals("")) {
-                                    getFwdClient(c, sender).sendToClient("Forwarded>PRIVATE MESSAGE from" + sender 
+                                    getFwdClient(c, sender).sendToClient("Forwarded> PRIVATE MESSAGE from" + sender 
                                         + " to " + c.getInfo("loginID") + "> " + message);
                                 } else {
                                     c.sendToClient("PRIVATE MESSAGE from " + sender + "> " + message);
                                 }
                                 serverUI.display("Private message: \"" +message + "\" from " + sender + " to " + c.getInfo("loginID"));
                             } else {
-                                sendToClientOrServer(client, "Cannot send message because " + loginID + " is blocking message form you.");
+                                sendToClientOrServer(client, "Cannot send message because " + loginID + " is blocking message from you.");
                             }
                         }
                     }
@@ -642,7 +644,7 @@ public class EchoServer extends AbstractServer {
             sendToClientOrServer(client, "ERROR - usage: #private <loginID> <msg>");
         }
     }
-
+    //누가 날 블록했는지(클라이언트가 사용하는 경우, 서버에서 메시지가 오는 경우)
     private void checkForBlocks(String login, ConnectionToClient client) {
         String results = "User block check:";
 
@@ -655,7 +657,7 @@ public class EchoServer extends AbstractServer {
         Thread[] clients = getClientConnections();
 
         for (int i = 0; i < clients.length; i++) {
-            ConnectionToClient c= (ConnectionToClient)(clients[i]);
+            ConnectionToClient c = (ConnectionToClient)(clients[i]);
 
             Vector blocked = (Vector)(c.getInfo("blockedUsers"));
 
@@ -761,7 +763,7 @@ public class EchoServer extends AbstractServer {
                         client.setInfo("creatingNewAccount", new Boolean(false));
 
                         try{
-                            client.sendToClient("login already in use.   Enter login ID:");
+                            client.sendToClient("login already in use.  Enter login ID:");
                         } catch (IOException e) {
                             try {
                                 client.close();
@@ -809,7 +811,7 @@ public class EchoServer extends AbstractServer {
             }
         } 
     }
-
+//////////////////////////
     private void addClientToRegistry(String clientLoginID, String clientPassword) {
         try {
             FileInputStream inputFile = new FileInputStream(PASSWORDFILE);
@@ -991,7 +993,7 @@ public class EchoServer extends AbstractServer {
             sendToClientOrServer(c, "SERVER --- on channel: "
                 + (serverChannel == null ? "main" : serverChannel));
         } else {
-            serverUI.display("SERVER --- no active cahnnels");
+            serverUI.display("SERVER --- no active channels");
         }
 
         Iterator toReturn = clientInfo.iterator();
@@ -1006,7 +1008,7 @@ public class EchoServer extends AbstractServer {
             String userToBlock = message.substring(7);
 
             if (userToBlock.toLowerCase().equals("server")) {
-                serverUI.display("Cannot block the sending of message to yourself.");
+                serverUI.display("Cannot block the sending of messages to yourself.");
                 return;
             } else {
                 if (isLoginUsed(userToBlock)) {
@@ -1033,6 +1035,11 @@ public class EchoServer extends AbstractServer {
                     try {
                         c.sendToClient("You have been expelled from this server.");
                     } catch (IOException e) { }
+                    finally {
+                        try {
+                            c.close();
+                        } catch (IOException ex) { }
+                    }
                 }
             }
         } catch (StringIndexOutOfBoundsException ex) {

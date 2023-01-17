@@ -27,7 +27,8 @@ public class ServerConsole implements ChatIF {
                 }
             } catch (NullPointerException e) { }
         } catch (Exception ex) {
-            display("Unexpected error while reading from console!");
+            ex.printStackTrace();
+            display("ERROR!");
         }
     }
 

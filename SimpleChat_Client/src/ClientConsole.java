@@ -3,6 +3,7 @@ import client.*;
 import common.*;
 
 public class ClientConsole implements ChatIF{
+
     final public static int DEFAULT_PORT = 5555;
 
     ChatClient client;
@@ -37,7 +38,6 @@ public class ClientConsole implements ChatIF{
     public static void main(String[] args) {
         String host = "";
         int port = 0;
-        String loginID = null;
 
         try {
             host = args[0]; //첫 번째 파라미터를 호스트로 받음. 호스트는 dns 또는 ip주소. 클라이언트가 서버에 접속하기 위해선 서버의 ip주소가 필요.
