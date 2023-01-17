@@ -8,7 +8,7 @@ public class ClientConsole implements ChatIF{
 
     ChatClient client;
 
-    public ClientConsole(String host, int port) { //생성자에서 클라이언트 객체 생성 및 호스트, 포트, 로그인아이디, 자신의 문맥을 넘겨줌
+    public ClientConsole(String host, int port) { //생성자에서 클라이언트 객체 생성 및 호스트, 포트, 자신의 문맥을 넘겨줌
         client = new ChatClient(host, port, this);
     }
 
@@ -46,7 +46,7 @@ public class ClientConsole implements ChatIF{
         }
         
         try {
-            port = Integer.parseInt(args[1]);   //세 번째 파라미터를 포트 번호로 받음. 문자열로 들어오므로 변환 필요
+            port = Integer.parseInt(args[1]);   //두 번째 파라미터를 포트 번호로 받음. 문자열로 들어오므로 변환 필요
         } catch (Throwable t) {
             port = DEFAULT_PORT;    //기본 포트 번호
         }
