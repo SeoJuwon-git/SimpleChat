@@ -515,7 +515,7 @@ public class EchoServer extends AbstractServer {
                 client.setInfo("fwdClient", destineeName);  //자신의 메시지 전달지를 해당 클라이언트로
             } else {    //블록하고 있다면 해당 메시지 표시
                 try {
-                    client.sendToClient("Cannot forward to " + destineeName + " because" + destineeName + " is blocking messages from you.");
+                    client.sendToClient("Cannot forward to " + destineeName + " because " + destineeName + " is blocking messages from you.");
                 } catch (IOException e) {
                     serverUI.display("Warning: Error sending message.");
                 }
@@ -540,12 +540,12 @@ public class EchoServer extends AbstractServer {
             }
         }
     }
-    
+///////////
     private void handleCmdPub(String command, ConnectionToClient client) {
         String sender = "";
 
         try {
-            sender = (String)(client.getInfo("logindID"));
+            sender = (String)(client.getInfo("loginID"));
         } catch (NullPointerException e) {
             sender = "server";
         }
@@ -626,7 +626,7 @@ public class EchoServer extends AbstractServer {
                         if (c.getInfo("loginID").equals(loginID)) {
                             if (!(((Vector)(c.getInfo("blockedUsers"))).contains(sender))) {
                                 if (!c.getInfo("fwdClient").equals("")) {
-                                    getFwdClient(c, sender).sendToClient("Forwarded> PRIVATE MESSAGE from" + sender 
+                                    getFwdClient(c, sender).sendToClient("Forwarded> PRIVATE MESSAGE from " + sender 
                                         + " to " + c.getInfo("loginID") + "> " + message);
                                 } else {
                                     c.sendToClient("PRIVATE MESSAGE from " + sender + "> " + message);
