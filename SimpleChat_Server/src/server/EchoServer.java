@@ -82,7 +82,6 @@ public class EchoServer extends AbstractServer {
 
             if (command.startsWith("#unfwd")) { //메시지 전달 중지 메소드 호출
                 client.setInfo("fwdClient", "");
-
                 try {
                     client.sendToClient("Messages will no longer be forwarded");
                 } catch (IOException e) {
@@ -107,9 +106,9 @@ public class EchoServer extends AbstractServer {
                     (String)client.getInfo("channel"), 
                     (String)(client.getInfo("loginID")));
             }
-        } else {
-            clientLoggingIn(command, client);   //아직 검증되지 않은 패스워드를 가진 클라이언트였다면 로그인 메소드 호출
+            return;
         }
+        clientLoggingIn(command, client);   //아직 검증되지 않은 패스워드를 가진 클라이언트였다면 로그인 메소드 호출
     }
 
     public synchronized void handleMessageFromServerUI(String message) { //서버 자신이 입력한 메시지들에 대한 처리 메소드
@@ -132,13 +131,14 @@ public class EchoServer extends AbstractServer {
                 try {
                     listen();   //리스닝 메소드 실행
                     serverChannel = null;   //처음 채널 메인으로
+                    return;
                 } catch (IOException e) {   //예외 발생의 경우 서버를 종료함
                     serverUI.display("Cannot listen.  Terminating server.");
                     quit();
                 }
-            } else {    //이미 리스닝 되고 있을 경우 이에 대한 메시지를 서버에게 표시
-                serverUI.display("Server is already running.");
             }
+            //이미 리스닝 되고 있을 경우 이에 대한 메시지를 서버에게 표시
+            serverUI.display("Server is already running.");
             return;
         }
 
@@ -165,22 +165,23 @@ public class EchoServer extends AbstractServer {
         if (message.startsWith("#setport")) {   //서버의 포트 번호를 변경하는 명령어인 경우
             if ((getNumberOfClients() != 0) || (isListening())) {   //연결된 클라이언트가 있거나 서버가 리스닝 중인 경우엔 변경하지 못하도록 막음(이전 코드의 요구사항)
                 serverUI.display("Cannot change port while clients are connected or while server is listening");
-            } else {
-                try {
-                    int port = 0;
-                    port = Integer.parseInt(message.substring(9));  //"#setport " 이후의 문자열
+                return;
+            }
+            try {
+                int port = 0;
+                port = Integer.parseInt(message.substring(9));  //"#setport " 이후의 문자열
 
-                    if ((port < 1024) || (port > 65535)) {   //well-known이거나 정상 포트 범위가 아닌 경우 
-                        setPort(5555);  //(DEFAULT_PORT가 아니라?) 일단 잘못된 포트 번호를 입력하더라도 기본 포트로 설정하는 것이 이전 코드와 달라진 점.
-                        serverUI.display("Invalid port number.  Port unchanged.");
-                    } else {    //가능한 정상 포트인 경우
-                        setPort(port);
-                        serverUI.display("Port set to " + port);
-                    }
-                } catch (Exception e) { //문자 등 비정상적인 포트 번호를 입력했을 때
-                    serverUI.display("Invalid use of the #setport command.");
-                    serverUI.display("Port unchanged.");
+                if ((port < 1024) || (port > 65535)) {   //well-known이거나 정상 포트 범위가 아닌 경우 
+                    setPort(DEFAULT_PORT);  //(DEFAULT_PORT가 아니라?) 일단 잘못된 포트 번호를 입력하더라도 기본 포트로 설정하는 것이 이전 코드와 달라진 점.
+                    serverUI.display("Invalid port number.  Port unchanged.");
+                    return;
                 }
+                //가능한 정상 포트인 경우
+                setPort(port);
+                serverUI.display("Port set to " + port);
+            } catch (Exception e) { //문자 등 비정상적인 포트 번호를 입력했을 때
+                serverUI.display("Invalid use of the #setport command.");
+                serverUI.display("Port unchanged.");
             }
             return;
         }
@@ -238,10 +239,11 @@ public class EchoServer extends AbstractServer {
         }
         //리스닝 중이거나 연결된 클라이언트가 있는 경우 서버의 채널을 표시, 아니라면 활성화된 채널이 없다고 표시(서버 혼자 있을 경우 활성화하지 않은 것으로 생각하는듯.)
         if (message.startsWith("#getchannel")) {    
-            if (isListening() || getNumberOfClients() > 0)
+            if (isListening() || getNumberOfClients() > 0) {
                 serverUI.display("Currently on channel: " + serverChannel);
-            else
-                serverUI.display("Server has no active channels.");
+                return;
+            }
+            serverUI.display("Server has no active channels.");
             return;
         }
 
@@ -298,9 +300,10 @@ public class EchoServer extends AbstractServer {
         if (!(message.startsWith("#"))) {   //#으로 시작하지 않는 모든 입력은 서버가 하는 메시지 전송이 됨. 다만 sendToAllClients였던 이전 코드와는 달리 채널 메세지 전송이 되는 차이점.
             serverUI.display("SERVER MESSAGE> " + message);
             sendChannelMessage("SERVER MESSAGE> " + message, (serverChannel == null? "main" : serverChannel), "server");
-        } else {    //메시지 전송도 아니고 올바른 명렁어도 아닌 경우
-            serverUI.display("Invalid command.");
+            return;
         }
+        //메시지 전송도 아니고 올바른 명렁어도 아닌 경우
+        serverUI.display("Invalid command.");
     }
 
     public void quit() {    //종료에 대한 메소드
@@ -360,11 +363,7 @@ public class EchoServer extends AbstractServer {
     private void handleCmdWhoiblock(ConnectionToClient client) {    //내가 블록한 목록을 표시하기 위한 메소드
         Vector blocked;
 
-        if (client != null) {   //서버가 아니라면 해당 클라이언트의 정보에서 가져오게 되며
-            blocked = new Vector((Vector)(client.getInfo("blockedUsers")));
-        } else {    //서버라면 서버가 가진 블록 목록들을 가져옴.
-            blocked = new Vector(blockedUsers);
-        }
+        blocked = (client != null) ? (Vector)(client.getInfo("blockedUsers")):blockedUsers;   //서버가 아니라면 해당 클라이언트의 정보에서 가져오게 되며 서버라면 서버가 가진 블록 목록들을 가져옴.
 
         Iterator blockedIterator = blocked.iterator();  //저장된 블록 목록 읽기 위한 이터레이터
 
@@ -375,9 +374,10 @@ public class EchoServer extends AbstractServer {
                 String blockedUser = (String)blockedIterator.next();
                 sendToClientOrServer(client, "Message from " + blockedUser + " are blocked.");
             }
-        } else {    //안에 요소가 아예 없을 경우
-            sendToClientOrServer(client, "No blocking is in effect.");
+            return;
         }
+        //안에 요소가 아예 없을 경우
+        sendToClientOrServer(client, "No blocking is in effect.");
     }
 
     private void handleCmdUnblock(String command, ConnectionToClient client) {  //클라이언트 혹은 서버의 블록 해제를 다루는 메소드
@@ -385,11 +385,7 @@ public class EchoServer extends AbstractServer {
         boolean removedUser = false;    //블록 해제되는 유저가 하나라도 있는지 판별
         String userToUnblock = null;    //블록 해제되는 유저(있을 경우와 없을 경우로 나뉠 수 있음)
 
-        if (client != null) {   //whoiblock과 new Vector로 감싸는 여부 차이가 있음.
-            blocked = (Vector)(client.getInfo("blockedUsers"));
-        } else {
-            blocked = blockedUsers;
-        }
+        blocked = (client != null) ? (Vector)(client.getInfo("blockedUsers")):blockedUsers;
 
         if (blocked.size() == 0) {  //블록을 해제할 요소가 없는 경우
             sendToClientOrServer(client, "No blocking is in effect.");
@@ -406,10 +402,10 @@ public class EchoServer extends AbstractServer {
             userToUnblock = "server";
 
         Iterator blockedIterator = blocked.iterator();
-
+    
         while (blockedIterator.hasNext()) { //목록의 요소들을 탐색하며
             String blockedUser = (String)blockedIterator.next();
-
+            
             if (blockedUser.equals(userToUnblock) || userToUnblock.equals("")) {    //삭제할 유저 혹은 모든 유저 삭제일 경우 next()로 나온 해당 유저를 블록해제(remove)함.
                 blockedIterator.remove();
                 removedUser = true;
@@ -417,7 +413,7 @@ public class EchoServer extends AbstractServer {
             }
         }
 
-        if (!removedUser) { //특정 유저를 해제하는 unblock의 경우만 해당될 것.
+        if (!removedUser) { //특정 유저를 해제하는 unblock의 경우만 해당될 것. 블록 해제 받을 유저가 없음.
             sendToClientOrServer(client, "Message from " + userToUnblock + " were not blocked.");
         }
     }
@@ -439,43 +435,41 @@ public class EchoServer extends AbstractServer {
                     serverUI.display("Warning: Error sending message.");
                 }
                 return;
-            } else {    //타인을 블록하는 경우
-                if (isLoginUsed(userToBlock) || userToBlock.equals("server")) { //현재 사용되는 로그인아이디거나 서버를 블록하는 경우(유효한 경우)
-                    if (isLoginBeingUsed(userToBlock, false) && !userToBlock.equals("server")) {    //현재 로그인중이고 서버를 블록하지 않는 경우(이 또한 유효한 경우)
-                        ConnectionToClient toBlock = getClient(userToBlock);
-                        
-                        if (((String)(toBlock.getInfo("fwdClient"))).equals(((String)(client.getInfo("loginID"))))) {   //블록을 당하는 클라이언트가 블록을 하는 자신에게 메시지를 전달하고 있는지 
-                            toBlock.setInfo("fwdClient", "");   //블록을 당하는 클라이언트의 메시지 전달 초기화
+            }
+            //타인을 블록하는 경우
+            if (isLoginUsed(userToBlock) || userToBlock.equals("server")) { //현재 사용되는 로그인아이디거나 서버를 블록하는 경우(유효한 경우)
+                if (isLoginBeingUsed(userToBlock, false) && !userToBlock.equals("server")) {    //현재 로그인중이고 서버를 블록하지 않는 경우(이 또한 유효한 경우)
+                    ConnectionToClient toBlock = getClient(userToBlock);
+                    
+                    if (((String)(toBlock.getInfo("fwdClient"))).equals(((String)(client.getInfo("loginID"))))) {   //블록을 당하는 클라이언트가 블록을 하는 자신에게 메시지를 전달하고 있는지 
+                        toBlock.setInfo("fwdClient", "");   //블록을 당하는 클라이언트의 메시지 전달 초기화
 
-                            try {   //메시지 전달이 취소되었음을 당사자들에게 알림
-                                toBlock.sendToClient("Forwarding to "
-                                    + client.getInfo("loginID")
-                                    + " has been cancelled because "
-                                    + client.getInfo("loginID") + " is now blocking messages from you.");
-                                client.sendToClient("Forwarding from "
-                                + toBlock.getInfo("loginID") + " to you has been terminated.");
-                            } catch (IOException ioe) {
-                                serverUI.display("Warning: Error sending message.");
-                            }
+                        try {   //메시지 전달이 취소되었음을 당사자들에게 알림
+                            toBlock.sendToClient("Forwarding to "
+                                + client.getInfo("loginID")
+                                + " has been cancelled because "
+                                + client.getInfo("loginID") + " is now blocking messages from you.");
+                            client.sendToClient("Forwarding from "
+                            + toBlock.getInfo("loginID") + " to you has been terminated.");
+                        } catch (IOException ioe) {
+                            serverUI.display("Warning: Error sending message.");
                         }
                     }
-                    addBlock = (Vector)(client.getInfo("blockedUsers"));    //블록을 하는 클라이언트의 블록할 목록을 가져와
-                    addBlock.addElement(userToBlock);   //그 목록에 요소로 넣음
-                } else {    //사용되지 않는 로그인 아이디의 경우
-                    try {   //해당 클라이언트가 존재하지 않음을 알리고 메소드 종료
-                        client.sendToClient("User " + userToBlock + " does not exist.");
-                    } catch (IOException ioe) {
-                        serverUI.display("Warning: Error sending message.");
-                    }
-                    return;
                 }
+                ((Vector)(client.getInfo("blockedUsers"))).addElement(userToBlock);    //블록을 하는 클라이언트의 블록할 목록을 가져와/그 목록에 요소로 넣음
 
                 try {   //블록 사실을 본인에게 알림
                     client.sendToClient("Messages from " + userToBlock + " will be blocked.");
                 } catch (IOException ex) {
                     serverUI.display("Warning: Error sending message.");
                 }
-            } 
+            }
+            //사용되지 않는 로그인 아이디의 경우
+            try {   //해당 클라이언트가 존재하지 않음을 알리고 메소드 종료
+                client.sendToClient("User " + userToBlock + " does not exist.");
+            } catch (IOException ioe) {
+                serverUI.display("Warning: Error sending message.");
+            }
         } catch (StringIndexOutOfBoundsException e) {   //블록 메소드의 경우 특정 로그인 아이디를 덧붙이지 않으면 잘못된 명령어 입력이 됨.
             try {
                 client.sendToClient("ERROR - usage #block <loginID>");
@@ -493,16 +487,14 @@ public class EchoServer extends AbstractServer {
                 if (destineeName.equals(client.getInfo("loginID"))) {   //자기 자신일 경우 취소
                     client.sendToClient("ERROR - Can't forward to self");
                     return;
-                } else {   
-                    if (destineeName.toLowerCase().equals("server")) {   //서버로의 전달은 불가능해 취소
-                        client.sendToClient("ERROR - Can't forward to SERVER");
-                        return;
-                    } else {    
-                        if (getClient(destineeName) == null) {  //없는 클라이언트일 경우 취소
-                            client.sendToClient("ERROR - Client does not exist");
-                            return;
-                        }
-                    }
+                }
+                if (destineeName.toLowerCase().equals("server")) {   //서버로의 전달은 불가능해 취소
+                    client.sendToClient("ERROR - Can't forward to SERVER");
+                    return;
+                }
+                if (getClient(destineeName) == null) {  //없는 클라이언트일 경우 취소
+                    client.sendToClient("ERROR - Client does not exist");
+                    return;
                 }
             } catch (IOException e) {
                 serverUI.display("Warning: Error sending message.");
@@ -511,9 +503,7 @@ public class EchoServer extends AbstractServer {
             String tempFwdClient = (String)(client.getInfo("fwdClient"));   //자신이 이미 메시지를 전달하고 있는 클라이언트가 있을 수 있으므로 임시 저장
             ConnectionToClient destinee = getClient(destineeName);  //메세지를 전달할 클라이언트의 연결
 
-            if(!(((Vector)(destinee.getInfo("blockedUsers"))).contains((String)(client.getInfo("loginID"))))) { //전달하려는 클라이언트가 자신을 블록하고 있지 않다면
-                client.setInfo("fwdClient", destineeName);  //자신의 메시지 전달지를 해당 클라이언트로
-            } else {    //블록하고 있다면 해당 메시지 표시
+            if((((Vector)(destinee.getInfo("blockedUsers"))).contains((String)(client.getInfo("loginID"))))) { //전달하려는 클라이언트가 자신을 블록하고 있지 않다면
                 try {
                     client.sendToClient("Cannot forward to " + destineeName + " because " + destineeName + " is blocking messages from you.");
                 } catch (IOException e) {
@@ -521,14 +511,17 @@ public class EchoServer extends AbstractServer {
                 }
                 return;
             }
+            client.setInfo("fwdClient", destineeName);  //자신의 메시지 전달지를 해당 클라이언트로
 
             try {
                 if (isValidFwdClient(client)) { //전달이 타당한 클라이언트일 경우
                     client.sendToClient("Message will be forwarded to: " + client.getInfo("fwdClient"));
-                } else {    //이전 설정대로
-                    client.setInfo("fwdClient", tempFwdClient);
-                    client.sendToClient("ERROR - Can't forward because a loop would result");
+                    return;
                 }
+                //이전 설정대로
+                client.setInfo("fwdClient", tempFwdClient);
+                client.sendToClient("ERROR - Can't forward because a loop would result");
+                return;
             } catch (IOException e) { 
                 serverUI.display("Warning: Error sending message.");
             }
@@ -609,37 +602,41 @@ public class EchoServer extends AbstractServer {
             if (loginID.toLowerCase().equals("server")) {   //서버에게 보내는 것이라면 대소문자를 구분하지 않고
                 if (!blockedUsers.contains(sender)) {   //서버가 블록하지 않았는지에 따라 메시지를 보냄.(따라서 서버 자신도 가능.)
                     serverUI.display("PRIVATE MESSAGE from " + sender + "> " + message);
-                } else {    //블록된 클라이언트였다면 해당 클라이언트에게 블록으로 인해 보낼 수 없음을 알려주는 메시지를 보냄.
-                    try {
-                        client.sendToClient("Cannot send message because " + loginID + " is blocking messages from you.");
-                    } catch (IOException e) {
-                        serverUI.display("Warning: Error sending message.");
-                    }
+                    return;
                 }
-            } else {    //연결된 클라이언트에게 보내는 경우라면
+                //블록된 클라이언트였다면 해당 클라이언트에게 블록으로 인해 보낼 수 없음을 알려주는 메시지를 보냄.
                 try {
-                    Thread[] clients = getClientConnections();
-
-                    for (int i = 0; i < clients.length; i++) {
-                        ConnectionToClient c = (ConnectionToClient)(clients[i]);
-                        
-                        if (c.getInfo("loginID").equals(loginID)) { //보내려는 로그인 아이디와 일치하는 클라이언트에게
-                            if (!(((Vector)(c.getInfo("blockedUsers"))).contains(sender))) {    //블록되지 않았다면
-                                if (!c.getInfo("fwdClient").equals("")) {   //해당 클라이언트가 자신에게 온 메시지를 다른 클라이언트에게 전달 중이라면
-                                    getFwdClient(c, sender).sendToClient("Forwarded> PRIVATE MESSAGE from " + sender //해당 메소드를 이용해 받아야하는 클라이언트를 구하고 해당 메시지를 전송
-                                        + " to " + c.getInfo("loginID") + "> " + message);
-                                } else {    //전달 중이 아니라면 해당 클라이언트에게 메시지 정송
-                                    c.sendToClient("PRIVATE MESSAGE from " + sender + "> " + message);
-                                }
-                                serverUI.display("Private message: \"" +message + "\" from " + sender + " to " + c.getInfo("loginID")); //서버에게도 똑같은 메시지 전송
-                            } else {    //블록되었다면 관련 메시지 전송
-                                sendToClientOrServer(client, "Cannot send message because " + loginID + " is blocking message from you.");
-                            }
-                        }
-                    }
+                    client.sendToClient("Cannot send message because " + loginID + " is blocking messages from you.");
                 } catch (IOException e) {
                     serverUI.display("Warning: Error sending message.");
                 }
+                return;
+            }
+            //연결된 클라이언트에게 보내는 경우라면
+            try {
+                Thread[] clients = getClientConnections();
+
+                for (int i = 0; i < clients.length; i++) {
+                    ConnectionToClient c = (ConnectionToClient)(clients[i]);
+                    
+                    if (c.getInfo("loginID").equals(loginID)) { //보내려는 로그인 아이디와 일치하는 클라이언트에게
+                        if (!(((Vector)(c.getInfo("blockedUsers"))).contains(sender))) {    //블록되지 않았다면
+                            if (!c.getInfo("fwdClient").equals("")) {   //해당 클라이언트가 자신에게 온 메시지를 다른 클라이언트에게 전달 중이라면
+                                getFwdClient(c, sender).sendToClient("Forwarded> PRIVATE MESSAGE from " + sender //해당 메소드를 이용해 받아야하는 클라이언트를 구하고 해당 메시지를 전송
+                                    + " to " + c.getInfo("loginID") + "> " + message);
+                            } else {    //전달 중이 아니라면 해당 클라이언트에게 메시지 정송
+                                c.sendToClient("PRIVATE MESSAGE from " + sender + "> " + message);
+                            }
+                            serverUI.display("Private message: \"" +message + "\" from " + sender + " to " + c.getInfo("loginID")); //서버에게도 똑같은 메시지 전송
+                            return;
+                        }
+                        //블록되었다면 관련 메시지 전송
+                        sendToClientOrServer(client, "Cannot send message because " + loginID + " is blocking message from you.");
+                        return;
+                    }
+                }
+            } catch (IOException e) {
+                serverUI.display("Warning: Error sending message.");
             }
         } catch (StringIndexOutOfBoundsException e) {   //입력을 안했을 경우
             sendToClientOrServer(client, "ERROR - usage: #private <loginID> <msg>");
@@ -683,6 +680,7 @@ public class EchoServer extends AbstractServer {
             ConnectionToClient tempc = (ConnectionToClient)(clients[i]);
             if (tempc.getInfo("loginID").equals(testClient.getInfo("fwdClient"))) {    //기존의 연결이 가지고 있는 메시지 전달지가 연결들 중에 있다면 
                 clientFound = true;
+                break;
             }
         }
 
@@ -733,84 +731,83 @@ public class EchoServer extends AbstractServer {
                     client.close();
                 } catch (IOException ex) { }
             }
-        //로그인 아이디가 있거나 게스트가 아닌 로그인을 할 경우로 위에서 로그인을 입력 시 아직 패스워드가 검증되지 않은 상태이므로 조건을 충족하여 이쪽으로 오게됨.
-        } else {
-            //로그인 아이디가 없고 계정 생성을 하는 중인 경우
-            if ((client.getInfo("loginID").equals("") && ((Boolean)(client.getInfo("creatingNewAccount"))).booleanValue())) {
-                client.setInfo("loginID", message); //메세지=로그인아이디를 설정하여 이후부터 client.getInfo("loginID").equals("")가 false가 됨
+            return;
+        }//로그인 아이디가 있거나 게스트가 아닌 로그인을 할 경우로 위에서 로그인을 입력 시 아직 패스워드가 검증되지 않은 상태이므로 조건을 충족하여 이쪽으로 오게됨.
+        //로그인 아이디가 없고 계정 생성을 하는 중인 경우
+        if ((client.getInfo("loginID").equals("") && ((Boolean)(client.getInfo("creatingNewAccount"))).booleanValue())) {
+            client.setInfo("loginID", message); //메세지=로그인아이디를 설정하여 이후부터 client.getInfo("loginID").equals("")가 false가 됨
 
+            try {
+                client.sendToClient("Enter new password :");    //클라이언트에게 패스워드를 입력하라는 메시지를 보냄.
+            } catch (IOException e) {
                 try {
-                    client.sendToClient("Enter new password :");    //클라이언트에게 패스워드를 입력하라는 메시지를 보냄.
+                    client.close();
+                }catch (IOException ex) { }
+            }
+        //로그인 아이디가 있거나 계정 생성을 하지 않는 경우
+            return;
+        }
+        //로그인 아이디가 설정되었고 계정 생성을 하는 중인 경우(guest 입력(creatingNewAccount 설정) 및 아이디 입력, 패스워드를 입력(아이디 설정)하는 단계를 거쳐서 오게 됨.)
+        if ((!client.getInfo("loginID").equals("")) && (((Boolean)(client.getInfo("creatingNewAccount"))).booleanValue())) {
+            //로그인에 사용된 적이 없는 아이디일 경우
+            if (!isLoginUsed((String)(client.getInfo("loginID")))) {    //패스워드 검증 설정, 새 계정 만들기 종료, 채널은 main 채널로 초기화, 패스워드 파일에 계정 정보 저장, 관련 메시지 전송
+                client.setInfo("passwordVerified", new Boolean(true));
+                client.setInfo("creatingNewAccount", new Boolean(false));
+                client.setInfo("channel", "main");
+                addClientToRegistry((String)(client.getInfo("loginID")), message);
+                serverUI.display(client.getInfo("loginID") + " has logged on.");
+                sendToAllClients(client.getInfo("loginID") + " has logged on.");
+            //로그인에 사용된 적이 있는 아이디였을 경우
+            } else {    //이전에 했던 로그인아이디와 새 계정 생성을 초기화하고 로그인 입력 단계로 돌아감.
+                client.setInfo("loginID", "");
+                client.setInfo("creatingNewAccount", new Boolean(false));
+
+                try{
+                    client.sendToClient("login already in use.  Enter login ID:");
                 } catch (IOException e) {
                     try {
                         client.close();
-                    }catch (IOException ex) { }
-                }
-            //로그인 아이디가 있거나 계정 생성을 하지 않는 경우
-            } else {
-                //로그인 아이디가 설정되었고 계정 생성을 하는 중인 경우(guest 입력(creatingNewAccount 설정) 및 아이디 입력, 패스워드를 입력(아이디 설정)하는 단계를 거쳐서 오게 됨.)
-                if ((!client.getInfo("loginID").equals("")) && (((Boolean)(client.getInfo("creatingNewAccount"))).booleanValue())) {
-                    //로그인에 사용된 적이 없는 아이디일 경우
-                    if (!isLoginUsed((String)(client.getInfo("loginID")))) {    //패스워드 검증 설정, 새 계정 만들기 종료, 채널은 main 채널로 초기화, 패스워드 파일에 계정 정보 저장, 관련 메시지 전송
-                        client.setInfo("passwordVerified", new Boolean(true));
-                        client.setInfo("creatingNewAccount", new Boolean(false));
-                        client.setInfo("channel", "main");
-                        addClientToRegistry((String)(client.getInfo("loginID")), message);
-                        serverUI.display(client.getInfo("loginID") + " has logged on.");
-                        sendToAllClients(client.getInfo("loginID") + " has logged on.");
-                    //로그인에 사용된 적이 있는 아이디였을 경우
-                    } else {    //이전에 했던 로그인아이디와 새 계정 생성을 초기화하고 로그인 입력 단계로 돌아감.
-                        client.setInfo("loginID", "");
-                        client.setInfo("creatingNewAccount", new Boolean(false));
-
-                        try{
-                            client.sendToClient("login already in use.  Enter login ID:");
-                        } catch (IOException e) {
-                            try {
-                                client.close();
-                            } catch (IOException ex) { }
-                        }
-                    }
-                //로그인 아이디가 없거나 계정 생성을 하지 않는 경우
-                } else {
-                    //아직 로그인 아이디가 없고 일반 로그인 과정에서 로그인아이디를 입력하고 계정 생성 중이 아닌 경우로, 입력된 메시지로 로그인 아이디를 설정 후 해당 클라이언트에게 패스워드를 입력하게 함.
-                    if (client.getInfo("loginID").equals("")) { //클라이언트와 서버가 연결될 때 로그인 아이디를 입력하면 이곳으로 오게 됨.
-                        client.setInfo("loginID", message);
-
-                        try {
-                            client.sendToClient("Enter password:");
-                        } catch (IOException e) {
-                            try {
-                                client.close();
-                            } catch (IOException ex) { }
-                        }
-                    //로그인 아이디가 있는 경우이며 계정 생성 중이 아닌 경우
-                    } else {
-                        if ((isValidPwd((String)(client.getInfo("loginID")), message, true)) //이미 패스워드 파일에 저장되어 있는 로그인아이디와 패스워드인지 확인
-                        && (!isLoginBeingUsed((String)(client.getInfo("loginID")), true))) {//현재 로그인 중인 아이디인지(CheckForDup을 이용해 존재 여부가 아닌 중복 여부를 판단)
-                                client.setInfo("passwordVerified", new Boolean(true));  //패스워드 검증 및 메인 채널 설정, 관련 메시지 전송
-                                client.setInfo("channel", "main");
-                                serverUI.display(client.getInfo("loginID") + " has logged on.");
-                                sendToAllClients(client.getInfo("loginID") + " has logged on.");
-                        } else {    //현재 로그인중이거나 타당한 계정 정보가 아니었을 경우
-                            try {   //현재 로그인 중
-                                if (isLoginBeingUsed((String)(client.getInfo("loginID")), true)) {
-                                    client.setInfo("loginID", "");
-                                    client.sendToClient("Login ID is already logged on.\nEnter LoginID:");
-                                } else {    //계정 정보 없음
-                                    client.setInfo("loginID", "");
-                                    client.sendToClient("\nIncorrect login or password\nEnter LoginID:");
-                                }
-                            } catch (IOException e) {
-                                try {
-                                    client.close();
-                                } catch (IOException ex) { }
-                            }
-                        }
-                    }
+                    } catch (IOException ex) { }
                 }
             }
+        //로그인 아이디가 없거나 계정 생성을 하지 않는 경우
+            return;
+        }
+        //아직 로그인 아이디가 없고 일반 로그인 과정에서 로그인아이디를 입력하고 계정 생성 중이 아닌 경우로, 입력된 메시지로 로그인 아이디를 설정 후 해당 클라이언트에게 패스워드를 입력하게 함.
+        if (client.getInfo("loginID").equals("")) { //클라이언트와 서버가 연결될 때 로그인 아이디를 입력하면 이곳으로 오게 됨.
+            client.setInfo("loginID", message);
+
+            try {
+                client.sendToClient("Enter password:");
+            } catch (IOException e) {
+                try {
+                    client.close();
+                } catch (IOException ex) { }
+            }
+        //로그인 아이디가 있는 경우이며 계정 생성 중이 아닌 경우
+            return;
         } 
+        if ((isValidPwd((String)(client.getInfo("loginID")), message, true)) //이미 패스워드 파일에 저장되어 있는 로그인아이디와 패스워드인지 확인
+        && (!isLoginBeingUsed((String)(client.getInfo("loginID")), true))) {//현재 로그인 중인 아이디인지(CheckForDup을 이용해 존재 여부가 아닌 중복 여부를 판단)
+            client.setInfo("passwordVerified", new Boolean(true));  //패스워드 검증 및 메인 채널 설정, 관련 메시지 전송
+            client.setInfo("channel", "main");
+            serverUI.display(client.getInfo("loginID") + " has logged on.");
+            sendToAllClients(client.getInfo("loginID") + " has logged on.");
+            return;
+        } //현재 로그인중이거나 타당한 계정 정보가 아니었을 경우
+        try {   //현재 로그인 중
+            if (isLoginBeingUsed((String)(client.getInfo("loginID")), true)) {
+                client.setInfo("loginID", "");
+                client.sendToClient("Login ID is already logged on.\nEnter LoginID:");
+                return;
+            }    //계정 정보 없음
+            client.setInfo("loginID", "");
+            client.sendToClient("\nIncorrect login or password\nEnter LoginID:");
+        } catch (IOException e) {
+            try {
+                client.close();
+            } catch (IOException ex) { }
+        }
     }
 
     private void addClientToRegistry(String clientLoginID, String clientPassword) { //패스워드 파일에 계정 정보를 등록하는 메소드
@@ -868,19 +865,18 @@ public class EchoServer extends AbstractServer {
                     if (character == -1) {
                         eof = true;
                         break;
-                    } else {
-                        if (character == LINEBREAK) {   //이후 줄바꿈 필요.
-                            eoln = true;
+                    }
+                    if (character == LINEBREAK) {   //이후 줄바꿈 필요.
+                        eoln = true;
 
-                            if ((str.substring(0, str.indexOf(" ")).equals(loginID)) 
-                             && ((str.substring(str.indexOf(" ") + 1).equals(password)) || (!verifyPassword))){ //패스워드 검증 여부가 필요한지에 따라 왼쪽 혹은 오른쪽 조건문이 사용됨.
-                                return true;
-                            }
-                        } else {
-                            if (character != RETURN) {
-                                str = str + (char)character;
-                            }
+                        if ((str.substring(0, str.indexOf(" ")).equals(loginID)) 
+                            && ((str.substring(str.indexOf(" ") + 1).equals(password)) || (!verifyPassword))){ //패스워드 검증 여부가 필요한지에 따라 왼쪽 혹은 오른쪽 조건문이 사용됨.
+                            return true;
                         }
+                        continue;
+                    }
+                    if (character != RETURN) {
+                        str = str + (char)character;
                     }
                 }
             }
@@ -920,9 +916,10 @@ public class EchoServer extends AbstractServer {
                 try {
                     if (!(c.getInfo("fwdClient").equals(""))) { //해당 클라이언트가 전달지가 있다면 해당 메소드를 사용해 최종 전달지를 찾아 전달 메시지를 전송함
                         getFwdClient(c, login).sendToClient("Forwarded> " + message);
-                    } else {    //아니라면 해당 클라이언트에게 메시지 전송
-                        c.sendToClient(message);
+                        continue;
                     }
+                    //아니라면 해당 클라이언트에게 메시지 전송
+                    c.sendToClient(message);
                 } catch (IOException e) {
                     serverUI.display("Warning: Error sending message.");
                 }
@@ -940,7 +937,7 @@ public class EchoServer extends AbstractServer {
             for (int i = 0; i < clients.length; i++) {
                 ConnectionToClient tempc = (ConnectionToClient)(clients[i]);
             
-                if (tempc.getInfo("loginID").equals(c.getInfo("fwdClient"))) {  //그 전달지를 찾아 
+                if (tempc.getInfo("loginID").equals(c.getInfo("fwdClient"))) {  //그 전달지를 찾아냄(전달지는 하나이므로 이후 불필요)
                     if (!(((Vector)(tempc.getInfo("blockedUsers"))).contains(sender))) {    //전송자를 블록하지 않았다면
                         Iterator pastIterator = pastRecipients.iterator();
 
@@ -957,22 +954,22 @@ public class EchoServer extends AbstractServer {
                                 return c;
                             }
                         }
-
                         if (!tempc.getInfo("fwdClient").equals("")) {   //전달지도 또다른 전달지를 가지고 있을 경우
                             c = tempc;  //전달지를 검사할 클라이언트로 두고
                             pastRecipients.addElement(((String)(c.getInfo("loginID"))));    //그 전달지를 이전 도착지 벡터에 넣음.(이후 전체 반복문 반복)
-                        } else {    //전달지의 전달지가 없는 경우
-                            return tempc;   //현재 클라이언트의 전송지 리턴
+                            break;
                         }
-                    } else {    //전송자를 블록했을 경우 전송자에게 관련 메시지를 전송
-                        try {
-                            c.sendToClient("Cannot forward message.  Original sender is blocked by "
-                            + ((String)(c.getInfo("fwdClient"))));
-                        } catch (IOException e) {
-                            serverUI.display("Warning: Error sending message.");
-                        }
-                        return c;   //현재 클라이언트 리턴
+                        //전달지의 전달지가 없는 경우
+                        return tempc;   //현재 클라이언트의 전송지 리턴
                     }
+                    //전송자를 블록했을 경우 전송자에게 관련 메시지를 전송
+                    try {
+                        c.sendToClient("Cannot forward message.  Original sender is blocked by "
+                        + ((String)(c.getInfo("fwdClient"))));
+                    } catch (IOException e) {
+                        serverUI.display("Warning: Error sending message.");
+                    }
+                    return c;   //현재 클라이언트 리턴
                 }
             }
         }
@@ -993,7 +990,7 @@ public class EchoServer extends AbstractServer {
         if (isListening() || getNumberOfClients() != 0) {   //리스닝 중이거나 연결된 클라이언트가 있을 경우
             sendToClientOrServer(c, "SERVER --- on channel: "   //서버 혹은 해당 메소드를 요청한 클라이언트에게 서버의 채널 위치 정보를 보냄.
                 + (serverChannel == null ? "main" : serverChannel));
-        } else {    //현재 연결된 클라이언트가 없다면 채널이 활성화되어 있지 않다고 간주함.
+        } else {    //리스닝 중이 아니거나 현재 연결된 클라이언트가 없다면 채널이 활성화되어 있지 않다고 간주함.
             serverUI.display("SERVER --- no active channels");
         }
 
@@ -1011,14 +1008,12 @@ public class EchoServer extends AbstractServer {
             if (userToBlock.toLowerCase().equals("server")) {   //자신 블록 금지
                 serverUI.display("Cannot block the sending of messages to yourself.");
                 return;
-            } else {    //존재하는 계정이라면 블록 목록에 요소로 넣음
-                if (isLoginUsed(userToBlock)) {
-                    blockedUsers.addElement(userToBlock);
-                } else {    //존재하지 않는 계정이라고 서버에게 알림.
-                    serverUI.display("User " + userToBlock + " does not exist.");
-                    return;
-                }
             }
+            if (!isLoginUsed(userToBlock)) {//존재하지 않는 계정이라고 서버에게 알림.
+                serverUI.display("User " + userToBlock + " does not exist.");
+                return;
+            }
+            blockedUsers.addElement(userToBlock);//존재하는 계정이라면 블록 목록에 요소로 넣음
             serverUI.display("Messages from " + userToBlock + " will be blocked."); //누구를 블록했는지 확인 메시지를 보냄.
         } catch (StringIndexOutOfBoundsException e) {
             serverUI.display("ERROR - usage #block <loginID>");
