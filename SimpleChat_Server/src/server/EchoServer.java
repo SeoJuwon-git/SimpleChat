@@ -19,7 +19,7 @@ public class EchoServer extends AbstractServer {
 
     String serverChannel = null;    //채널 기능이 추가됨에 따른 변수
 
-    Vector blockedUsers = new Vector(); //블록한 유저들
+    Vector blockedUsers = new Vector(); //서버가 블록한 유저들
 
     private boolean closing = false;    //서버의 연결이 닫히고 있는 중인지에 대한 변수로 false, true의 변화는 있으나 아직 조건문에 사용되지는 않음
 
@@ -417,7 +417,7 @@ public class EchoServer extends AbstractServer {
             }
         }
 
-        if (!removedUser) { //if (blocked.size() == 0)로 아예 없었을 경우는 블록이 없다고 알리고 끝나게 되므로 이곳에선 특정 유저를 해제하는 unblock의 경우만 해당될 것.
+        if (!removedUser) { //특정 유저를 해제하는 unblock의 경우만 해당될 것.
             sendToClientOrServer(client, "Message from " + userToUnblock + " were not blocked.");
         }
     }
@@ -774,7 +774,7 @@ public class EchoServer extends AbstractServer {
                 //로그인 아이디가 없거나 계정 생성을 하지 않는 경우
                 } else {
                     //아직 로그인 아이디가 없고 일반 로그인 과정에서 로그인아이디를 입력하고 계정 생성 중이 아닌 경우로, 입력된 메시지로 로그인 아이디를 설정 후 해당 클라이언트에게 패스워드를 입력하게 함.
-                    if (client.getInfo("loginID").equals("")) {
+                    if (client.getInfo("loginID").equals("")) { //클라이언트와 서버가 연결될 때 로그인 아이디를 입력하면 이곳으로 오게 됨.
                         client.setInfo("loginID", message);
 
                         try {
@@ -840,7 +840,7 @@ public class EchoServer extends AbstractServer {
             for (int i = 0; i < clientPassword.length(); i++)   //클라이언트의 패스워드를 새로운 파일에 씀.
                 outputFile.write(clientPassword.charAt(i));
 
-            outputFile.write(RETURN);   //줄 제일 첫칸으로 이동 입력
+            outputFile.write(RETURN);   //줄 제일 첫 칸으로 이동 입력
             outputFile.write(LINEBREAK);    //줄바꿈 입력
             outputFile.close();
         } catch (IOException e) {   //패스워드 파일이 없을 시 예외 발생. 따라서 미리 만들어둘 필요가 있었음.
@@ -960,9 +960,9 @@ public class EchoServer extends AbstractServer {
 
                         if (!tempc.getInfo("fwdClient").equals("")) {   //전달지도 또다른 전달지를 가지고 있을 경우
                             c = tempc;  //전달지를 검사할 클라이언트로 두고
-                            pastRecipients.addElement(((String)(c.getInfo("loginID"))));    //그 전달지를 이전 도착지 벡터에 넣음.
-                        } else {
-                            return tempc;
+                            pastRecipients.addElement(((String)(c.getInfo("loginID"))));    //그 전달지를 이전 도착지 벡터에 넣음.(이후 전체 반복문 반복)
+                        } else {    //전달지의 전달지가 없는 경우
+                            return tempc;   //현재 클라이언트의 전송지 리턴
                         }
                     } else {    //전송자를 블록했을 경우 전송자에게 관련 메시지를 전송
                         try {
@@ -971,7 +971,7 @@ public class EchoServer extends AbstractServer {
                         } catch (IOException e) {
                             serverUI.display("Warning: Error sending message.");
                         }
-                        return c;
+                        return c;   //현재 클라이언트 리턴
                     }
                 }
             }
