@@ -58,39 +58,42 @@ public class ChatClient extends AbstractClient {
         }
 
         if (message.startsWith("#sethost")) {   //호스트 변경 명령어인 경우
-            if (isConnected())  //연결이 있는 경우 호스트가 변경되지 않도록(요구사항)
+            if (isConnected())  {  //연결이 있는 경우 호스트가 변경되지 않도록(요구사항)
                 clientUI.display("Cannot change host while connected.");
-            else {  //연결이 없는 경우
-                try {
-                    setHost(message.substring(9));  //#sethost <host>에서 <host>부터인 메시지의 9번째 문자부터를
-                    clientUI.display("Host set to: " + getHost());  //변경된 호스트 자신에게 표시
-                } catch(IndexOutOfBoundsException e) {  //변경할 호스트를 쓰지 않은 경우임(띄어쓰기 후 아무것도 입력이 없어도 변경되는 문제점->ip형식을 지키도록?)
-                    clientUI.display("Invalid host.  Use #sethost <host>.");
-                }
-            }
+                return;
+            }  
+            //연결이 없는 경우
+            try {
+                setHost(message.substring(9));  //#sethost <host>에서 <host>부터인 메시지의 9번째 문자부터를
+                clientUI.display("Host set to: " + getHost());  //변경된 호스트 자신에게 표시
+            } catch(IndexOutOfBoundsException e) {  //변경할 호스트를 쓰지 않은 경우임(띄어쓰기 후 아무것도 입력이 없어도 변경되는 문제점->ip형식을 지키도록?)
+                clientUI.display("Invalid host.  Use #sethost <host>.");
+            } 
             return;
         }
 
         if (message.startsWith("#setport")) {   //포트 번호 변경 명령어인 경우
-            if (isConnected())  //똑같이 연결이 있을 경우 변경되지 않도록(요구사항)
+            if (isConnected()) { //똑같이 연결이 있을 경우 변경되지 않도록(요구사항)
                 clientUI.display("Cannot change port while connected.");
-            else {
-                try {
-                    int port = 0;
-                    port = Integer.parseInt(message.substring(9));
-
-                    if((port < 1024) || (port > 65535)) {   //포트 번호의 범위 안인지, well-known 포트가 아닌지 확인해 부적합하면 메시지만 표시
-                        clientUI.display("Invalid port number.  Port unchanged");
-                    } else {    //정상적인 포트 번호라면 변경 및 자신에게 표시
-                        setPort(port);
-                        clientUI.display("Port set to " + port);
-                    }
-                } catch(Exception e) {  //호스트 변경과 달리 아무 입력도 없을 경우도 걸러져 에러 처리가 됨.
-                    clientUI.display("Invalid port.  Use #setport <port>.");
-                    clientUI.display("Port unchanged.");
-                }
+                return;
             }
-            return;
+            
+            try {
+                int port = 0;
+                port = Integer.parseInt(message.substring(9));
+
+                if((port < 1024) || (port > 65535)) {   //포트 번호의 범위 안인지, well-known 포트가 아닌지 확인해 부적합하면 메시지만 표시
+                    clientUI.display("Invalid port number.  Port unchanged");
+                    return;
+                }
+                //정상적인 포트 번호라면 변경 및 자신에게 표시
+                setPort(port);
+                clientUI.display("Port set to " + port);
+                return;
+            } catch(Exception e) {  //호스트 변경과 달리 아무 입력도 없을 경우도 걸러져 에러 처리가 됨.
+                clientUI.display("Invalid port.  Use #setport <port>.");
+                clientUI.display("Port unchanged.");
+            }
         }
 
         if (message.startsWith("#help") || message.startsWith("#?")) {
@@ -144,10 +147,12 @@ public class ChatClient extends AbstractClient {
                     clientUI.display("Cannot logoff normally.  Terminating client.");
                     quit();
                 }
+            return;
             }
-        } else {    //잘못된 # 명령어의 메시지들.
-            clientUI.display("Invalid command.");
         }
+        //잘못된 # 명령어의 메시지들.
+        clientUI.display("Invalid command.");
+        return;
     }
 
     public void quit() {    //종료 과정(연결 끊기->시스템 종료)
@@ -158,10 +163,12 @@ public class ChatClient extends AbstractClient {
     }
 
     protected void connectionClosed(boolean isAbnormal) {   //연결을 끊는 경우 그것이 정상인지 비정상 해제인지를 클라이언트에게 메시지로 표시하는 메소드
-        if (isAbnormal)
+        if (isAbnormal)  {
             clientUI.display("Abnormal termination of connection.");
-        else
-            clientUI.display("Connection closed.");
+            return;
+        }
+        clientUI.display("Connection closed.");
+        return;
     }
 
     protected void connectionEstablished() {    //openConnection()이 정상적으로 이루어졌을 때 클라이언트에게 표시할 수 있는 메시지로 사용되는 ocsf 메소드 구현
