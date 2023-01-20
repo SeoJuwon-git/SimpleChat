@@ -463,6 +463,7 @@ public class EchoServer extends AbstractServer {
                 } catch (IOException ex) {
                     serverUI.display("Warning: Error sending message.");
                 }
+                return;
             }
             //사용되지 않는 로그인 아이디의 경우
             try {   //해당 클라이언트가 존재하지 않음을 알리고 메소드 종료
