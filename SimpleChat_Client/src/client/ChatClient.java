@@ -149,10 +149,10 @@ public class ChatClient extends AbstractClient {
                 }
             return;
             }
+            return;
         }
         //잘못된 # 명령어의 메시지들.
         clientUI.display("Invalid command.");
-        return;
     }
 
     public void quit() {    //종료 과정(연결 끊기->시스템 종료)
