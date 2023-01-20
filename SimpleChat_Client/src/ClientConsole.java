@@ -1,6 +1,8 @@
 import java.io.*;
+import ocsf.client.*;
 import client.*;
 import common.*;
+import javafx.collections.ObservableArray;
 
 public class ClientConsole implements ChatIF{
 
@@ -9,23 +11,20 @@ public class ClientConsole implements ChatIF{
     ChatClient client;
 
     public ClientConsole(String host, int port) { //생성자에서 클라이언트 객체 생성 및 호스트, 포트, 자신의 문맥을 넘겨줌
-        client = new ChatClient(host, port, this);
+        ObservableClient oc = new ObservableClient(host, port);
+        client = new ChatClient(oc, this);
     }
 
     public void accept() {  //채팅 입력 대기 함수
         try {
             BufferedReader fromConsole = new BufferedReader(new InputStreamReader(System.in));
-        
-                String message;
-
-                try {
-                    while (true) {      //채팅중. 무한 반복
-                        message = fromConsole.readLine();
-                        client.handleMessageFromClientUI(message);
-                    }
-                } catch (NullPointerException e) { 
-
+            String message;
+            try {
+                while (true) {      //채팅중. 무한 반복
+                    message = fromConsole.readLine();
+                    client.handleMessageFromClientUI(message);
                 }
+            } catch (NullPointerException e) {}
         } catch (Exception ex) {
             System.out.println("Unexpected error while reading from console!");
         }
