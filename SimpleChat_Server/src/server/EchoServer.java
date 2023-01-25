@@ -400,8 +400,6 @@ public class EchoServer extends AbstractServer {
     }
 
     private void handleCmdBlock(String command, ConnectionToClient client) {    //블록을 하는 경우의 메소드
-        Vector addBlock = null;
-
         try {
             String userToBlock = command.substring(7);  //이슈1에 의하면 여러 유저를 한번에 블록하는 부분이 구현되어야 하는 것으로 생각했으나 그런 부분이 없는 것 같음.
 
@@ -726,9 +724,8 @@ public class EchoServer extends AbstractServer {
                     client.close();
                 }catch (IOException ex) { }
             }
-        //로그인 아이디가 있거나 계정 생성을 하지 않는 경우
             return;
-        }
+        }//로그인 아이디가 있거나 계정 생성을 하지 않는 경우
         //로그인 아이디가 설정되었고 계정 생성을 하는 중인 경우(guest 입력(creatingNewAccount 설정) 및 아이디 입력, 패스워드를 입력(아이디 설정)하는 단계를 거쳐서 오게 됨.)
         if ((!client.getInfo("loginID").equals("")) && (((Boolean)(client.getInfo("creatingNewAccount"))).booleanValue())) {
             //로그인에 사용된 적이 없는 아이디일 경우
