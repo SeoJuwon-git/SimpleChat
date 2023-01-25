@@ -795,7 +795,6 @@ public class EchoServer extends AbstractServer {
             while((str=inputFile.readLine()) != null) {
                 fileText += str;
                 fileText += "\n";
-                System.out.println(fileText);
             }
             inputFile.close();
             return fileText;
@@ -815,7 +814,7 @@ public class EchoServer extends AbstractServer {
     }
     private void outputFile(String originalText, String filePath, String newText) {
         try {
-            BufferedWriter outputFile = new BufferedWriter(new FileWriter(PASSWORDFILE));
+            BufferedWriter outputFile = new BufferedWriter(new FileWriter(filePath));
             outputFile.write(originalText);
             outputFile.write(newText);
             outputFile.close();
