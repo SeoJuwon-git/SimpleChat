@@ -10,7 +10,7 @@ public class EchoServer implements Observer {
 
     final public static int DEFAULT_PORT = 5555;
 
-    static final String PASSWORDFILE = "passwords.txt";   //나중에 경로 수정 필요할듯
+    static final String PASSWORDFILE = "./passwords.txt";   //나중에 경로 수정 필요할듯
 
     static final int LINEBREAK = 10;
     static final int RETURN = 13;

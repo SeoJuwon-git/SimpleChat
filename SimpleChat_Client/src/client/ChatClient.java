@@ -14,7 +14,7 @@ public class ChatClient implements Observer {
     public ChatClient(ObservableClient client, ChatIF clientUI) {
         this.client = client;
         this.clientUI = clientUI;
-
+        client.addObserver(this);
         try {
             client.openConnection();   
         } catch (IOException e) {
@@ -24,9 +24,9 @@ public class ChatClient implements Observer {
     }
 
     public void update(Observable obs, Object msg) {
-        if (!(msg instanceof String)) 
+        if (!(msg instanceof String)) {
             return;
-        
+        }
             String message = (String)msg;
 
             if (message.startsWith(ObservableClient.CONNECTION_CLOSED))

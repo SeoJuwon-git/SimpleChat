@@ -44,7 +44,7 @@ public class ServerConsole implements ChatIF {
 
         try {
             ObservableOriginatorServer ooserver = new ObservableOriginatorServer(port);
-            ServerConsole sv = new ServerConsole(port); //서버 콘솔 객체 생성 및 입력 대기
+            ServerConsole sv = new ServerConsole(ooserver); //서버 콘솔 객체 생성 및 입력 대기
             sv.accept();
         } catch (IOException e) {
             System.out.println("Could not start listening for clients.");

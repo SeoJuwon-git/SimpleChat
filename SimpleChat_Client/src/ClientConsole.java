@@ -2,7 +2,6 @@ import java.io.*;
 import ocsf.client.*;
 import client.*;
 import common.*;
-import javafx.collections.ObservableArray;
 
 public class ClientConsole implements ChatIF{
 
