@@ -102,9 +102,7 @@ public class EchoServer extends AbstractServer {
                 checkForBlocks((String)(client.getInfo("loginID")), client);
 
             if (!command.startsWith("#")) { //일반 메시지에 대해서 채널 메시지 메소드 호출
-                sendChannelMessage(client.getInfo("loginID") + "> " + command, 
-                    (String)client.getInfo("channel"), 
-                    (String)(client.getInfo("loginID")));
+                sendChannelMessage(client.getInfo("loginID") + "> " + command, (String)client.getInfo("channel"), (String)(client.getInfo("loginID")));
             }
             return;
         }
@@ -172,7 +170,7 @@ public class EchoServer extends AbstractServer {
                 port = Integer.parseInt(message.substring(9));  //"#setport " 이후의 문자열
 
                 if ((port < 1024) || (port > 65535)) {   //well-known이거나 정상 포트 범위가 아닌 경우 
-                    setPort(DEFAULT_PORT);  //(DEFAULT_PORT가 아니라?) 일단 잘못된 포트 번호를 입력하더라도 기본 포트로 설정하는 것이 이전 코드와 달라진 점.
+                    setPort(DEFAULT_PORT);  //일단 잘못된 포트 번호를 입력하더라도 기본 포트로 설정하는 것이 이전 코드와 달라진 점.
                     serverUI.display("Invalid port number.  Port unchanged.");
                     return;
                 }
@@ -202,28 +200,12 @@ public class EchoServer extends AbstractServer {
         }
 
         if (message.startsWith("#channel")) {   //서버의 채널을 바꾸는 명령어인 경우
-            String oldChannel = serverChannel;
-
-            if (!(oldChannel == null)) {    //서버가(login="") 메인 채널에서 이동하는 게 아닌 경우 채널에 이 채널을 떠난다는 메시지를 보냄
-                sendChannelMessage("The server has left this channel.", serverChannel, "");
-            }
-
-            try {
-                serverChannel = message.substring(9);
-            } catch (StringIndexOutOfBoundsException e) {
-                serverChannel = null;   //해당 입력 예외가 발생했을 경우 메인 서버로
-                serverUI.display("Server will now receive all messages.");
-            }
-
-            if (serverChannel != null) {    //메인 메시지로 가는게 아니라면 해당 채널에 접속해있는 유저들에게 해당 메시지를 보냄(저 메소드 상에서 당사자는 해당 메시지를 받지 않음)
-                sendChannelMessage("The server has joined this channel.", serverChannel, "");
-            }
-
-            serverUI.display("Now on channel: " + serverChannel);   //변경된 채널명 표시
+            handleServerCmdServer(message);
             return;
         }
 
         if (message.startsWith("#nochannel")) { //서버의 채널을 메인 채널로 바꾸는 명령어인 경우
+            handleServerCmdServer(message);
             if (serverChannel != null) {
                 sendChannelMessage("The server has left this channel.", serverChannel, "");
             }
@@ -758,20 +740,20 @@ public class EchoServer extends AbstractServer {
                 addClientToRegistry((String)(client.getInfo("loginID")), message);
                 serverUI.display(client.getInfo("loginID") + " has logged on.");
                 sendToAllClients(client.getInfo("loginID") + " has logged on.");
+                return;
             //로그인에 사용된 적이 있는 아이디였을 경우
-            } else {    //이전에 했던 로그인아이디와 새 계정 생성을 초기화하고 로그인 입력 단계로 돌아감.
-                client.setInfo("loginID", "");
-                client.setInfo("creatingNewAccount", new Boolean(false));
+            } 
+            //이전에 했던 로그인아이디와 새 계정 생성을 초기화하고 로그인 입력 단계로 돌아감.
+            client.setInfo("loginID", "");
+            client.setInfo("creatingNewAccount", new Boolean(false));
 
-                try{
-                    client.sendToClient("login already in use.  Enter login ID:");
-                } catch (IOException e) {
-                    try {
-                        client.close();
-                    } catch (IOException ex) { }
-                }
+            try{
+                client.sendToClient("login already in use.  Enter login ID:");
+            } catch (IOException e) {
+                try {
+                    client.close();
+                } catch (IOException ex) { }
             }
-        //로그인 아이디가 없거나 계정 생성을 하지 않는 경우
             return;
         }
         //아직 로그인 아이디가 없고 일반 로그인 과정에서 로그인아이디를 입력하고 계정 생성 중이 아닌 경우로, 입력된 메시지로 로그인 아이디를 설정 후 해당 클라이언트에게 패스워드를 입력하게 함.
@@ -785,7 +767,6 @@ public class EchoServer extends AbstractServer {
                     client.close();
                 } catch (IOException ex) { }
             }
-        //로그인 아이디가 있는 경우이며 계정 생성 중이 아닌 경우
             return;
         } 
         if ((isValidPwd((String)(client.getInfo("loginID")), message, true)) //이미 패스워드 파일에 저장되어 있는 로그인아이디와 패스워드인지 확인
@@ -810,40 +791,48 @@ public class EchoServer extends AbstractServer {
             } catch (IOException ex) { }
         }
     }
-
-    private void addClientToRegistry(String clientLoginID, String clientPassword) { //패스워드 파일에 계정 정보를 등록하는 메소드
+    private String inputFile(String filePath) {
         try {
-            FileInputStream inputFile = new FileInputStream(PASSWORDFILE);
-            byte buff[] = new byte[inputFile.available()];  //현재 읽기 가능한 바이트 수
-
-            for (int i = 0; i < buff.length; i++) { //한 바이트씩 읽어들여 buff 배열에 저장.
-                int character = inputFile.read();
-                buff[i] = (byte)character;
+            BufferedReader inputFile = new BufferedReader(new FileReader(filePath));
+            String fileText = "";
+            String str = "";
+            while((str=inputFile.readLine()) != null) {
+                fileText += str;
+                fileText += "\n";
+                System.out.println(fileText);
             }
             inputFile.close();
-
-            File fileToBeDeleted = new File(PASSWORDFILE);
+            return fileText;
+        }
+        catch (IOException e){
+            serverUI.display("ERROR - Password File Not Found");
+        }
+        return null;
+    }
+    private void deleteFile(String filePath) {
+        try {
+            File fileToBeDeleted = new File(filePath);
             fileToBeDeleted.delete();  //기존의 파일을 삭제함
-
-            FileOutputStream outputFile = new FileOutputStream(PASSWORDFILE);
-
-            for (int i = 0; i< buff.length; i++)    //새로운 파일에 기존 내용을 씀.
-                outputFile.write(buff[i]);
-
-            for (int i = 0; i < clientLoginID.length(); i++)    //클라이언트의 로그인 아이디를 새로운 파일에 씀.
-                outputFile.write(clientLoginID.charAt(i));
-            
-            outputFile.write(SPACE);    //공백 문자
-
-            for (int i = 0; i < clientPassword.length(); i++)   //클라이언트의 패스워드를 새로운 파일에 씀.
-                outputFile.write(clientPassword.charAt(i));
-
-            outputFile.write(RETURN);   //줄 제일 첫 칸으로 이동 입력
-            outputFile.write(LINEBREAK);    //줄바꿈 입력
+        } catch (Exception e) {
+            serverUI.display("ERROR - Password File Not Found");
+        }
+    }
+    private void outputFile(String originalText, String filePath, String newText) {
+        try {
+            BufferedWriter outputFile = new BufferedWriter(new FileWriter(PASSWORDFILE));
+            outputFile.write(originalText);
+            outputFile.write(newText);
             outputFile.close();
         } catch (IOException e) {   //패스워드 파일이 없을 시 예외 발생. 따라서 미리 만들어둘 필요가 있었음.
             serverUI.display("ERROR - Password File Not Found");
         }
+    }
+    private void addClientToRegistry(String clientLoginID, String clientPassword) { //패스워드 파일에 계정 정보를 등록하는 메소드
+            String originalText = inputFile(PASSWORDFILE);
+            deleteFile(PASSWORDFILE);
+            String newText = clientLoginID+(char)SPACE+clientPassword+(char)RETURN+(char)LINEBREAK;
+            outputFile(originalText, PASSWORDFILE, newText);
+            return;
     }
 
     private boolean isLoginUsed(String loginID) {   //이미 사용되고 있는 계정 정보인지를 판별하기 위한 메소드로 패스워드 파일을 사용하는 isValidPwd를 로그인 아이디만 검증하여 사용.
@@ -851,40 +840,18 @@ public class EchoServer extends AbstractServer {
     }
 
     private boolean isValidPwd(String loginID, String password, boolean verifyPassword) {   //패스워드 파일에 해당 계정 정보가 있는지에 대한 메소드
-        try {
-            FileInputStream inputFile = new FileInputStream(PASSWORDFILE);
-            boolean eoln = false;   //한줄이 끝났는지
-            boolean eof = false;    //파일이 끝났는지
-
-            while (!eof) {  //한 글짜씩 읽어 저장해 나가며 줄바꿈이 일어났을 경우 공백문자를 기준으로 로그인 아이디와 패스워드를 가져와 일치하는지를 확인함.
-                eoln = false;
-                String str = "";
-
-                while (!eoln) {
-                    int character = inputFile.read();  
-
-                    if (character == -1) {
-                        eof = true;
-                        break;
-                    }
-                    if (character == LINEBREAK) {   //이후 줄바꿈 필요.
-                        eoln = true;
-
-                        if ((str.substring(0, str.indexOf(" ")).equals(loginID)) 
-                            && ((str.substring(str.indexOf(" ") + 1).equals(password)) || (!verifyPassword))){ //패스워드 검증 여부가 필요한지에 따라 왼쪽 혹은 오른쪽 조건문이 사용됨.
-                            return true;
-                        }
-                        continue;
-                    }
-                    if (character != RETURN) {
-                        str = str + (char)character;
-                    }
+        try (BufferedReader inputFile = new BufferedReader(new FileReader(PASSWORDFILE));) {
+            String str = "";
+            while((str=inputFile.readLine()) != null) {
+                if ((str.substring(0, str.indexOf(" ")).equals(loginID)) 
+                 && ((str.substring(str.indexOf(" ") + 1).equals(password)) || (!verifyPassword))){ //패스워드 검증 여부가 필요한지에 따라 왼쪽 혹은 오른쪽 조건문이 사용됨.
+                    return true;
                 }
             }
             inputFile.close();
         } catch (IOException e) {
             serverUI.display("ERROR - Password File Not Found");
-        }
+        } 
         return false;
     }
 
@@ -1064,6 +1031,28 @@ public class EchoServer extends AbstractServer {
         } catch (StringIndexOutOfBoundsException ex) {
             serverUI.display("Invalid use of the #warn command");
         }
+    }
+
+    private void handleServerCmdServer(String message) {
+        String oldChannel = serverChannel;
+
+        if (!(oldChannel == null)) {    //서버가(login="") 메인 채널에서 이동하는 게 아닌 경우 채널에 이 채널을 떠난다는 메시지를 보냄
+            sendChannelMessage("The server has left this channel.", serverChannel, "");
+        }
+
+        try {
+            serverChannel = message.substring(9);
+        } catch (StringIndexOutOfBoundsException e) {
+            serverChannel = null;   //해당 입력 예외가 발생했을 경우 메인 서버로
+            serverUI.display("Server will now receive all messages.");
+        }
+
+        if (serverChannel != null) {    //메인 메시지로 가는게 아니라면 해당 채널에 접속해있는 유저들에게 해당 메시지를 보냄(저 메소드 상에서 당사자는 해당 메시지를 받지 않음)
+            sendChannelMessage("The server has joined this channel.", serverChannel, "");
+        }
+
+        serverUI.display("Now on channel: " + serverChannel);   //변경된 채널명 표시
+        return;
     }
 
     private void sendToClientOrServer(ConnectionToClient client, String message) {  //매개변수 client에 따라 서버로 보내거나 해당 클라이언트로 보내는 메소드
