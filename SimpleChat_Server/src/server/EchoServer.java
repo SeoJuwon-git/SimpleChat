@@ -200,12 +200,11 @@ public class EchoServer extends AbstractServer {
         }
 
         if (message.startsWith("#channel")) {   //서버의 채널을 바꾸는 명령어인 경우
-            handleServerCmdServer(message);
+            handleServerCmdChannel(message);
             return;
         }
 
         if (message.startsWith("#nochannel")) { //서버의 채널을 메인 채널로 바꾸는 명령어인 경우
-            handleServerCmdServer(message);
             if (serverChannel != null) {
                 sendChannelMessage("The server has left this channel.", serverChannel, "");
             }
@@ -1033,7 +1032,7 @@ public class EchoServer extends AbstractServer {
         }
     }
 
-    private void handleServerCmdServer(String message) {
+    private void handleServerCmdChannel(String message) {
         String oldChannel = serverChannel;
 
         if (!(oldChannel == null)) {    //서버가(login="") 메인 채널에서 이동하는 게 아닌 경우 채널에 이 채널을 떠난다는 메시지를 보냄
