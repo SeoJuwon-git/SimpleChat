@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+  <Properties>
+    <Property name="layoutPattern">%d{HH:mm:ss.SSS} %l [%t] %-5level %logger{36} - %msg%n</Property>
+  </Properties>
+  <Appenders>
+  <!--표준 시스템 출력을 대상으로 console을 이름으로 사용함.-->
+  <!--위에서 프로버티 만든 걸 패턴으로 사용함-->
+  <!--
+    <Console name="Console" target="SYSTEM_OUT">  
+      <PatternLayout pattern="${layoutPattern}" /> 
+    </Console>
+  -->
+    
+    <File name="File" fileName="./log/log4j2.log" append="true"> <!--append는 덮어쓰기가 아니라 뒤에 추가-->>
+      <PatternLayout>
+        <Pattern>${layoutPattern}</Pattern>
+      </PatternLayout>
+    </File>
+  </Appenders>
+  <Loggers>
+    <!--주변 부모 로거로의 전달.-->
+    <!--위에 정의한 콘솔 어펜더에 로그 추가하는 2번째 로거-->
+    <!--
+    <Logger name="ServerConsole" level="debug" additivity="true"> 
+      <AppenderRef ref="Console"/> 
+    </Logger>
+    -->
+    <!-- 기본 레벨은 debug -->
+    <!--파일 어펜더에 로그 추가하는 루트 로거-->
+    <Root level="debug">
+      <AppenderRef ref="File"/> 
+    </Root>
+  </Loggers>
+</Configuration>
