@@ -16,7 +16,7 @@ public class ServerConsole implements ChatIF {
 
     public ServerConsole(int port) throws IOException { //서버도 콘솔 입력이 가능해지도록 함에 따라 에코서버와 콘솔 사이의 문맥이 교환되고 콘솔 생성자에서 서버 객체가 같이 생성되도록 됨.
         server = new EchoServer(port, this);
-        log.debug("ServerConser's Cunstructor initializes.");
+        log.debug("ServerConsole\'s Cunstructor initializes.");
     }
 
     public void display(String message) {

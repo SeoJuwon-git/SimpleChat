@@ -1,0 +1,110 @@
+15:41:07.205 ServerConsole.main(ServerConsole.java:43) [main] INFO  ServerConsole - ServerConsole Program start.
+15:41:07.210 ServerConsole.main(ServerConsole.java:50) [main] INFO  ServerConsole - args[0] does not exist: 5555
+java.lang.ArrayIndexOutOfBoundsException: 0
+	at ServerConsole.main(ServerConsole.java:46) [bin/:?]
+15:41:07.221 server.EchoServer.<init>(EchoServer.java:34) [main] DEBUG server.EchoServer - EchoServer's Cunstructor initializes.
+15:41:07.225 ServerConsole.<init>(ServerConsole.java:19) [main] DEBUG ServerConsole - ServerConsole's Cunstructor initializes.
+15:41:07.226 server.EchoServer.serverStarted(EchoServer.java:344) [Thread-1] INFO  server.EchoServer - server's serverStarted() execute
+15:41:07.226 server.EchoServer.serverStarted(EchoServer.java:349) [Thread-1] INFO  server.EchoServer - server restarted that port: 5555
+15:41:08.924 ClientConsole.main(ClientConsole.java:46) [main] INFO  ClientConsole - ClientConsole Program start.
+15:41:08.927 ClientConsole.main(ClientConsole.java:55) [main] INFO  ClientConsole - args[0] does not exist: localhost
+java.lang.ArrayIndexOutOfBoundsException: 0
+	at ClientConsole.main(ClientConsole.java:51) [bin/:?]
+15:41:08.932 ClientConsole.main(ClientConsole.java:63) [main] INFO  ClientConsole - args[1] does not exist: 5555
+java.lang.ArrayIndexOutOfBoundsException: 1
+	at ClientConsole.main(ClientConsole.java:59) [bin/:?]
+15:41:08.936 client.ChatClient.<init>(ChatClient.java:19) [main] DEBUG client.ChatClient - ChatClient's Cunstructor initializes.
+15:41:08.936 client.ChatClient.<init>(ChatClient.java:21) [main] INFO  client.ChatClient - localhost try to open connection.
+15:41:08.949 ClientConsole.<init>(ClientConsole.java:18) [main] DEBUG ClientConsole - ClientConsole's Cunstructor initializes.
+15:41:08.950 client.ChatClient.connectionEstablished(ChatClient.java:210) [Thread-1] INFO  client.ChatClient - client's connection established().
+15:41:08.950 server.EchoServer.clientConnected(EchoServer.java:370) [Thread-2] INFO  server.EchoServer - server's clientConnected() execute
+15:41:08.952 server.EchoServer.clientConnected(EchoServer.java:372) [Thread-2] INFO  server.EchoServer - New client is initialized.
+15:41:08.952 server.EchoServer.clientConnected(EchoServer.java:379) [Thread-2] DEBUG server.EchoServer - Initializing:  |  | false | false |  | []
+15:41:08.952 server.EchoServer.clientConnected(EchoServer.java:383) [Thread-2] DEBUG server.EchoServer - It is 'clientConnected()''s login start.
+15:41:08.957 client.ChatClient.handleMessageFromServer(ChatClient.java:31) [Thread-1] INFO  client.ChatClient - received message from the server.
+15:41:13.204 client.ChatClient.handleMessageFromClientUI(ChatClient.java:36) [main] INFO  client.ChatClient - received input from myself.
+15:41:13.205 client.ChatClient.handleMessageFromClientUI(ChatClient.java:163) [main] INFO  client.ChatClient - It is the command the server should help with.
+15:41:13.209 client.ChatClient.handleMessageFromClientUI(ChatClient.java:166) [main] DEBUG client.ChatClient - sending to server is success.
+15:41:13.209 server.EchoServer.handleMessageFromClient(EchoServer.java:58) [Thread-2] INFO  server.EchoServer - Message From Client
+15:41:13.209 server.EchoServer.handleMessageFromClient(EchoServer.java:64) [Thread-2] DEBUG server.EchoServer - Server reveived by  guest
+15:41:13.210 server.EchoServer.handleMessageFromClient(EchoServer.java:67) [Thread-2] INFO  server.EchoServer - This Connection's passwordVerified is false
+15:41:13.210 server.EchoServer.handleMessageFromClient(EchoServer.java:125) [Thread-2] INFO  server.EchoServer - The logging phase is working.
+15:41:13.210 server.EchoServer.clientLoggingIn(EchoServer.java:865) [Thread-2] INFO  server.EchoServer - You are in logging phase.
+15:41:13.210 server.EchoServer.clientLoggingIn(EchoServer.java:868) [Thread-2] DEBUG server.EchoServer - Your loginID is  And your message is guesttrue
+15:41:13.210 server.EchoServer.clientLoggingIn(EchoServer.java:870) [Thread-2] DEBUG server.EchoServer - Now, Your creatingNewAccount is true
+15:41:13.211 server.EchoServer.clientLoggingIn(EchoServer.java:873) [Thread-2] DEBUG server.EchoServer - sending to message for CREATING NEW ACCOUNT loginID is worked.
+15:41:13.211 client.ChatClient.handleMessageFromServer(ChatClient.java:31) [Thread-1] INFO  client.ChatClient - received message from the server.
+15:41:15.748 client.ChatClient.handleMessageFromClientUI(ChatClient.java:36) [main] INFO  client.ChatClient - received input from myself.
+15:41:15.748 client.ChatClient.handleMessageFromClientUI(ChatClient.java:163) [main] INFO  client.ChatClient - It is the command the server should help with.
+15:41:15.749 client.ChatClient.handleMessageFromClientUI(ChatClient.java:166) [main] DEBUG client.ChatClient - sending to server is success.
+15:41:15.749 server.EchoServer.handleMessageFromClient(EchoServer.java:58) [Thread-2] INFO  server.EchoServer - Message From Client
+15:41:15.749 server.EchoServer.handleMessageFromClient(EchoServer.java:64) [Thread-2] DEBUG server.EchoServer - Server reveived by  bob
+15:41:15.750 server.EchoServer.handleMessageFromClient(EchoServer.java:67) [Thread-2] INFO  server.EchoServer - This Connection's passwordVerified is false
+15:41:15.750 server.EchoServer.handleMessageFromClient(EchoServer.java:125) [Thread-2] INFO  server.EchoServer - The logging phase is working.
+15:41:15.750 server.EchoServer.clientLoggingIn(EchoServer.java:865) [Thread-2] INFO  server.EchoServer - You are in logging phase.
+15:41:15.750 server.EchoServer.clientLoggingIn(EchoServer.java:887) [Thread-2] DEBUG server.EchoServer - Your loginID is and creatingNewAccount is true And your message is bob
+15:41:15.751 server.EchoServer.clientLoggingIn(EchoServer.java:890) [Thread-2] DEBUG server.EchoServer - Now, Your loginID is bob
+15:41:15.751 server.EchoServer.clientLoggingIn(EchoServer.java:893) [Thread-2] DEBUG server.EchoServer - sending to message for CREATING NEW ACCOUNT password is worked.
+15:41:15.751 client.ChatClient.handleMessageFromServer(ChatClient.java:31) [Thread-1] INFO  client.ChatClient - received message from the server.
+15:41:17.731 client.ChatClient.handleMessageFromClientUI(ChatClient.java:36) [main] INFO  client.ChatClient - received input from myself.
+15:41:17.731 client.ChatClient.handleMessageFromClientUI(ChatClient.java:163) [main] INFO  client.ChatClient - It is the command the server should help with.
+15:41:17.731 client.ChatClient.handleMessageFromClientUI(ChatClient.java:166) [main] DEBUG client.ChatClient - sending to server is success.
+15:41:17.731 server.EchoServer.handleMessageFromClient(EchoServer.java:58) [Thread-2] INFO  server.EchoServer - Message From Client
+15:41:17.732 server.EchoServer.handleMessageFromClient(EchoServer.java:64) [Thread-2] DEBUG server.EchoServer - Server reveived by bob dole
+15:41:17.732 server.EchoServer.handleMessageFromClient(EchoServer.java:67) [Thread-2] INFO  server.EchoServer - This Connection's passwordVerified is false
+15:41:17.732 server.EchoServer.handleMessageFromClient(EchoServer.java:125) [Thread-2] INFO  server.EchoServer - The logging phase is working.
+15:41:17.733 server.EchoServer.clientLoggingIn(EchoServer.java:865) [Thread-2] INFO  server.EchoServer - You are in logging phase.
+15:41:17.733 server.EchoServer.clientLoggingIn(EchoServer.java:907) [Thread-2] DEBUG server.EchoServer - Your loginID is boband creatingNewAccount is true And your message is dole
+15:41:17.733 server.EchoServer.isLoginUsed(EchoServer.java:1077) [Thread-2] DEBUG server.EchoServer - We just checkout loginID.
+15:41:17.733 server.EchoServer.isValidPwd(EchoServer.java:1082) [Thread-2] DEBUG server.EchoServer - This is checking account about bob |  but is password verifying needed? false
+15:41:17.734 server.EchoServer.isValidPwd(EchoServer.java:1096) [Thread-2] DEBUG server.EchoServer - intputFile for cheking validity normally close.
+15:41:17.734 server.EchoServer.isValidPwd(EchoServer.java:1101) [Thread-2] INFO  server.EchoServer - No account was ever the same.
+15:41:17.734 server.EchoServer.clientLoggingIn(EchoServer.java:910) [Thread-2] DEBUG server.EchoServer - This account is used? false
+15:41:17.734 server.EchoServer.isLoginUsed(EchoServer.java:1077) [Thread-2] DEBUG server.EchoServer - We just checkout loginID.
+15:41:17.734 server.EchoServer.isValidPwd(EchoServer.java:1082) [Thread-2] DEBUG server.EchoServer - This is checking account about bob |  but is password verifying needed? false
+15:41:17.735 server.EchoServer.isValidPwd(EchoServer.java:1096) [Thread-2] DEBUG server.EchoServer - intputFile for cheking validity normally close.
+15:41:17.735 server.EchoServer.isValidPwd(EchoServer.java:1101) [Thread-2] INFO  server.EchoServer - No account was ever the same.
+15:41:17.735 server.EchoServer.clientLoggingIn(EchoServer.java:912) [Thread-2] DEBUG server.EchoServer - Because not used, New account will be setting.
+15:41:17.735 server.EchoServer.clientLoggingIn(EchoServer.java:913) [Thread-2] DEBUG server.EchoServer - Before initializing: passwordVerified is false, creatingNewAccount is true, channel is 
+15:41:17.735 server.EchoServer.clientLoggingIn(EchoServer.java:918) [Thread-2] DEBUG server.EchoServer - After initializing: passwordVerified is true, creatingNewAccount is false, channel is main
+15:41:17.735 server.EchoServer.addClientToRegistry(EchoServer.java:1064) [Thread-2] INFO  server.EchoServer - This is adding client to registry starting.
+15:41:17.736 server.EchoServer.inputFile(EchoServer.java:1011) [Thread-2] INFO  server.EchoServer - reading file start about C:\workspace\vscode\SimpleChat\SimpleChat_Server\src\passwords.txt
+15:41:17.736 server.EchoServer.inputFile(EchoServer.java:1016) [Thread-2] DEBUG server.EchoServer - inputFile exists? java.io.BufferedReader@6f602604
+15:41:17.736 server.EchoServer.inputFile(EchoServer.java:1017) [Thread-2] DEBUG server.EchoServer - Each sentence:
+15:41:17.737 server.EchoServer.inputFile(EchoServer.java:1024) [Thread-2] DEBUG server.EchoServer - Final file input:
+
+15:41:17.737 server.EchoServer.inputFile(EchoServer.java:1025) [Thread-2] INFO  server.EchoServer - read and save file(C:\workspace\vscode\SimpleChat\SimpleChat_Server\src\passwords.txt) is success.
+15:41:17.737 server.EchoServer.addClientToRegistry(EchoServer.java:1066) [Thread-2] INFO  server.EchoServer - This is original text  about C:\workspace\vscode\SimpleChat\SimpleChat_Server\src\passwords.txt
+15:41:17.737 server.EchoServer.deleteFile(EchoServer.java:1036) [Thread-2] INFO  server.EchoServer - deleting file start about C:\workspace\vscode\SimpleChat\SimpleChat_Server\src\passwords.txt
+15:41:17.737 server.EchoServer.deleteFile(EchoServer.java:1039) [Thread-2] DEBUG server.EchoServer - Deleted file exists? C:\workspace\vscode\SimpleChat\SimpleChat_Server\src\passwords.txt
+15:41:17.739 server.EchoServer.deleteFile(EchoServer.java:1041) [Thread-2] INFO  server.EchoServer - delete file(C:\workspace\vscode\SimpleChat\SimpleChat_Server\src\passwords.txt) is success.
+15:41:17.739 server.EchoServer.addClientToRegistry(EchoServer.java:1068) [Thread-2] INFO  server.EchoServer - This is deleting file about C:\workspace\vscode\SimpleChat\SimpleChat_Server\src\passwords.txt
+15:41:17.739 server.EchoServer.addClientToRegistry(EchoServer.java:1070) [Thread-2] INFO  server.EchoServer - Put the newText bob dole
+ in the file.C:\workspace\vscode\SimpleChat\SimpleChat_Server\src\passwords.txt
+15:41:17.739 server.EchoServer.outputFile(EchoServer.java:1048) [Thread-2] INFO  server.EchoServer - writing file start about C:\workspace\vscode\SimpleChat\SimpleChat_Server\src\passwords.txt. What to write: bob dole
+
+15:41:17.741 server.EchoServer.outputFile(EchoServer.java:1051) [Thread-2] DEBUG server.EchoServer - file for writing exists? java.io.BufferedWriter@488b3fcf
+15:41:17.741 server.EchoServer.outputFile(EchoServer.java:1052) [Thread-2] DEBUG server.EchoServer - originalText is 
+15:41:17.741 server.EchoServer.outputFile(EchoServer.java:1054) [Thread-2] DEBUG server.EchoServer - originalText is bob dole
+
+15:41:17.742 server.EchoServer.outputFile(EchoServer.java:1057) [Thread-2] INFO  server.EchoServer - write file(C:\workspace\vscode\SimpleChat\SimpleChat_Server\src\passwords.txt) is success.
+15:41:17.743 server.EchoServer.addClientToRegistry(EchoServer.java:1072) [Thread-2] INFO  server.EchoServer - This is new file about C:\workspace\vscode\SimpleChat\SimpleChat_Server\src\passwords.txt
+15:41:17.743 server.EchoServer.sendToAllClients(EchoServer.java:39) [Thread-2] INFO  server.EchoServer - server's sendToAllClients() execute
+15:41:17.744 server.EchoServer.sendToAllClients(EchoServer.java:48) [Thread-2] DEBUG server.EchoServer - sent to bob
+15:41:17.744 client.ChatClient.handleMessageFromServer(ChatClient.java:31) [Thread-1] INFO  client.ChatClient - received message from the server.
+15:41:17.744 server.EchoServer.sendToAllClients(EchoServer.java:54) [Thread-2] DEBUG server.EchoServer - Total number sent is 1
+15:41:17.744 server.EchoServer.clientLoggingIn(EchoServer.java:923) [Thread-2] INFO  server.EchoServer - Creating New Account is success.
+15:41:24.660 server.EchoServer.clientException(EchoServer.java:401) [Thread-2] INFO  server.EchoServer - server's client exception(). execute Disconnect Action.
+15:41:24.660 server.EchoServer.handleDisconnect(EchoServer.java:1416) [Thread-2] INFO  server.EchoServer - server's sendToClientOrServer() excute
+15:41:24.660 server.EchoServer.handleDisconnect(EchoServer.java:1418) [Thread-2] DEBUG server.EchoServer - In disconnect about bob
+15:41:24.660 server.EchoServer.sendToAllClients(EchoServer.java:39) [Thread-2] INFO  server.EchoServer - server's sendToAllClients() execute
+15:41:24.661 server.EchoServer.sendToAllClients(EchoServer.java:51) [Thread-2] ERROR server.EchoServer - WARNING - Cannot send message to a client.
+java.net.SocketException: socket does not exist
+	at ocsf.server.ConnectionToClient.sendToClient(ConnectionToClient.java:119) ~[ocsf.jar:?]
+	at server.EchoServer.sendToAllClients(EchoServer.java:47) [bin/:?]
+	at server.EchoServer.handleDisconnect(EchoServer.java:1434) [bin/:?]
+	at server.EchoServer.clientException(EchoServer.java:402) [bin/:?]
+	at ocsf.server.ConnectionToClient.run(ConnectionToClient.java:223) [ocsf.jar:?]
+15:41:24.661 server.EchoServer.sendToAllClients(EchoServer.java:54) [Thread-2] DEBUG server.EchoServer - Total number sent is 0
+15:41:24.661 server.EchoServer.handleDisconnect(EchoServer.java:1435) [Thread-2] INFO  server.EchoServer - inform to all clients about disconnect is success.
+15:41:24.662 server.EchoServer.handleDisconnect(EchoServer.java:1442) [Thread-2] DEBUG server.EchoServer - The client bob is "".

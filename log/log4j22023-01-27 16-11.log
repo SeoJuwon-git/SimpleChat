@@ -1,0 +1,18 @@
+16:11:19.573 ServerConsole.main(ServerConsole.java:43) [main] INFO  ServerConsole - ServerConsole Program start.
+16:11:19.579 ServerConsole.main(ServerConsole.java:50) [main] INFO  ServerConsole - args[0] does not exist: 5555
+java.lang.ArrayIndexOutOfBoundsException: 0
+	at ServerConsole.main(ServerConsole.java:46) [bin/:?]
+16:11:19.594 server.EchoServer.<init>(EchoServer.java:34) [main] DEBUG server.EchoServer - EchoServer's Cunstructor initializes.
+16:11:19.598 ServerConsole.<init>(ServerConsole.java:19) [main] DEBUG ServerConsole - ServerConsole's Cunstructor initializes.
+16:11:19.598 server.EchoServer.serverStarted(EchoServer.java:344) [Thread-1] INFO  server.EchoServer - server's serverStarted() execute
+16:11:19.601 server.EchoServer.serverStarted(EchoServer.java:349) [Thread-1] INFO  server.EchoServer - server restarted that port: 5555
+16:11:26.664 server.EchoServer.handleMessageFromServerUI(EchoServer.java:130) [main] INFO  server.EchoServer - MessageFromServerUI: #whoison
+16:11:44.274 ServerConsole.main(ServerConsole.java:43) [main] INFO  ServerConsole - ServerConsole Program start.
+16:11:44.278 ServerConsole.main(ServerConsole.java:50) [main] INFO  ServerConsole - args[0] does not exist: 5555
+java.lang.ArrayIndexOutOfBoundsException: 0
+	at ServerConsole.main(ServerConsole.java:46) [bin/:?]
+16:11:44.290 server.EchoServer.<init>(EchoServer.java:34) [main] DEBUG server.EchoServer - EchoServer's Cunstructor initializes.
+16:11:44.295 ServerConsole.<init>(ServerConsole.java:19) [main] DEBUG ServerConsole - ServerConsole's Cunstructor initializes.
+16:11:44.296 server.EchoServer.serverStarted(EchoServer.java:344) [Thread-1] INFO  server.EchoServer - server's serverStarted() execute
+16:11:44.296 server.EchoServer.serverStarted(EchoServer.java:349) [Thread-1] INFO  server.EchoServer - server restarted that port: 5555
+16:11:46.884 server.EchoServer.handleMessageFromServerUI(EchoServer.java:130) [main] INFO  server.EchoServer - MessageFromServerUI: #whoison

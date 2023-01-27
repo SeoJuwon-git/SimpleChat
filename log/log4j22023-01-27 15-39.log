@@ -1,0 +1,29 @@
+15:39:43.941 ClientConsole.main(ClientConsole.java:46) [main] INFO  ClientConsole - ClientConsole Program start.
+15:39:43.945 ClientConsole.main(ClientConsole.java:55) [main] INFO  ClientConsole - args[0] does not exist: localhost
+java.lang.ArrayIndexOutOfBoundsException: 0
+	at ClientConsole.main(ClientConsole.java:51) [bin/:?]
+15:39:43.950 ClientConsole.main(ClientConsole.java:63) [main] INFO  ClientConsole - args[1] does not exist: 5555
+java.lang.ArrayIndexOutOfBoundsException: 1
+	at ClientConsole.main(ClientConsole.java:59) [bin/:?]
+15:39:43.952 client.ChatClient.<init>(ChatClient.java:19) [main] DEBUG client.ChatClient - ChatClient's Cunstructor initializes.
+15:39:43.952 client.ChatClient.<init>(ChatClient.java:21) [main] INFO  client.ChatClient - localhost try to open connection.
+15:39:46.004 client.ChatClient.<init>(ChatClient.java:24) [main] ERROR client.ChatClient - openConncetion have IOException. next phase is automatic #lofoff
+java.net.ConnectException: Connection refused: connect
+	at java.net.DualStackPlainSocketImpl.connect0(Native Method) ~[?:1.8.0_202]
+	at java.net.DualStackPlainSocketImpl.socketConnect(DualStackPlainSocketImpl.java:79) ~[?:1.8.0_202]
+	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:350) ~[?:1.8.0_202]
+	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:206) ~[?:1.8.0_202]
+	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:188) ~[?:1.8.0_202]
+	at java.net.PlainSocketImpl.connect(PlainSocketImpl.java:172) ~[?:1.8.0_202]
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392) ~[?:1.8.0_202]
+	at java.net.Socket.connect(Socket.java:589) ~[?:1.8.0_202]
+	at java.net.Socket.connect(Socket.java:538) ~[?:1.8.0_202]
+	at java.net.Socket.<init>(Socket.java:434) ~[?:1.8.0_202]
+	at java.net.Socket.<init>(Socket.java:211) ~[?:1.8.0_202]
+	at ocsf.client.AbstractClient.openConnection(AbstractClient.java:106) ~[ocsf.jar:?]
+	at client.ChatClient.<init>(ChatClient.java:22) [bin/:?]
+	at ClientConsole.<init>(ClientConsole.java:17) [bin/:?]
+	at ClientConsole.main(ClientConsole.java:66) [bin/:?]
+15:39:46.008 client.ChatClient.handleMessageFromClientUI(ChatClient.java:36) [main] INFO  client.ChatClient - received input from myself.
+15:39:46.008 client.ChatClient.handleMessageFromClientUI(ChatClient.java:54) [main] INFO  client.ChatClient - It is logoff input. trying to close connection.
+15:39:46.026 ClientConsole.<init>(ClientConsole.java:18) [main] DEBUG ClientConsole - ClientConsole's Cunstructor initializes.

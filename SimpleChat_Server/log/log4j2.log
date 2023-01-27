@@ -1,20 +1,8 @@
-14:35:49.812 ServerConsole.main(ServerConsole.java:43) [main] INFO  ServerConsole - ServerConsole Program start.
-14:35:49.816 ServerConsole.main(ServerConsole.java:50) [main] INFO  ServerConsole - args[0] does not exist: 5555
+14:15:57.500 ServerConsole.main(ServerConsole.java:43) [main] INFO  ServerConsole - ServerConsole Program start.
+14:15:57.503 ServerConsole.main(ServerConsole.java:50) [main] INFO  ServerConsole - args[0] does not exist: 5555
 java.lang.ArrayIndexOutOfBoundsException: 0
 	at ServerConsole.main(ServerConsole.java:46) [bin/:?]
-14:35:49.829 server.EchoServer.<init>(EchoServer.java:34) [main] INFO  server.EchoServer - EchoServer's Cunstructor initializes.
-14:35:49.835 ServerConsole.<init>(ServerConsole.java:19) [main] INFO  ServerConsole - ServerConser's Cunstructor initializes.
-17:29:42.762 ServerConsole.main(ServerConsole.java:43) [main] INFO  ServerConsole - ServerConsole Program start.
-17:29:42.766 ServerConsole.main(ServerConsole.java:50) [main] INFO  ServerConsole - args[0] does not exist: 5555
-java.lang.ArrayIndexOutOfBoundsException: 0
-	at ServerConsole.main(ServerConsole.java:46) [bin/:?]
-17:29:42.774 server.EchoServer.<init>(EchoServer.java:34) [main] DEBUG server.EchoServer - EchoServer's Cunstructor initializes.
-17:29:42.777 ServerConsole.<init>(ServerConsole.java:19) [main] DEBUG ServerConsole - ServerConser's Cunstructor initializes.
-17:29:42.777 server.EchoServer.serverStarted(EchoServer.java:344) [Thread-1] INFO  server.EchoServer - server's serverStarted() execute
-17:29:42.778 server.EchoServer.serverStarted(EchoServer.java:349) [Thread-1] INFO  server.EchoServer - server restarted that port: 5555
-17:29:49.923 server.EchoServer.handleMessageFromServerUI(EchoServer.java:130) [main] INFO  server.EchoServer - MessageFromServerUI: 
-17:29:49.923 server.EchoServer.handleCmdPrivate(EchoServer.java:696) [main] INFO  server.EchoServer - server's handleCmdPrivate() execute
-17:29:49.924 server.EchoServer.handleCmdPrivate(EchoServer.java:700) [main] DEBUG server.EchoServer - split index: 8 15
-17:29:49.924 server.EchoServer.handleCmdPrivate(EchoServer.java:705) [main] DEBUG server.EchoServer - server a
-17:29:49.925 server.EchoServer.handleCmdPrivate(EchoServer.java:712) [main] DEBUG server.EchoServer - sender using private message is server
-17:29:49.926 server.EchoServer.handleCmdPrivate(EchoServer.java:715) [main] DEBUG server.EchoServer - server = server
+14:15:57.514 server.EchoServer.<init>(EchoServer.java:34) [main] DEBUG server.EchoServer - EchoServer's Cunstructor initializes.
+14:15:57.520 ServerConsole.<init>(ServerConsole.java:19) [main] DEBUG ServerConsole - ServerConser's Cunstructor initializes.
+14:15:57.521 server.EchoServer.serverStarted(EchoServer.java:344) [Thread-1] INFO  server.EchoServer - server's serverStarted() execute
+14:15:57.521 server.EchoServer.serverStarted(EchoServer.java:349) [Thread-1] INFO  server.EchoServer - server restarted that port: 5555

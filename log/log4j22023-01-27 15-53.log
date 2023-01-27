@@ -1,0 +1,63 @@
+15:53:00.346 ClientConsole.main(ClientConsole.java:46) [main] INFO  ClientConsole - ClientConsole Program start.
+15:53:00.351 ClientConsole.main(ClientConsole.java:55) [main] INFO  ClientConsole - args[0] does not exist: localhost
+java.lang.ArrayIndexOutOfBoundsException: 0
+	at ClientConsole.main(ClientConsole.java:51) [bin/:?]
+15:53:00.356 ClientConsole.main(ClientConsole.java:63) [main] INFO  ClientConsole - args[1] does not exist: 5555
+java.lang.ArrayIndexOutOfBoundsException: 1
+	at ClientConsole.main(ClientConsole.java:59) [bin/:?]
+15:53:00.358 client.ChatClient.<init>(ChatClient.java:19) [main] DEBUG client.ChatClient - ChatClient's Cunstructor initializes.
+15:53:00.359 client.ChatClient.<init>(ChatClient.java:21) [main] INFO  client.ChatClient - localhost try to open connection.
+15:53:00.376 ClientConsole.<init>(ClientConsole.java:18) [main] DEBUG ClientConsole - ClientConsole's Cunstructor initializes.
+15:53:00.377 client.ChatClient.connectionEstablished(ChatClient.java:210) [Thread-1] INFO  client.ChatClient - client's connection established().
+15:53:00.379 client.ChatClient.handleMessageFromServer(ChatClient.java:31) [Thread-1] INFO  client.ChatClient - received message from the server.
+15:53:03.658 ClientConsole.main(ClientConsole.java:46) [main] INFO  ClientConsole - ClientConsole Program start.
+15:53:03.664 ClientConsole.main(ClientConsole.java:55) [main] INFO  ClientConsole - args[0] does not exist: localhost
+java.lang.ArrayIndexOutOfBoundsException: 0
+	at ClientConsole.main(ClientConsole.java:51) [bin/:?]
+15:53:03.670 ClientConsole.main(ClientConsole.java:63) [main] INFO  ClientConsole - args[1] does not exist: 5555
+java.lang.ArrayIndexOutOfBoundsException: 1
+	at ClientConsole.main(ClientConsole.java:59) [bin/:?]
+15:53:03.672 client.ChatClient.<init>(ChatClient.java:19) [main] DEBUG client.ChatClient - ChatClient's Cunstructor initializes.
+15:53:03.672 client.ChatClient.<init>(ChatClient.java:21) [main] INFO  client.ChatClient - localhost try to open connection.
+15:53:03.687 ClientConsole.<init>(ClientConsole.java:18) [main] DEBUG ClientConsole - ClientConsole's Cunstructor initializes.
+15:53:03.687 client.ChatClient.connectionEstablished(ChatClient.java:210) [Thread-1] INFO  client.ChatClient - client's connection established().
+15:53:03.689 client.ChatClient.handleMessageFromServer(ChatClient.java:31) [Thread-1] INFO  client.ChatClient - received message from the server.
+15:53:34.725 client.ChatClient.handleMessageFromClientUI(ChatClient.java:36) [main] INFO  client.ChatClient - received input from myself.
+15:53:34.725 client.ChatClient.handleMessageFromClientUI(ChatClient.java:163) [main] INFO  client.ChatClient - It is the command the server should help with.
+15:53:34.729 client.ChatClient.handleMessageFromClientUI(ChatClient.java:166) [main] DEBUG client.ChatClient - sending to server is success.
+15:53:34.730 client.ChatClient.handleMessageFromServer(ChatClient.java:31) [Thread-1] INFO  client.ChatClient - received message from the server.
+15:53:35.389 client.ChatClient.handleMessageFromClientUI(ChatClient.java:36) [main] INFO  client.ChatClient - received input from myself.
+15:53:35.390 client.ChatClient.handleMessageFromClientUI(ChatClient.java:163) [main] INFO  client.ChatClient - It is the command the server should help with.
+15:53:35.390 client.ChatClient.handleMessageFromClientUI(ChatClient.java:166) [main] DEBUG client.ChatClient - sending to server is success.
+15:53:35.398 client.ChatClient.handleMessageFromServer(ChatClient.java:31) [Thread-1] INFO  client.ChatClient - received message from the server.
+15:53:37.741 client.ChatClient.handleMessageFromClientUI(ChatClient.java:36) [main] INFO  client.ChatClient - received input from myself.
+15:53:37.741 client.ChatClient.handleMessageFromClientUI(ChatClient.java:163) [main] INFO  client.ChatClient - It is the command the server should help with.
+15:53:37.748 client.ChatClient.handleMessageFromClientUI(ChatClient.java:166) [main] DEBUG client.ChatClient - sending to server is success.
+15:53:37.750 client.ChatClient.handleMessageFromServer(ChatClient.java:31) [Thread-1] INFO  client.ChatClient - received message from the server.
+15:53:38.405 client.ChatClient.handleMessageFromClientUI(ChatClient.java:36) [main] INFO  client.ChatClient - received input from myself.
+15:53:38.406 client.ChatClient.handleMessageFromClientUI(ChatClient.java:163) [main] INFO  client.ChatClient - It is the command the server should help with.
+15:53:38.406 client.ChatClient.handleMessageFromClientUI(ChatClient.java:166) [main] DEBUG client.ChatClient - sending to server is success.
+15:53:38.414 client.ChatClient.handleMessageFromServer(ChatClient.java:31) [Thread-1] INFO  client.ChatClient - received message from the server.
+15:53:42.075 client.ChatClient.handleMessageFromClientUI(ChatClient.java:36) [main] INFO  client.ChatClient - received input from myself.
+15:53:42.076 client.ChatClient.handleMessageFromClientUI(ChatClient.java:163) [main] INFO  client.ChatClient - It is the command the server should help with.
+15:53:42.076 client.ChatClient.handleMessageFromClientUI(ChatClient.java:166) [main] DEBUG client.ChatClient - sending to server is success.
+15:53:42.078 client.ChatClient.handleMessageFromServer(ChatClient.java:31) [Thread-1] INFO  client.ChatClient - received message from the server.
+15:53:42.764 client.ChatClient.handleMessageFromClientUI(ChatClient.java:36) [main] INFO  client.ChatClient - received input from myself.
+15:53:42.764 client.ChatClient.handleMessageFromClientUI(ChatClient.java:163) [main] INFO  client.ChatClient - It is the command the server should help with.
+15:53:42.765 client.ChatClient.handleMessageFromClientUI(ChatClient.java:166) [main] DEBUG client.ChatClient - sending to server is success.
+15:53:42.769 client.ChatClient.handleMessageFromServer(ChatClient.java:31) [Thread-1] INFO  client.ChatClient - received message from the server.
+15:53:42.769 client.ChatClient.handleMessageFromServer(ChatClient.java:31) [Thread-1] INFO  client.ChatClient - received message from the server.
+15:53:49.299 client.ChatClient.handleMessageFromServer(ChatClient.java:31) [Thread-1] INFO  client.ChatClient - received message from the server.
+15:53:49.300 client.ChatClient.handleMessageFromServer(ChatClient.java:31) [Thread-1] INFO  client.ChatClient - received message from the server.
+15:54:01.586 client.ChatClient.handleMessageFromServer(ChatClient.java:31) [Thread-1] INFO  client.ChatClient - received message from the server.
+15:54:01.586 client.ChatClient.handleMessageFromServer(ChatClient.java:31) [Thread-1] INFO  client.ChatClient - received message from the server.
+15:54:13.261 client.ChatClient.handleMessageFromClientUI(ChatClient.java:36) [main] INFO  client.ChatClient - received input from myself.
+15:54:13.262 client.ChatClient.handleMessageFromClientUI(ChatClient.java:163) [main] INFO  client.ChatClient - It is the command the server should help with.
+15:54:13.262 client.ChatClient.handleMessageFromClientUI(ChatClient.java:166) [main] DEBUG client.ChatClient - sending to server is success.
+15:54:13.266 client.ChatClient.handleMessageFromServer(ChatClient.java:31) [Thread-1] INFO  client.ChatClient - received message from the server.
+15:54:22.283 client.ChatClient.handleMessageFromClientUI(ChatClient.java:36) [main] INFO  client.ChatClient - received input from myself.
+15:54:22.284 client.ChatClient.handleMessageFromClientUI(ChatClient.java:163) [main] INFO  client.ChatClient - It is the command the server should help with.
+15:54:22.284 client.ChatClient.handleMessageFromClientUI(ChatClient.java:166) [main] DEBUG client.ChatClient - sending to server is success.
+15:54:22.287 client.ChatClient.handleMessageFromServer(ChatClient.java:31) [Thread-1] INFO  client.ChatClient - received message from the server.
+15:58:21.994 client.ChatClient.connectionException(ChatClient.java:215) [Thread-1] INFO  client.ChatClient - client's connection exception().
+15:58:21.994 client.ChatClient.connectionException(ChatClient.java:215) [Thread-1] INFO  client.ChatClient - client's connection exception().

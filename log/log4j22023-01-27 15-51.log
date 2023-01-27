@@ -1,0 +1,461 @@
+15:51:05.918 ServerConsole.main(ServerConsole.java:43) [main] INFO  ServerConsole - ServerConsole Program start.
+15:51:05.922 ServerConsole.main(ServerConsole.java:50) [main] INFO  ServerConsole - args[0] does not exist: 5555
+java.lang.ArrayIndexOutOfBoundsException: 0
+	at ServerConsole.main(ServerConsole.java:46) [bin/:?]
+15:51:05.932 server.EchoServer.<init>(EchoServer.java:34) [main] DEBUG server.EchoServer - EchoServer's Cunstructor initializes.
+15:51:05.937 ServerConsole.<init>(ServerConsole.java:19) [main] DEBUG ServerConsole - ServerConsole's Cunstructor initializes.
+15:51:05.937 server.EchoServer.serverStarted(EchoServer.java:344) [Thread-1] INFO  server.EchoServer - server's serverStarted() execute
+15:51:05.938 server.EchoServer.serverStarted(EchoServer.java:349) [Thread-1] INFO  server.EchoServer - server restarted that port: 5555
+15:51:08.301 ClientConsole.main(ClientConsole.java:46) [main] INFO  ClientConsole - ClientConsole Program start.
+15:51:08.304 ClientConsole.main(ClientConsole.java:55) [main] INFO  ClientConsole - args[0] does not exist: localhost
+java.lang.ArrayIndexOutOfBoundsException: 0
+	at ClientConsole.main(ClientConsole.java:51) [bin/:?]
+15:51:08.309 ClientConsole.main(ClientConsole.java:63) [main] INFO  ClientConsole - args[1] does not exist: 5555
+java.lang.ArrayIndexOutOfBoundsException: 1
+	at ClientConsole.main(ClientConsole.java:59) [bin/:?]
+15:51:08.311 client.ChatClient.<init>(ChatClient.java:19) [main] DEBUG client.ChatClient - ChatClient's Cunstructor initializes.
+15:51:08.311 client.ChatClient.<init>(ChatClient.java:21) [main] INFO  client.ChatClient - localhost try to open connection.
+15:51:08.325 ClientConsole.<init>(ClientConsole.java:18) [main] DEBUG ClientConsole - ClientConsole's Cunstructor initializes.
+15:51:08.325 client.ChatClient.connectionEstablished(ChatClient.java:210) [Thread-1] INFO  client.ChatClient - client's connection established().
+15:51:08.325 server.EchoServer.clientConnected(EchoServer.java:370) [Thread-2] INFO  server.EchoServer - server's clientConnected() execute
+15:51:08.326 server.EchoServer.clientConnected(EchoServer.java:372) [Thread-2] INFO  server.EchoServer - New client is initialized.
+15:51:08.327 server.EchoServer.clientConnected(EchoServer.java:379) [Thread-2] DEBUG server.EchoServer - Initializing:  |  | false | false |  | []
+15:51:08.327 server.EchoServer.clientConnected(EchoServer.java:383) [Thread-2] DEBUG server.EchoServer - It is 'clientConnected()''s login start.
+15:51:08.329 client.ChatClient.handleMessageFromServer(ChatClient.java:31) [Thread-1] INFO  client.ChatClient - received message from the server.
+15:51:11.598 ClientConsole.main(ClientConsole.java:46) [main] INFO  ClientConsole - ClientConsole Program start.
+15:51:11.601 ClientConsole.main(ClientConsole.java:55) [main] INFO  ClientConsole - args[0] does not exist: localhost
+java.lang.ArrayIndexOutOfBoundsException: 0
+	at ClientConsole.main(ClientConsole.java:51) [bin/:?]
+15:51:11.607 ClientConsole.main(ClientConsole.java:63) [main] INFO  ClientConsole - args[1] does not exist: 5555
+java.lang.ArrayIndexOutOfBoundsException: 1
+	at ClientConsole.main(ClientConsole.java:59) [bin/:?]
+15:51:11.608 client.ChatClient.<init>(ChatClient.java:19) [main] DEBUG client.ChatClient - ChatClient's Cunstructor initializes.
+15:51:11.609 client.ChatClient.<init>(ChatClient.java:21) [main] INFO  client.ChatClient - localhost try to open connection.
+15:51:11.619 server.EchoServer.clientConnected(EchoServer.java:370) [Thread-3] INFO  server.EchoServer - server's clientConnected() execute
+15:51:11.620 server.EchoServer.clientConnected(EchoServer.java:372) [Thread-3] INFO  server.EchoServer - New client is initialized.
+15:51:11.620 server.EchoServer.clientConnected(EchoServer.java:379) [Thread-3] DEBUG server.EchoServer - Initializing:  |  | false | false |  | []
+15:51:11.621 server.EchoServer.clientConnected(EchoServer.java:383) [Thread-3] DEBUG server.EchoServer - It is 'clientConnected()''s login start.
+15:51:11.622 ClientConsole.<init>(ClientConsole.java:18) [main] DEBUG ClientConsole - ClientConsole's Cunstructor initializes.
+15:51:11.623 client.ChatClient.connectionEstablished(ChatClient.java:210) [Thread-1] INFO  client.ChatClient - client's connection established().
+15:51:11.625 client.ChatClient.handleMessageFromServer(ChatClient.java:31) [Thread-1] INFO  client.ChatClient - received message from the server.
+15:51:13.325 client.ChatClient.handleMessageFromClientUI(ChatClient.java:36) [main] INFO  client.ChatClient - received input from myself.
+15:51:13.325 client.ChatClient.handleMessageFromClientUI(ChatClient.java:163) [main] INFO  client.ChatClient - It is the command the server should help with.
+15:51:13.330 client.ChatClient.handleMessageFromClientUI(ChatClient.java:166) [main] DEBUG client.ChatClient - sending to server is success.
+15:51:13.331 server.EchoServer.handleMessageFromClient(EchoServer.java:58) [Thread-2] INFO  server.EchoServer - Message From Client
+15:51:13.331 server.EchoServer.handleMessageFromClient(EchoServer.java:64) [Thread-2] DEBUG server.EchoServer - Server reveived by  sonia
+15:51:13.331 server.EchoServer.handleMessageFromClient(EchoServer.java:67) [Thread-2] INFO  server.EchoServer - This Connection's passwordVerified is false
+15:51:13.332 server.EchoServer.handleMessageFromClient(EchoServer.java:125) [Thread-2] INFO  server.EchoServer - The logging phase is working.
+15:51:13.332 server.EchoServer.clientLoggingIn(EchoServer.java:865) [Thread-2] INFO  server.EchoServer - You are in logging phase.
+15:51:13.332 server.EchoServer.clientLoggingIn(EchoServer.java:951) [Thread-2] INFO  server.EchoServer - It is normally login starting.
+15:51:13.332 server.EchoServer.clientLoggingIn(EchoServer.java:952) [Thread-2] DEBUG server.EchoServer - Before loginID enter, and not doing create new account. false
+15:51:13.332 server.EchoServer.clientLoggingIn(EchoServer.java:954) [Thread-2] DEBUG server.EchoServer - After loginID enter, sonia
+15:51:13.332 server.EchoServer.clientLoggingIn(EchoServer.java:957) [Thread-2] INFO  server.EchoServer - Enter password normally.
+15:51:13.332 server.EchoServer.clientLoggingIn(EchoServer.java:959) [Thread-2] DEBUG server.EchoServer - sending to message for password normally is worked.
+15:51:13.332 client.ChatClient.handleMessageFromServer(ChatClient.java:31) [Thread-1] INFO  client.ChatClient - received message from the server.
+15:51:13.997 client.ChatClient.handleMessageFromClientUI(ChatClient.java:36) [main] INFO  client.ChatClient - received input from myself.
+15:51:13.998 client.ChatClient.handleMessageFromClientUI(ChatClient.java:163) [main] INFO  client.ChatClient - It is the command the server should help with.
+15:51:13.998 client.ChatClient.handleMessageFromClientUI(ChatClient.java:166) [main] DEBUG client.ChatClient - sending to server is success.
+15:51:13.998 server.EchoServer.handleMessageFromClient(EchoServer.java:58) [Thread-2] INFO  server.EchoServer - Message From Client
+15:51:13.999 server.EchoServer.handleMessageFromClient(EchoServer.java:64) [Thread-2] DEBUG server.EchoServer - Server reveived by sonia pass
+15:51:14.000 server.EchoServer.handleMessageFromClient(EchoServer.java:67) [Thread-2] INFO  server.EchoServer - This Connection's passwordVerified is false
+15:51:14.000 server.EchoServer.handleMessageFromClient(EchoServer.java:125) [Thread-2] INFO  server.EchoServer - The logging phase is working.
+15:51:14.000 server.EchoServer.clientLoggingIn(EchoServer.java:865) [Thread-2] INFO  server.EchoServer - You are in logging phase.
+15:51:14.001 server.EchoServer.isLoginBeingUsed(EchoServer.java:1106) [Thread-2] INFO  server.EchoServer - About sonia, to check for duplication about yourself? If not to block? true
+15:51:14.001 server.EchoServer.isLoginBeingUsed(EchoServer.java:1127) [Thread-2] DEBUG server.EchoServer - To check once for duplication took 1 times.
+15:51:14.001 server.EchoServer.isLoginBeingUsed(EchoServer.java:1138) [Thread-2] INFO  server.EchoServer - About That account to check for dup, only one exists but not duplicates.(only one loggin in)
+15:51:14.001 server.EchoServer.clientLoggingIn(EchoServer.java:971) [Thread-2] DEBUG server.EchoServer - You are valid password? sonia and already login? false
+15:51:14.002 server.EchoServer.isValidPwd(EchoServer.java:1082) [Thread-2] DEBUG server.EchoServer - This is checking account about sonia | pass but is password verifying needed? true
+15:51:14.003 server.EchoServer.isValidPwd(EchoServer.java:1086) [Thread-2] DEBUG server.EchoServer - This account infomation is bob dole
+15:51:14.003 server.EchoServer.isValidPwd(EchoServer.java:1087) [Thread-2] DEBUG server.EchoServer - loginID is bob, password is dole and Is password verifying needed? false
+15:51:14.003 server.EchoServer.isValidPwd(EchoServer.java:1086) [Thread-2] DEBUG server.EchoServer - This account infomation is tim pass
+15:51:14.004 server.EchoServer.isValidPwd(EchoServer.java:1087) [Thread-2] DEBUG server.EchoServer - loginID is tim, password is pass and Is password verifying needed? false
+15:51:14.004 server.EchoServer.isValidPwd(EchoServer.java:1086) [Thread-2] DEBUG server.EchoServer - This account infomation is sonia pass
+15:51:14.004 server.EchoServer.isValidPwd(EchoServer.java:1087) [Thread-2] DEBUG server.EchoServer - loginID is sonia, password is pass and Is password verifying needed? false
+15:51:14.004 server.EchoServer.isValidPwd(EchoServer.java:1091) [Thread-2] INFO  server.EchoServer - Account exists normally.
+15:51:14.005 server.EchoServer.isLoginBeingUsed(EchoServer.java:1106) [Thread-2] INFO  server.EchoServer - About sonia, to check for duplication about yourself? If not to block? true
+15:51:14.005 server.EchoServer.isLoginBeingUsed(EchoServer.java:1127) [Thread-2] DEBUG server.EchoServer - To check once for duplication took 1 times.
+15:51:14.005 server.EchoServer.isLoginBeingUsed(EchoServer.java:1138) [Thread-2] INFO  server.EchoServer - About That account to check for dup, only one exists but not duplicates.(only one loggin in)
+15:51:14.005 server.EchoServer.clientLoggingIn(EchoServer.java:974) [Thread-2] INFO  server.EchoServer - You are verified.
+15:51:14.005 server.EchoServer.clientLoggingIn(EchoServer.java:975) [Thread-2] DEBUG server.EchoServer - Before verified, passwordVerified is false, and channel is 
+15:51:14.006 server.EchoServer.clientLoggingIn(EchoServer.java:978) [Thread-2] DEBUG server.EchoServer - After verified, passwordVerified is true, and channel is main
+15:51:14.006 server.EchoServer.sendToAllClients(EchoServer.java:39) [Thread-2] INFO  server.EchoServer - server's sendToAllClients() execute
+15:51:14.007 server.EchoServer.sendToAllClients(EchoServer.java:48) [Thread-2] DEBUG server.EchoServer - sent to sonia
+15:51:14.007 client.ChatClient.handleMessageFromServer(ChatClient.java:31) [Thread-1] INFO  client.ChatClient - received message from the server.
+15:51:14.008 server.EchoServer.sendToAllClients(EchoServer.java:48) [Thread-2] DEBUG server.EchoServer - sent to 
+15:51:14.008 server.EchoServer.sendToAllClients(EchoServer.java:54) [Thread-2] DEBUG server.EchoServer - Total number sent is 2
+15:51:16.531 client.ChatClient.handleMessageFromClientUI(ChatClient.java:36) [main] INFO  client.ChatClient - received input from myself.
+15:51:16.532 client.ChatClient.handleMessageFromClientUI(ChatClient.java:163) [main] INFO  client.ChatClient - It is the command the server should help with.
+15:51:16.534 client.ChatClient.handleMessageFromClientUI(ChatClient.java:166) [main] DEBUG client.ChatClient - sending to server is success.
+15:51:16.534 server.EchoServer.handleMessageFromClient(EchoServer.java:58) [Thread-3] INFO  server.EchoServer - Message From Client
+15:51:16.535 server.EchoServer.handleMessageFromClient(EchoServer.java:64) [Thread-3] DEBUG server.EchoServer - Server reveived by  tim
+15:51:16.536 server.EchoServer.handleMessageFromClient(EchoServer.java:67) [Thread-3] INFO  server.EchoServer - This Connection's passwordVerified is false
+15:51:16.536 server.EchoServer.handleMessageFromClient(EchoServer.java:125) [Thread-3] INFO  server.EchoServer - The logging phase is working.
+15:51:16.536 server.EchoServer.clientLoggingIn(EchoServer.java:865) [Thread-3] INFO  server.EchoServer - You are in logging phase.
+15:51:16.536 server.EchoServer.clientLoggingIn(EchoServer.java:951) [Thread-3] INFO  server.EchoServer - It is normally login starting.
+15:51:16.536 server.EchoServer.clientLoggingIn(EchoServer.java:952) [Thread-3] DEBUG server.EchoServer - Before loginID enter, and not doing create new account. false
+15:51:16.536 server.EchoServer.clientLoggingIn(EchoServer.java:954) [Thread-3] DEBUG server.EchoServer - After loginID enter, tim
+15:51:16.537 server.EchoServer.clientLoggingIn(EchoServer.java:957) [Thread-3] INFO  server.EchoServer - Enter password normally.
+15:51:16.537 server.EchoServer.clientLoggingIn(EchoServer.java:959) [Thread-3] DEBUG server.EchoServer - sending to message for password normally is worked.
+15:51:16.537 client.ChatClient.handleMessageFromServer(ChatClient.java:31) [Thread-1] INFO  client.ChatClient - received message from the server.
+15:51:17.187 client.ChatClient.handleMessageFromClientUI(ChatClient.java:36) [main] INFO  client.ChatClient - received input from myself.
+15:51:17.187 client.ChatClient.handleMessageFromClientUI(ChatClient.java:163) [main] INFO  client.ChatClient - It is the command the server should help with.
+15:51:17.187 client.ChatClient.handleMessageFromClientUI(ChatClient.java:166) [main] DEBUG client.ChatClient - sending to server is success.
+15:51:17.187 server.EchoServer.handleMessageFromClient(EchoServer.java:58) [Thread-3] INFO  server.EchoServer - Message From Client
+15:51:17.188 server.EchoServer.handleMessageFromClient(EchoServer.java:64) [Thread-3] DEBUG server.EchoServer - Server reveived by tim pass
+15:51:17.188 server.EchoServer.handleMessageFromClient(EchoServer.java:67) [Thread-3] INFO  server.EchoServer - This Connection's passwordVerified is false
+15:51:17.189 server.EchoServer.handleMessageFromClient(EchoServer.java:125) [Thread-3] INFO  server.EchoServer - The logging phase is working.
+15:51:17.189 server.EchoServer.clientLoggingIn(EchoServer.java:865) [Thread-3] INFO  server.EchoServer - You are in logging phase.
+15:51:17.189 server.EchoServer.isLoginBeingUsed(EchoServer.java:1106) [Thread-3] INFO  server.EchoServer - About tim, to check for duplication about yourself? If not to block? true
+15:51:17.190 server.EchoServer.isLoginBeingUsed(EchoServer.java:1127) [Thread-3] DEBUG server.EchoServer - To check once for duplication took 2 times.
+15:51:17.190 server.EchoServer.isLoginBeingUsed(EchoServer.java:1138) [Thread-3] INFO  server.EchoServer - About That account to check for dup, only one exists but not duplicates.(only one loggin in)
+15:51:17.190 server.EchoServer.clientLoggingIn(EchoServer.java:971) [Thread-3] DEBUG server.EchoServer - You are valid password? tim and already login? false
+15:51:17.190 server.EchoServer.isValidPwd(EchoServer.java:1082) [Thread-3] DEBUG server.EchoServer - This is checking account about tim | pass but is password verifying needed? true
+15:51:17.191 server.EchoServer.isValidPwd(EchoServer.java:1086) [Thread-3] DEBUG server.EchoServer - This account infomation is bob dole
+15:51:17.191 server.EchoServer.isValidPwd(EchoServer.java:1087) [Thread-3] DEBUG server.EchoServer - loginID is bob, password is dole and Is password verifying needed? false
+15:51:17.191 server.EchoServer.isValidPwd(EchoServer.java:1086) [Thread-3] DEBUG server.EchoServer - This account infomation is tim pass
+15:51:17.191 server.EchoServer.isValidPwd(EchoServer.java:1087) [Thread-3] DEBUG server.EchoServer - loginID is tim, password is pass and Is password verifying needed? false
+15:51:17.191 server.EchoServer.isValidPwd(EchoServer.java:1091) [Thread-3] INFO  server.EchoServer - Account exists normally.
+15:51:17.192 server.EchoServer.isLoginBeingUsed(EchoServer.java:1106) [Thread-3] INFO  server.EchoServer - About tim, to check for duplication about yourself? If not to block? true
+15:51:17.192 server.EchoServer.isLoginBeingUsed(EchoServer.java:1127) [Thread-3] DEBUG server.EchoServer - To check once for duplication took 2 times.
+15:51:17.192 server.EchoServer.isLoginBeingUsed(EchoServer.java:1138) [Thread-3] INFO  server.EchoServer - About That account to check for dup, only one exists but not duplicates.(only one loggin in)
+15:51:17.192 server.EchoServer.clientLoggingIn(EchoServer.java:974) [Thread-3] INFO  server.EchoServer - You are verified.
+15:51:17.193 server.EchoServer.clientLoggingIn(EchoServer.java:975) [Thread-3] DEBUG server.EchoServer - Before verified, passwordVerified is false, and channel is 
+15:51:17.193 server.EchoServer.clientLoggingIn(EchoServer.java:978) [Thread-3] DEBUG server.EchoServer - After verified, passwordVerified is true, and channel is main
+15:51:17.194 server.EchoServer.sendToAllClients(EchoServer.java:39) [Thread-3] INFO  server.EchoServer - server's sendToAllClients() execute
+15:51:17.194 server.EchoServer.sendToAllClients(EchoServer.java:48) [Thread-3] DEBUG server.EchoServer - sent to sonia
+15:51:17.194 client.ChatClient.handleMessageFromServer(ChatClient.java:31) [Thread-1] INFO  client.ChatClient - received message from the server.
+15:51:17.195 server.EchoServer.sendToAllClients(EchoServer.java:48) [Thread-3] DEBUG server.EchoServer - sent to tim
+15:51:17.195 client.ChatClient.handleMessageFromServer(ChatClient.java:31) [Thread-1] INFO  client.ChatClient - received message from the server.
+15:51:17.195 server.EchoServer.sendToAllClients(EchoServer.java:54) [Thread-3] DEBUG server.EchoServer - Total number sent is 2
+15:51:32.291 client.ChatClient.handleMessageFromClientUI(ChatClient.java:36) [main] INFO  client.ChatClient - received input from myself.
+15:51:32.291 client.ChatClient.handleMessageFromClientUI(ChatClient.java:163) [main] INFO  client.ChatClient - It is the command the server should help with.
+15:51:32.292 client.ChatClient.handleMessageFromClientUI(ChatClient.java:166) [main] DEBUG client.ChatClient - sending to server is success.
+15:51:32.292 server.EchoServer.handleMessageFromClient(EchoServer.java:58) [Thread-2] INFO  server.EchoServer - Message From Client
+15:51:32.293 server.EchoServer.handleMessageFromClient(EchoServer.java:64) [Thread-2] DEBUG server.EchoServer - Server reveived by sonia #fwd tim
+15:51:32.293 server.EchoServer.handleMessageFromClient(EchoServer.java:67) [Thread-2] INFO  server.EchoServer - This Connection's passwordVerified is true
+15:51:32.293 server.EchoServer.handleCmdFwd(EchoServer.java:560) [Thread-2] INFO  server.EchoServer - server's handleCmdFwd() execute
+15:51:32.293 server.EchoServer.getClient(EchoServer.java:845) [Thread-2] INFO  server.EchoServer - server's getClient() execute
+15:51:32.293 server.EchoServer.getClient(EchoServer.java:852) [Thread-2] DEBUG server.EchoServer - After total2 times research, found client. tim = tim
+15:51:32.293 server.EchoServer.handleCmdFwd(EchoServer.java:586) [Thread-2] DEBUG server.EchoServer - previous forwarding target: next target: tim
+15:51:32.293 server.EchoServer.getClient(EchoServer.java:845) [Thread-2] INFO  server.EchoServer - server's getClient() execute
+15:51:32.293 server.EchoServer.getClient(EchoServer.java:852) [Thread-2] DEBUG server.EchoServer - After total2 times research, found client. tim = tim
+15:51:32.294 server.EchoServer.handleCmdFwd(EchoServer.java:588) [Thread-2] DEBUG server.EchoServer - timis block sonia? false
+15:51:32.294 server.EchoServer.handleCmdFwd(EchoServer.java:602) [Thread-2] DEBUG server.EchoServer - sonia's forwarding target is changed tim
+15:51:32.294 server.EchoServer.isValidFwdClient(EchoServer.java:804) [Thread-2] INFO  server.EchoServer - server's isValidFwdClient() execute
+15:51:32.295 server.EchoServer.isValidFwdClient(EchoServer.java:813) [Thread-2] DEBUG server.EchoServer - 127.0.0.1 (127.0.0.1) have forwarding target tim = tim
+15:51:32.295 server.EchoServer.isValidFwdClient(EchoServer.java:822) [Thread-2] DEBUG server.EchoServer - There is Connection? 2
+15:51:32.296 server.EchoServer.isValidFwdClient(EchoServer.java:828) [Thread-2] DEBUG server.EchoServer - Check the forwarding chain: [Ljava.lang.String;@426104ad
+15:51:32.296 server.EchoServer.getClient(EchoServer.java:845) [Thread-2] INFO  server.EchoServer - server's getClient() execute
+15:51:32.296 server.EchoServer.getClient(EchoServer.java:852) [Thread-2] DEBUG server.EchoServer - After total2 times research, found client. tim = tim
+15:51:32.296 server.EchoServer.isValidFwdClient(EchoServer.java:840) [Thread-2] DEBUG server.EchoServer - no one matches, valid forwarding chain.
+15:51:32.296 server.EchoServer.handleCmdFwd(EchoServer.java:603) [Thread-2] DEBUG server.EchoServer - Is Valid forwarding? true
+15:51:32.296 server.EchoServer.isValidFwdClient(EchoServer.java:804) [Thread-2] INFO  server.EchoServer - server's isValidFwdClient() execute
+15:51:32.296 server.EchoServer.isValidFwdClient(EchoServer.java:813) [Thread-2] DEBUG server.EchoServer - 127.0.0.1 (127.0.0.1) have forwarding target tim = tim
+15:51:32.297 server.EchoServer.isValidFwdClient(EchoServer.java:822) [Thread-2] DEBUG server.EchoServer - There is Connection? 2
+15:51:32.297 server.EchoServer.isValidFwdClient(EchoServer.java:828) [Thread-2] DEBUG server.EchoServer - Check the forwarding chain: [Ljava.lang.String;@1abeb8d3
+15:51:32.297 server.EchoServer.getClient(EchoServer.java:845) [Thread-2] INFO  server.EchoServer - server's getClient() execute
+15:51:32.297 server.EchoServer.getClient(EchoServer.java:852) [Thread-2] DEBUG server.EchoServer - After total2 times research, found client. tim = tim
+15:51:32.297 server.EchoServer.isValidFwdClient(EchoServer.java:840) [Thread-2] DEBUG server.EchoServer - no one matches, valid forwarding chain.
+15:51:32.297 server.EchoServer.handleCmdFwd(EchoServer.java:606) [Thread-2] INFO  server.EchoServer - setting fowarding is finished.tim
+15:51:32.298 client.ChatClient.handleMessageFromServer(ChatClient.java:31) [Thread-1] INFO  client.ChatClient - received message from the server.
+15:51:36.605 client.ChatClient.handleMessageFromClientUI(ChatClient.java:36) [main] INFO  client.ChatClient - received input from myself.
+15:51:36.606 client.ChatClient.handleMessageFromClientUI(ChatClient.java:163) [main] INFO  client.ChatClient - It is the command the server should help with.
+15:51:36.606 client.ChatClient.handleMessageFromClientUI(ChatClient.java:166) [main] DEBUG client.ChatClient - sending to server is success.
+15:51:36.606 server.EchoServer.handleMessageFromClient(EchoServer.java:58) [Thread-3] INFO  server.EchoServer - Message From Client
+15:51:36.607 server.EchoServer.handleMessageFromClient(EchoServer.java:64) [Thread-3] DEBUG server.EchoServer - Server reveived by tim #block sonia
+15:51:36.608 server.EchoServer.handleMessageFromClient(EchoServer.java:67) [Thread-3] INFO  server.EchoServer - This Connection's passwordVerified is true
+15:51:36.608 server.EchoServer.handleCmdBlock(EchoServer.java:481) [Thread-3] INFO  server.EchoServer - server's handleCmdBlock() execute
+15:51:36.608 server.EchoServer.handleCmdBlock(EchoServer.java:490) [Thread-3] DEBUG server.EchoServer - Blocking to : sonia
+15:51:36.608 server.EchoServer.isLoginUsed(EchoServer.java:1077) [Thread-3] DEBUG server.EchoServer - We just checkout loginID.
+15:51:36.609 server.EchoServer.isValidPwd(EchoServer.java:1082) [Thread-3] DEBUG server.EchoServer - This is checking account about sonia |  but is password verifying needed? false
+15:51:36.609 server.EchoServer.isValidPwd(EchoServer.java:1086) [Thread-3] DEBUG server.EchoServer - This account infomation is bob dole
+15:51:36.609 server.EchoServer.isValidPwd(EchoServer.java:1087) [Thread-3] DEBUG server.EchoServer - loginID is bob, password is dole and Is password verifying needed? true
+15:51:36.610 server.EchoServer.isValidPwd(EchoServer.java:1086) [Thread-3] DEBUG server.EchoServer - This account infomation is tim pass
+15:51:36.610 server.EchoServer.isValidPwd(EchoServer.java:1087) [Thread-3] DEBUG server.EchoServer - loginID is tim, password is pass and Is password verifying needed? true
+15:51:36.610 server.EchoServer.isValidPwd(EchoServer.java:1086) [Thread-3] DEBUG server.EchoServer - This account infomation is sonia pass
+15:51:36.616 server.EchoServer.isValidPwd(EchoServer.java:1087) [Thread-3] DEBUG server.EchoServer - loginID is sonia, password is pass and Is password verifying needed? true
+15:51:36.617 server.EchoServer.isValidPwd(EchoServer.java:1091) [Thread-3] INFO  server.EchoServer - Account exists normally.
+15:51:36.617 server.EchoServer.handleCmdBlock(EchoServer.java:503) [Thread-3] DEBUG server.EchoServer - account is already exist? trueor blocking to server? false
+15:51:36.618 server.EchoServer.isLoginUsed(EchoServer.java:1077) [Thread-3] DEBUG server.EchoServer - We just checkout loginID.
+15:51:36.618 server.EchoServer.isValidPwd(EchoServer.java:1082) [Thread-3] DEBUG server.EchoServer - This is checking account about sonia |  but is password verifying needed? false
+15:51:36.619 server.EchoServer.isValidPwd(EchoServer.java:1086) [Thread-3] DEBUG server.EchoServer - This account infomation is bob dole
+15:51:36.619 server.EchoServer.isValidPwd(EchoServer.java:1087) [Thread-3] DEBUG server.EchoServer - loginID is bob, password is dole and Is password verifying needed? true
+15:51:36.619 server.EchoServer.isValidPwd(EchoServer.java:1086) [Thread-3] DEBUG server.EchoServer - This account infomation is tim pass
+15:51:36.619 server.EchoServer.isValidPwd(EchoServer.java:1087) [Thread-3] DEBUG server.EchoServer - loginID is tim, password is pass and Is password verifying needed? true
+15:51:36.620 server.EchoServer.isValidPwd(EchoServer.java:1086) [Thread-3] DEBUG server.EchoServer - This account infomation is sonia pass
+15:51:36.620 server.EchoServer.isValidPwd(EchoServer.java:1087) [Thread-3] DEBUG server.EchoServer - loginID is sonia, password is pass and Is password verifying needed? true
+15:51:36.620 server.EchoServer.isValidPwd(EchoServer.java:1091) [Thread-3] INFO  server.EchoServer - Account exists normally.
+15:51:36.620 server.EchoServer.isLoginBeingUsed(EchoServer.java:1106) [Thread-3] INFO  server.EchoServer - About sonia, to check for duplication about yourself? If not to block? false
+15:51:36.620 server.EchoServer.isLoginBeingUsed(EchoServer.java:1121) [Thread-3] INFO  server.EchoServer - found dup or blocking target.
+15:51:36.620 server.EchoServer.isLoginBeingUsed(EchoServer.java:1122) [Thread-3] DEBUG server.EchoServer - Before found, 1 times+1 takes.
+15:51:36.621 server.EchoServer.handleCmdBlock(EchoServer.java:505) [Thread-3] DEBUG server.EchoServer - account is already login? trueand not about server? true
+15:51:36.621 server.EchoServer.isLoginBeingUsed(EchoServer.java:1106) [Thread-3] INFO  server.EchoServer - About sonia, to check for duplication about yourself? If not to block? false
+15:51:36.621 server.EchoServer.isLoginBeingUsed(EchoServer.java:1121) [Thread-3] INFO  server.EchoServer - found dup or blocking target.
+15:51:36.621 server.EchoServer.isLoginBeingUsed(EchoServer.java:1122) [Thread-3] DEBUG server.EchoServer - Before found, 1 times+1 takes.
+15:51:36.621 server.EchoServer.getClient(EchoServer.java:845) [Thread-3] INFO  server.EchoServer - server's getClient() execute
+15:51:36.621 server.EchoServer.getClient(EchoServer.java:852) [Thread-3] DEBUG server.EchoServer - After total1 times research, found client. sonia = sonia
+15:51:36.622 server.EchoServer.handleCmdBlock(EchoServer.java:508) [Thread-3] DEBUG server.EchoServer - block phase about sonia
+15:51:36.622 server.EchoServer.handleCmdBlock(EchoServer.java:509) [Thread-3] DEBUG server.EchoServer - That client foword to me? true
+15:51:36.623 server.EchoServer.handleCmdBlock(EchoServer.java:512) [Thread-3] DEBUG server.EchoServer - 127.0.0.1 (127.0.0.1)'s forwarding is reset.
+15:51:36.623 server.EchoServer.handleCmdBlock(EchoServer.java:518) [Thread-3] DEBUG server.EchoServer - Forwarding reset message for sonia
+15:51:36.623 client.ChatClient.handleMessageFromServer(ChatClient.java:31) [Thread-1] INFO  client.ChatClient - received message from the server.
+15:51:36.624 server.EchoServer.handleCmdBlock(EchoServer.java:521) [Thread-3] DEBUG server.EchoServer - Forwarding reset message for tim
+15:51:36.624 client.ChatClient.handleMessageFromServer(ChatClient.java:31) [Thread-1] INFO  client.ChatClient - received message from the server.
+15:51:36.625 server.EchoServer.handleCmdBlock(EchoServer.java:529) [Thread-3] DEBUG server.EchoServer - tim's blockedUsers add to sonia
+15:51:36.625 server.EchoServer.handleCmdBlock(EchoServer.java:533) [Thread-3] DEBUG server.EchoServer - tim's blocking alarming to sonia is completed.
+15:51:36.626 client.ChatClient.handleMessageFromServer(ChatClient.java:31) [Thread-1] INFO  client.ChatClient - received message from the server.
+15:51:44.012 client.ChatClient.handleMessageFromClientUI(ChatClient.java:36) [main] INFO  client.ChatClient - received input from myself.
+15:51:44.013 client.ChatClient.handleMessageFromClientUI(ChatClient.java:163) [main] INFO  client.ChatClient - It is the command the server should help with.
+15:51:44.013 client.ChatClient.handleMessageFromClientUI(ChatClient.java:166) [main] DEBUG client.ChatClient - sending to server is success.
+15:51:44.013 server.EchoServer.handleMessageFromClient(EchoServer.java:58) [Thread-3] INFO  server.EchoServer - Message From Client
+15:51:44.015 server.EchoServer.handleMessageFromClient(EchoServer.java:64) [Thread-3] DEBUG server.EchoServer - Server reveived by tim #unblock
+15:51:44.015 server.EchoServer.handleMessageFromClient(EchoServer.java:67) [Thread-3] INFO  server.EchoServer - This Connection's passwordVerified is true
+15:51:44.015 server.EchoServer.handleCmdUnblock(EchoServer.java:432) [Thread-3] INFO  server.EchoServer - server's handleCmdUnblock() execute
+15:51:44.015 server.EchoServer.handleCmdUnblock(EchoServer.java:439) [Thread-3] DEBUG server.EchoServer - client's blocking: 
+15:51:44.016 server.EchoServer.handleCmdUnblock(EchoServer.java:451) [Thread-3] INFO  server.EchoServer - This is unblock All.
+15:51:44.016 server.EchoServer.handleCmdUnblock(EchoServer.java:466) [Thread-3] DEBUG server.EchoServer -   sonia are unblocked.
+15:51:44.017 server.EchoServer.sendToClientOrServer(EchoServer.java:1402) [Thread-3] INFO  server.EchoServer - tim's sendToClientOrServer() excute
+15:51:44.017 server.EchoServer.sendToClientOrServer(EchoServer.java:1404) [Thread-3] INFO  server.EchoServer - tim send message.
+15:51:44.017 server.EchoServer.handleCmdUnblock(EchoServer.java:471) [Thread-3] DEBUG server.EchoServer - Total number of Unblocking: 0
+15:51:44.017 client.ChatClient.handleMessageFromServer(ChatClient.java:31) [Thread-1] INFO  client.ChatClient - received message from the server.
+15:51:48.687 ClientConsole.main(ClientConsole.java:46) [main] INFO  ClientConsole - ClientConsole Program start.
+15:51:48.690 ClientConsole.main(ClientConsole.java:55) [main] INFO  ClientConsole - args[0] does not exist: localhost
+java.lang.ArrayIndexOutOfBoundsException: 0
+	at ClientConsole.main(ClientConsole.java:51) [bin/:?]
+15:51:48.694 ClientConsole.main(ClientConsole.java:63) [main] INFO  ClientConsole - args[1] does not exist: 5555
+java.lang.ArrayIndexOutOfBoundsException: 1
+	at ClientConsole.main(ClientConsole.java:59) [bin/:?]
+15:51:48.696 client.ChatClient.<init>(ChatClient.java:19) [main] DEBUG client.ChatClient - ChatClient's Cunstructor initializes.
+15:51:48.696 client.ChatClient.<init>(ChatClient.java:21) [main] INFO  client.ChatClient - localhost try to open connection.
+15:51:48.706 server.EchoServer.clientConnected(EchoServer.java:370) [Thread-4] INFO  server.EchoServer - server's clientConnected() execute
+15:51:48.707 server.EchoServer.clientConnected(EchoServer.java:372) [Thread-4] INFO  server.EchoServer - New client is initialized.
+15:51:48.707 server.EchoServer.clientConnected(EchoServer.java:379) [Thread-4] DEBUG server.EchoServer - Initializing:  |  | false | false |  | []
+15:51:48.707 server.EchoServer.clientConnected(EchoServer.java:383) [Thread-4] DEBUG server.EchoServer - It is 'clientConnected()''s login start.
+15:51:48.708 ClientConsole.<init>(ClientConsole.java:18) [main] DEBUG ClientConsole - ClientConsole's Cunstructor initializes.
+15:51:48.708 client.ChatClient.connectionEstablished(ChatClient.java:210) [Thread-1] INFO  client.ChatClient - client's connection established().
+15:51:48.710 client.ChatClient.handleMessageFromServer(ChatClient.java:31) [Thread-1] INFO  client.ChatClient - received message from the server.
+15:51:49.811 client.ChatClient.handleMessageFromClientUI(ChatClient.java:36) [main] INFO  client.ChatClient - received input from myself.
+15:51:49.811 client.ChatClient.handleMessageFromClientUI(ChatClient.java:163) [main] INFO  client.ChatClient - It is the command the server should help with.
+15:51:49.815 server.EchoServer.handleMessageFromClient(EchoServer.java:58) [Thread-4] INFO  server.EchoServer - Message From Client
+15:51:49.815 client.ChatClient.handleMessageFromClientUI(ChatClient.java:166) [main] DEBUG client.ChatClient - sending to server is success.
+15:51:49.816 server.EchoServer.handleMessageFromClient(EchoServer.java:64) [Thread-4] DEBUG server.EchoServer - Server reveived by  bob
+15:51:49.816 server.EchoServer.handleMessageFromClient(EchoServer.java:67) [Thread-4] INFO  server.EchoServer - This Connection's passwordVerified is false
+15:51:49.816 server.EchoServer.handleMessageFromClient(EchoServer.java:125) [Thread-4] INFO  server.EchoServer - The logging phase is working.
+15:51:49.816 server.EchoServer.clientLoggingIn(EchoServer.java:865) [Thread-4] INFO  server.EchoServer - You are in logging phase.
+15:51:49.816 server.EchoServer.clientLoggingIn(EchoServer.java:951) [Thread-4] INFO  server.EchoServer - It is normally login starting.
+15:51:49.817 server.EchoServer.clientLoggingIn(EchoServer.java:952) [Thread-4] DEBUG server.EchoServer - Before loginID enter, and not doing create new account. false
+15:51:49.817 server.EchoServer.clientLoggingIn(EchoServer.java:954) [Thread-4] DEBUG server.EchoServer - After loginID enter, bob
+15:51:49.817 server.EchoServer.clientLoggingIn(EchoServer.java:957) [Thread-4] INFO  server.EchoServer - Enter password normally.
+15:51:49.817 server.EchoServer.clientLoggingIn(EchoServer.java:959) [Thread-4] DEBUG server.EchoServer - sending to message for password normally is worked.
+15:51:49.817 client.ChatClient.handleMessageFromServer(ChatClient.java:31) [Thread-1] INFO  client.ChatClient - received message from the server.
+15:51:50.467 client.ChatClient.handleMessageFromClientUI(ChatClient.java:36) [main] INFO  client.ChatClient - received input from myself.
+15:51:50.468 client.ChatClient.handleMessageFromClientUI(ChatClient.java:163) [main] INFO  client.ChatClient - It is the command the server should help with.
+15:51:50.468 client.ChatClient.handleMessageFromClientUI(ChatClient.java:166) [main] DEBUG client.ChatClient - sending to server is success.
+15:51:50.468 server.EchoServer.handleMessageFromClient(EchoServer.java:58) [Thread-4] INFO  server.EchoServer - Message From Client
+15:51:50.469 server.EchoServer.handleMessageFromClient(EchoServer.java:64) [Thread-4] DEBUG server.EchoServer - Server reveived by bob dole
+15:51:50.469 server.EchoServer.handleMessageFromClient(EchoServer.java:67) [Thread-4] INFO  server.EchoServer - This Connection's passwordVerified is false
+15:51:50.470 server.EchoServer.handleMessageFromClient(EchoServer.java:125) [Thread-4] INFO  server.EchoServer - The logging phase is working.
+15:51:50.470 server.EchoServer.clientLoggingIn(EchoServer.java:865) [Thread-4] INFO  server.EchoServer - You are in logging phase.
+15:51:50.470 server.EchoServer.isLoginBeingUsed(EchoServer.java:1106) [Thread-4] INFO  server.EchoServer - About bob, to check for duplication about yourself? If not to block? true
+15:51:50.470 server.EchoServer.isLoginBeingUsed(EchoServer.java:1127) [Thread-4] DEBUG server.EchoServer - To check once for duplication took 3 times.
+15:51:50.470 server.EchoServer.isLoginBeingUsed(EchoServer.java:1138) [Thread-4] INFO  server.EchoServer - About That account to check for dup, only one exists but not duplicates.(only one loggin in)
+15:51:50.470 server.EchoServer.clientLoggingIn(EchoServer.java:971) [Thread-4] DEBUG server.EchoServer - You are valid password? bob and already login? false
+15:51:50.470 server.EchoServer.isValidPwd(EchoServer.java:1082) [Thread-4] DEBUG server.EchoServer - This is checking account about bob | dole but is password verifying needed? true
+15:51:50.471 server.EchoServer.isValidPwd(EchoServer.java:1086) [Thread-4] DEBUG server.EchoServer - This account infomation is bob dole
+15:51:50.471 server.EchoServer.isValidPwd(EchoServer.java:1087) [Thread-4] DEBUG server.EchoServer - loginID is bob, password is dole and Is password verifying needed? false
+15:51:50.471 server.EchoServer.isValidPwd(EchoServer.java:1091) [Thread-4] INFO  server.EchoServer - Account exists normally.
+15:51:50.471 server.EchoServer.isLoginBeingUsed(EchoServer.java:1106) [Thread-4] INFO  server.EchoServer - About bob, to check for duplication about yourself? If not to block? true
+15:51:50.472 server.EchoServer.isLoginBeingUsed(EchoServer.java:1127) [Thread-4] DEBUG server.EchoServer - To check once for duplication took 3 times.
+15:51:50.472 server.EchoServer.isLoginBeingUsed(EchoServer.java:1138) [Thread-4] INFO  server.EchoServer - About That account to check for dup, only one exists but not duplicates.(only one loggin in)
+15:51:50.472 server.EchoServer.clientLoggingIn(EchoServer.java:974) [Thread-4] INFO  server.EchoServer - You are verified.
+15:51:50.472 server.EchoServer.clientLoggingIn(EchoServer.java:975) [Thread-4] DEBUG server.EchoServer - Before verified, passwordVerified is false, and channel is 
+15:51:50.472 server.EchoServer.clientLoggingIn(EchoServer.java:978) [Thread-4] DEBUG server.EchoServer - After verified, passwordVerified is true, and channel is main
+15:51:50.473 server.EchoServer.sendToAllClients(EchoServer.java:39) [Thread-4] INFO  server.EchoServer - server's sendToAllClients() execute
+15:51:50.473 server.EchoServer.sendToAllClients(EchoServer.java:48) [Thread-4] DEBUG server.EchoServer - sent to sonia
+15:51:50.473 client.ChatClient.handleMessageFromServer(ChatClient.java:31) [Thread-1] INFO  client.ChatClient - received message from the server.
+15:51:50.473 server.EchoServer.sendToAllClients(EchoServer.java:48) [Thread-4] DEBUG server.EchoServer - sent to tim
+15:51:50.473 client.ChatClient.handleMessageFromServer(ChatClient.java:31) [Thread-1] INFO  client.ChatClient - received message from the server.
+15:51:50.474 server.EchoServer.sendToAllClients(EchoServer.java:48) [Thread-4] DEBUG server.EchoServer - sent to bob
+15:51:50.474 server.EchoServer.sendToAllClients(EchoServer.java:54) [Thread-4] DEBUG server.EchoServer - Total number sent is 3
+15:51:50.474 client.ChatClient.handleMessageFromServer(ChatClient.java:31) [Thread-1] INFO  client.ChatClient - received message from the server.
+15:51:55.523 client.ChatClient.handleMessageFromClientUI(ChatClient.java:36) [main] INFO  client.ChatClient - received input from myself.
+15:51:55.523 client.ChatClient.handleMessageFromClientUI(ChatClient.java:163) [main] INFO  client.ChatClient - It is the command the server should help with.
+15:51:55.523 client.ChatClient.handleMessageFromClientUI(ChatClient.java:166) [main] DEBUG client.ChatClient - sending to server is success.
+15:51:55.523 server.EchoServer.handleMessageFromClient(EchoServer.java:58) [Thread-4] INFO  server.EchoServer - Message From Client
+15:51:55.524 server.EchoServer.handleMessageFromClient(EchoServer.java:64) [Thread-4] DEBUG server.EchoServer - Server reveived by bob #fwd tim
+15:51:55.524 server.EchoServer.handleMessageFromClient(EchoServer.java:67) [Thread-4] INFO  server.EchoServer - This Connection's passwordVerified is true
+15:51:55.525 server.EchoServer.handleCmdFwd(EchoServer.java:560) [Thread-4] INFO  server.EchoServer - server's handleCmdFwd() execute
+15:51:55.525 server.EchoServer.getClient(EchoServer.java:845) [Thread-4] INFO  server.EchoServer - server's getClient() execute
+15:51:55.525 server.EchoServer.getClient(EchoServer.java:852) [Thread-4] DEBUG server.EchoServer - After total2 times research, found client. tim = tim
+15:51:55.525 server.EchoServer.handleCmdFwd(EchoServer.java:586) [Thread-4] DEBUG server.EchoServer - previous forwarding target: next target: tim
+15:51:55.525 server.EchoServer.getClient(EchoServer.java:845) [Thread-4] INFO  server.EchoServer - server's getClient() execute
+15:51:55.525 server.EchoServer.getClient(EchoServer.java:852) [Thread-4] DEBUG server.EchoServer - After total2 times research, found client. tim = tim
+15:51:55.525 server.EchoServer.handleCmdFwd(EchoServer.java:588) [Thread-4] DEBUG server.EchoServer - timis block bob? false
+15:51:55.525 server.EchoServer.handleCmdFwd(EchoServer.java:602) [Thread-4] DEBUG server.EchoServer - bob's forwarding target is changed tim
+15:51:55.525 server.EchoServer.isValidFwdClient(EchoServer.java:804) [Thread-4] INFO  server.EchoServer - server's isValidFwdClient() execute
+15:51:55.527 server.EchoServer.isValidFwdClient(EchoServer.java:813) [Thread-4] DEBUG server.EchoServer - 127.0.0.1 (127.0.0.1) have forwarding target tim = tim
+15:51:55.527 server.EchoServer.isValidFwdClient(EchoServer.java:822) [Thread-4] DEBUG server.EchoServer - There is Connection? 3
+15:51:55.527 server.EchoServer.isValidFwdClient(EchoServer.java:828) [Thread-4] DEBUG server.EchoServer - Check the forwarding chain: [Ljava.lang.String;@6e96170e
+15:51:55.527 server.EchoServer.getClient(EchoServer.java:845) [Thread-4] INFO  server.EchoServer - server's getClient() execute
+15:51:55.527 server.EchoServer.getClient(EchoServer.java:852) [Thread-4] DEBUG server.EchoServer - After total2 times research, found client. tim = tim
+15:51:55.527 server.EchoServer.isValidFwdClient(EchoServer.java:840) [Thread-4] DEBUG server.EchoServer - no one matches, valid forwarding chain.
+15:51:55.527 server.EchoServer.handleCmdFwd(EchoServer.java:603) [Thread-4] DEBUG server.EchoServer - Is Valid forwarding? true
+15:51:55.527 server.EchoServer.isValidFwdClient(EchoServer.java:804) [Thread-4] INFO  server.EchoServer - server's isValidFwdClient() execute
+15:51:55.527 server.EchoServer.isValidFwdClient(EchoServer.java:813) [Thread-4] DEBUG server.EchoServer - 127.0.0.1 (127.0.0.1) have forwarding target tim = tim
+15:51:55.527 server.EchoServer.isValidFwdClient(EchoServer.java:822) [Thread-4] DEBUG server.EchoServer - There is Connection? 3
+15:51:55.528 server.EchoServer.isValidFwdClient(EchoServer.java:828) [Thread-4] DEBUG server.EchoServer - Check the forwarding chain: [Ljava.lang.String;@6aa98e04
+15:51:55.528 server.EchoServer.getClient(EchoServer.java:845) [Thread-4] INFO  server.EchoServer - server's getClient() execute
+15:51:55.528 server.EchoServer.getClient(EchoServer.java:852) [Thread-4] DEBUG server.EchoServer - After total2 times research, found client. tim = tim
+15:51:55.528 server.EchoServer.isValidFwdClient(EchoServer.java:840) [Thread-4] DEBUG server.EchoServer - no one matches, valid forwarding chain.
+15:51:55.528 server.EchoServer.handleCmdFwd(EchoServer.java:606) [Thread-4] INFO  server.EchoServer - setting fowarding is finished.tim
+15:51:55.529 client.ChatClient.handleMessageFromServer(ChatClient.java:31) [Thread-1] INFO  client.ChatClient - received message from the server.
+15:51:59.427 client.ChatClient.handleMessageFromClientUI(ChatClient.java:36) [main] INFO  client.ChatClient - received input from myself.
+15:51:59.427 client.ChatClient.handleMessageFromClientUI(ChatClient.java:163) [main] INFO  client.ChatClient - It is the command the server should help with.
+15:51:59.427 client.ChatClient.handleMessageFromClientUI(ChatClient.java:166) [main] DEBUG client.ChatClient - sending to server is success.
+15:51:59.427 server.EchoServer.handleMessageFromClient(EchoServer.java:58) [Thread-2] INFO  server.EchoServer - Message From Client
+15:51:59.428 server.EchoServer.handleMessageFromClient(EchoServer.java:64) [Thread-2] DEBUG server.EchoServer - Server reveived by sonia #fwd bob
+15:51:59.428 server.EchoServer.handleMessageFromClient(EchoServer.java:67) [Thread-2] INFO  server.EchoServer - This Connection's passwordVerified is true
+15:51:59.429 server.EchoServer.handleCmdFwd(EchoServer.java:560) [Thread-2] INFO  server.EchoServer - server's handleCmdFwd() execute
+15:51:59.429 server.EchoServer.getClient(EchoServer.java:845) [Thread-2] INFO  server.EchoServer - server's getClient() execute
+15:51:59.429 server.EchoServer.getClient(EchoServer.java:852) [Thread-2] DEBUG server.EchoServer - After total3 times research, found client. bob = bob
+15:51:59.429 server.EchoServer.handleCmdFwd(EchoServer.java:586) [Thread-2] DEBUG server.EchoServer - previous forwarding target: next target: bob
+15:51:59.429 server.EchoServer.getClient(EchoServer.java:845) [Thread-2] INFO  server.EchoServer - server's getClient() execute
+15:51:59.429 server.EchoServer.getClient(EchoServer.java:852) [Thread-2] DEBUG server.EchoServer - After total3 times research, found client. bob = bob
+15:51:59.429 server.EchoServer.handleCmdFwd(EchoServer.java:588) [Thread-2] DEBUG server.EchoServer - bobis block sonia? false
+15:51:59.430 server.EchoServer.handleCmdFwd(EchoServer.java:602) [Thread-2] DEBUG server.EchoServer - sonia's forwarding target is changed bob
+15:51:59.430 server.EchoServer.isValidFwdClient(EchoServer.java:804) [Thread-2] INFO  server.EchoServer - server's isValidFwdClient() execute
+15:51:59.430 server.EchoServer.isValidFwdClient(EchoServer.java:813) [Thread-2] DEBUG server.EchoServer - 127.0.0.1 (127.0.0.1) have forwarding target bob = bob
+15:51:59.430 server.EchoServer.isValidFwdClient(EchoServer.java:822) [Thread-2] DEBUG server.EchoServer - There is Connection? 3
+15:51:59.430 server.EchoServer.isValidFwdClient(EchoServer.java:828) [Thread-2] DEBUG server.EchoServer - Check the forwarding chain: [Ljava.lang.String;@56ca43af
+15:51:59.430 server.EchoServer.getClient(EchoServer.java:845) [Thread-2] INFO  server.EchoServer - server's getClient() execute
+15:51:59.430 server.EchoServer.getClient(EchoServer.java:852) [Thread-2] DEBUG server.EchoServer - After total3 times research, found client. bob = bob
+15:51:59.431 server.EchoServer.isValidFwdClient(EchoServer.java:828) [Thread-2] DEBUG server.EchoServer - Check the forwarding chain: [Ljava.lang.String;@56ca43af
+15:51:59.431 server.EchoServer.getClient(EchoServer.java:845) [Thread-2] INFO  server.EchoServer - server's getClient() execute
+15:51:59.431 server.EchoServer.getClient(EchoServer.java:852) [Thread-2] DEBUG server.EchoServer - After total2 times research, found client. tim = tim
+15:51:59.431 server.EchoServer.isValidFwdClient(EchoServer.java:840) [Thread-2] DEBUG server.EchoServer - no one matches, valid forwarding chain.
+15:51:59.431 server.EchoServer.handleCmdFwd(EchoServer.java:603) [Thread-2] DEBUG server.EchoServer - Is Valid forwarding? true
+15:51:59.431 server.EchoServer.isValidFwdClient(EchoServer.java:804) [Thread-2] INFO  server.EchoServer - server's isValidFwdClient() execute
+15:51:59.431 server.EchoServer.isValidFwdClient(EchoServer.java:813) [Thread-2] DEBUG server.EchoServer - 127.0.0.1 (127.0.0.1) have forwarding target bob = bob
+15:51:59.431 server.EchoServer.isValidFwdClient(EchoServer.java:822) [Thread-2] DEBUG server.EchoServer - There is Connection? 3
+15:51:59.432 server.EchoServer.isValidFwdClient(EchoServer.java:828) [Thread-2] DEBUG server.EchoServer - Check the forwarding chain: [Ljava.lang.String;@1c4471b7
+15:51:59.432 server.EchoServer.getClient(EchoServer.java:845) [Thread-2] INFO  server.EchoServer - server's getClient() execute
+15:51:59.432 server.EchoServer.getClient(EchoServer.java:852) [Thread-2] DEBUG server.EchoServer - After total3 times research, found client. bob = bob
+15:51:59.432 server.EchoServer.isValidFwdClient(EchoServer.java:828) [Thread-2] DEBUG server.EchoServer - Check the forwarding chain: [Ljava.lang.String;@1c4471b7
+15:51:59.432 server.EchoServer.getClient(EchoServer.java:845) [Thread-2] INFO  server.EchoServer - server's getClient() execute
+15:51:59.432 server.EchoServer.getClient(EchoServer.java:852) [Thread-2] DEBUG server.EchoServer - After total2 times research, found client. tim = tim
+15:51:59.432 server.EchoServer.isValidFwdClient(EchoServer.java:840) [Thread-2] DEBUG server.EchoServer - no one matches, valid forwarding chain.
+15:51:59.432 server.EchoServer.handleCmdFwd(EchoServer.java:606) [Thread-2] INFO  server.EchoServer - setting fowarding is finished.bob
+15:51:59.433 client.ChatClient.handleMessageFromServer(ChatClient.java:31) [Thread-1] INFO  client.ChatClient - received message from the server.
+15:52:04.363 client.ChatClient.handleMessageFromClientUI(ChatClient.java:36) [main] INFO  client.ChatClient - received input from myself.
+15:52:04.363 client.ChatClient.handleMessageFromClientUI(ChatClient.java:163) [main] INFO  client.ChatClient - It is the command the server should help with.
+15:52:04.363 client.ChatClient.handleMessageFromClientUI(ChatClient.java:166) [main] DEBUG client.ChatClient - sending to server is success.
+15:52:04.364 server.EchoServer.handleMessageFromClient(EchoServer.java:58) [Thread-3] INFO  server.EchoServer - Message From Client
+15:52:04.364 server.EchoServer.handleMessageFromClient(EchoServer.java:64) [Thread-3] DEBUG server.EchoServer - Server reveived by tim #block sonia
+15:52:04.364 server.EchoServer.handleMessageFromClient(EchoServer.java:67) [Thread-3] INFO  server.EchoServer - This Connection's passwordVerified is true
+15:52:04.365 server.EchoServer.handleCmdBlock(EchoServer.java:481) [Thread-3] INFO  server.EchoServer - server's handleCmdBlock() execute
+15:52:04.365 server.EchoServer.handleCmdBlock(EchoServer.java:490) [Thread-3] DEBUG server.EchoServer - Blocking to : sonia
+15:52:04.365 server.EchoServer.isLoginUsed(EchoServer.java:1077) [Thread-3] DEBUG server.EchoServer - We just checkout loginID.
+15:52:04.365 server.EchoServer.isValidPwd(EchoServer.java:1082) [Thread-3] DEBUG server.EchoServer - This is checking account about sonia |  but is password verifying needed? false
+15:52:04.365 server.EchoServer.isValidPwd(EchoServer.java:1086) [Thread-3] DEBUG server.EchoServer - This account infomation is bob dole
+15:52:04.366 server.EchoServer.isValidPwd(EchoServer.java:1087) [Thread-3] DEBUG server.EchoServer - loginID is bob, password is dole and Is password verifying needed? true
+15:52:04.366 server.EchoServer.isValidPwd(EchoServer.java:1086) [Thread-3] DEBUG server.EchoServer - This account infomation is tim pass
+15:52:04.366 server.EchoServer.isValidPwd(EchoServer.java:1087) [Thread-3] DEBUG server.EchoServer - loginID is tim, password is pass and Is password verifying needed? true
+15:52:04.366 server.EchoServer.isValidPwd(EchoServer.java:1086) [Thread-3] DEBUG server.EchoServer - This account infomation is sonia pass
+15:52:04.366 server.EchoServer.isValidPwd(EchoServer.java:1087) [Thread-3] DEBUG server.EchoServer - loginID is sonia, password is pass and Is password verifying needed? true
+15:52:04.366 server.EchoServer.isValidPwd(EchoServer.java:1091) [Thread-3] INFO  server.EchoServer - Account exists normally.
+15:52:04.366 server.EchoServer.handleCmdBlock(EchoServer.java:503) [Thread-3] DEBUG server.EchoServer - account is already exist? trueor blocking to server? false
+15:52:04.367 server.EchoServer.isLoginUsed(EchoServer.java:1077) [Thread-3] DEBUG server.EchoServer - We just checkout loginID.
+15:52:04.367 server.EchoServer.isValidPwd(EchoServer.java:1082) [Thread-3] DEBUG server.EchoServer - This is checking account about sonia |  but is password verifying needed? false
+15:52:04.367 server.EchoServer.isValidPwd(EchoServer.java:1086) [Thread-3] DEBUG server.EchoServer - This account infomation is bob dole
+15:52:04.367 server.EchoServer.isValidPwd(EchoServer.java:1087) [Thread-3] DEBUG server.EchoServer - loginID is bob, password is dole and Is password verifying needed? true
+15:52:04.368 server.EchoServer.isValidPwd(EchoServer.java:1086) [Thread-3] DEBUG server.EchoServer - This account infomation is tim pass
+15:52:04.368 server.EchoServer.isValidPwd(EchoServer.java:1087) [Thread-3] DEBUG server.EchoServer - loginID is tim, password is pass and Is password verifying needed? true
+15:52:04.368 server.EchoServer.isValidPwd(EchoServer.java:1086) [Thread-3] DEBUG server.EchoServer - This account infomation is sonia pass
+15:52:04.368 server.EchoServer.isValidPwd(EchoServer.java:1087) [Thread-3] DEBUG server.EchoServer - loginID is sonia, password is pass and Is password verifying needed? true
+15:52:04.368 server.EchoServer.isValidPwd(EchoServer.java:1091) [Thread-3] INFO  server.EchoServer - Account exists normally.
+15:52:04.368 server.EchoServer.isLoginBeingUsed(EchoServer.java:1106) [Thread-3] INFO  server.EchoServer - About sonia, to check for duplication about yourself? If not to block? false
+15:52:04.368 server.EchoServer.isLoginBeingUsed(EchoServer.java:1121) [Thread-3] INFO  server.EchoServer - found dup or blocking target.
+15:52:04.368 server.EchoServer.isLoginBeingUsed(EchoServer.java:1122) [Thread-3] DEBUG server.EchoServer - Before found, 1 times+1 takes.
+15:52:04.368 server.EchoServer.handleCmdBlock(EchoServer.java:505) [Thread-3] DEBUG server.EchoServer - account is already login? trueand not about server? true
+15:52:04.368 server.EchoServer.isLoginBeingUsed(EchoServer.java:1106) [Thread-3] INFO  server.EchoServer - About sonia, to check for duplication about yourself? If not to block? false
+15:52:04.369 server.EchoServer.isLoginBeingUsed(EchoServer.java:1121) [Thread-3] INFO  server.EchoServer - found dup or blocking target.
+15:52:04.369 server.EchoServer.isLoginBeingUsed(EchoServer.java:1122) [Thread-3] DEBUG server.EchoServer - Before found, 1 times+1 takes.
+15:52:04.369 server.EchoServer.getClient(EchoServer.java:845) [Thread-3] INFO  server.EchoServer - server's getClient() execute
+15:52:04.369 server.EchoServer.getClient(EchoServer.java:852) [Thread-3] DEBUG server.EchoServer - After total1 times research, found client. sonia = sonia
+15:52:04.369 server.EchoServer.handleCmdBlock(EchoServer.java:508) [Thread-3] DEBUG server.EchoServer - block phase about sonia
+15:52:04.369 server.EchoServer.handleCmdBlock(EchoServer.java:509) [Thread-3] DEBUG server.EchoServer - That client foword to me? false
+15:52:04.369 server.EchoServer.handleCmdBlock(EchoServer.java:529) [Thread-3] DEBUG server.EchoServer - tim's blockedUsers add to sonia
+15:52:04.370 server.EchoServer.handleCmdBlock(EchoServer.java:533) [Thread-3] DEBUG server.EchoServer - tim's blocking alarming to sonia is completed.
+15:52:04.370 client.ChatClient.handleMessageFromServer(ChatClient.java:31) [Thread-1] INFO  client.ChatClient - received message from the server.
+15:52:14.239 server.EchoServer.handleMessageFromServerUI(EchoServer.java:130) [main] INFO  server.EchoServer - MessageFromServerUI: 
+15:52:14.239 server.EchoServer.handleCmdPrivate(EchoServer.java:696) [main] INFO  server.EchoServer - server's handleCmdPrivate() execute
+15:52:14.239 server.EchoServer.handleCmdPrivate(EchoServer.java:700) [main] DEBUG server.EchoServer - split index: 8 14
+15:52:14.239 server.EchoServer.handleCmdPrivate(EchoServer.java:705) [main] DEBUG server.EchoServer - sonia 개인메시지 소니아
+15:52:14.240 server.EchoServer.handleCmdPrivate(EchoServer.java:712) [main] DEBUG server.EchoServer - sender using private message is server
+15:52:14.240 server.EchoServer.handleCmdPrivate(EchoServer.java:745) [main] DEBUG server.EchoServer - How many client find targets for private message? 2+ And forwarding chain exists.
+15:52:14.240 server.EchoServer.getFwdClient(EchoServer.java:1176) [main] INFO  server.EchoServer - process to find Where the message finally arrives.
+15:52:14.240 server.EchoServer.getFwdClient(EchoServer.java:1179) [main] DEBUG server.EchoServer - current pastRecipients: [sonia]
+15:52:14.240 server.EchoServer.getFwdClient(EchoServer.java:1188) [main] DEBUG server.EchoServer - Check that senderserver blocked by bob : false
+15:52:14.240 server.EchoServer.getFwdClient(EchoServer.java:1194) [main] DEBUG server.EchoServer - Check that pastRecipientsonia blocked by bob
+15:52:14.240 server.EchoServer.getFwdClient(EchoServer.java:1213) [main] DEBUG server.EchoServer - bobhave another forward.
+15:52:14.240 server.EchoServer.getFwdClient(EchoServer.java:1188) [main] DEBUG server.EchoServer - Check that senderserver blocked by tim : false
+15:52:14.240 server.EchoServer.getFwdClient(EchoServer.java:1194) [main] DEBUG server.EchoServer - Check that pastRecipientsonia blocked by tim
+15:52:14.241 server.EchoServer.getFwdClient(EchoServer.java:1198) [main] DEBUG server.EchoServer - send to client that past recipient blocked by tim
+15:52:14.241 server.EchoServer.getFwdClient(EchoServer.java:1202) [main] DEBUG server.EchoServer - send to client that past recipient blocked by timworked
+15:52:14.241 server.EchoServer.getFwdClient(EchoServer.java:1207) [main] DEBUG server.EchoServer - Final destination found. chain connects total 1 times. and current pastRecipients: [sonia, bob]
+15:52:14.241 server.EchoServer.getFwdClient(EchoServer.java:1208) [main] INFO  server.EchoServer - Because fowarding blocking, current checking client c bob is fianl destination.
+15:52:14.241 client.ChatClient.handleMessageFromServer(ChatClient.java:31) [Thread-1] INFO  client.ChatClient - received message from the server.
+15:52:14.242 client.ChatClient.handleMessageFromServer(ChatClient.java:31) [Thread-1] INFO  client.ChatClient - received message from the server.
+15:52:26.957 server.EchoServer.clientException(EchoServer.java:401) [Thread-2] INFO  server.EchoServer - server's client exception(). execute Disconnect Action.
+15:52:26.958 server.EchoServer.handleDisconnect(EchoServer.java:1416) [Thread-2] INFO  server.EchoServer - server's sendToClientOrServer() excute
+15:52:26.958 server.EchoServer.handleDisconnect(EchoServer.java:1418) [Thread-2] DEBUG server.EchoServer - In disconnect about sonia
+15:52:26.958 server.EchoServer.sendToAllClients(EchoServer.java:39) [Thread-2] INFO  server.EchoServer - server's sendToAllClients() execute
+15:52:26.958 server.EchoServer.sendToAllClients(EchoServer.java:51) [Thread-2] ERROR server.EchoServer - WARNING - Cannot send message to a client.
+java.net.SocketException: socket does not exist
+	at ocsf.server.ConnectionToClient.sendToClient(ConnectionToClient.java:119) ~[ocsf.jar:?]
+	at server.EchoServer.sendToAllClients(EchoServer.java:47) [bin/:?]
+	at server.EchoServer.handleDisconnect(EchoServer.java:1434) [bin/:?]
+	at server.EchoServer.clientException(EchoServer.java:402) [bin/:?]
+	at ocsf.server.ConnectionToClient.run(ConnectionToClient.java:223) [ocsf.jar:?]
+15:52:26.959 server.EchoServer.sendToAllClients(EchoServer.java:48) [Thread-2] DEBUG server.EchoServer - sent to tim
+15:52:26.959 client.ChatClient.handleMessageFromServer(ChatClient.java:31) [Thread-1] INFO  client.ChatClient - received message from the server.
+15:52:26.959 server.EchoServer.sendToAllClients(EchoServer.java:48) [Thread-2] DEBUG server.EchoServer - sent to bob
+15:52:26.959 server.EchoServer.sendToAllClients(EchoServer.java:54) [Thread-2] DEBUG server.EchoServer - Total number sent is 2
+15:52:26.959 client.ChatClient.handleMessageFromServer(ChatClient.java:31) [Thread-1] INFO  client.ChatClient - received message from the server.
+15:52:26.959 server.EchoServer.handleDisconnect(EchoServer.java:1435) [Thread-2] INFO  server.EchoServer - inform to all clients about disconnect is success.
+15:52:26.960 server.EchoServer.handleDisconnect(EchoServer.java:1442) [Thread-2] DEBUG server.EchoServer - The client sonia is "".
+15:52:27.256 server.EchoServer.clientException(EchoServer.java:401) [Thread-3] INFO  server.EchoServer - server's client exception(). execute Disconnect Action.
+15:52:27.256 server.EchoServer.handleDisconnect(EchoServer.java:1416) [Thread-3] INFO  server.EchoServer - server's sendToClientOrServer() excute
+15:52:27.256 server.EchoServer.handleDisconnect(EchoServer.java:1418) [Thread-3] DEBUG server.EchoServer - In disconnect about tim
+15:52:27.256 server.EchoServer.handleDisconnect(EchoServer.java:1426) [Thread-3] DEBUG server.EchoServer - took 2 times, find it.
+15:52:27.257 server.EchoServer.handleDisconnect(EchoServer.java:1427) [Thread-3] DEBUG server.EchoServer - Before reset for disconnect, fwdClient is tim
+15:52:27.257 server.EchoServer.handleDisconnect(EchoServer.java:1429) [Thread-3] DEBUG server.EchoServer - After reset for disconnect, fwdClient is 
+15:52:27.257 server.EchoServer.handleDisconnect(EchoServer.java:1431) [Thread-3] INFO  server.EchoServer - forwarding reset for disconnect is success.
+15:52:27.257 server.EchoServer.sendToAllClients(EchoServer.java:39) [Thread-3] INFO  server.EchoServer - server's sendToAllClients() execute
+15:52:27.257 client.ChatClient.handleMessageFromServer(ChatClient.java:31) [Thread-1] INFO  client.ChatClient - received message from the server.
+15:52:27.257 server.EchoServer.sendToAllClients(EchoServer.java:51) [Thread-3] ERROR server.EchoServer - WARNING - Cannot send message to a client.
+java.net.SocketException: socket does not exist
+	at ocsf.server.ConnectionToClient.sendToClient(ConnectionToClient.java:119) ~[ocsf.jar:?]
+	at server.EchoServer.sendToAllClients(EchoServer.java:47) [bin/:?]
+	at server.EchoServer.handleDisconnect(EchoServer.java:1434) [bin/:?]
+	at server.EchoServer.clientException(EchoServer.java:402) [bin/:?]
+	at ocsf.server.ConnectionToClient.run(ConnectionToClient.java:223) [ocsf.jar:?]
+15:52:27.257 server.EchoServer.sendToAllClients(EchoServer.java:48) [Thread-3] DEBUG server.EchoServer - sent to bob
+15:52:27.258 server.EchoServer.sendToAllClients(EchoServer.java:54) [Thread-3] DEBUG server.EchoServer - Total number sent is 1
+15:52:27.258 server.EchoServer.handleDisconnect(EchoServer.java:1435) [Thread-3] INFO  server.EchoServer - inform to all clients about disconnect is success.
+15:52:27.258 client.ChatClient.handleMessageFromServer(ChatClient.java:31) [Thread-1] INFO  client.ChatClient - received message from the server.
+15:52:27.258 server.EchoServer.handleDisconnect(EchoServer.java:1442) [Thread-3] DEBUG server.EchoServer - The client tim is "".
+15:52:27.647 server.EchoServer.clientException(EchoServer.java:401) [Thread-4] INFO  server.EchoServer - server's client exception(). execute Disconnect Action.
+15:52:27.647 server.EchoServer.handleDisconnect(EchoServer.java:1416) [Thread-4] INFO  server.EchoServer - server's sendToClientOrServer() excute
+15:52:27.647 server.EchoServer.handleDisconnect(EchoServer.java:1418) [Thread-4] DEBUG server.EchoServer - In disconnect about bob
+15:52:27.647 server.EchoServer.sendToAllClients(EchoServer.java:39) [Thread-4] INFO  server.EchoServer - server's sendToAllClients() execute
+15:52:27.647 server.EchoServer.sendToAllClients(EchoServer.java:51) [Thread-4] ERROR server.EchoServer - WARNING - Cannot send message to a client.
+java.net.SocketException: socket does not exist
+	at ocsf.server.ConnectionToClient.sendToClient(ConnectionToClient.java:119) ~[ocsf.jar:?]
+	at server.EchoServer.sendToAllClients(EchoServer.java:47) [bin/:?]
+	at server.EchoServer.handleDisconnect(EchoServer.java:1434) [bin/:?]
+	at server.EchoServer.clientException(EchoServer.java:402) [bin/:?]
+	at ocsf.server.ConnectionToClient.run(ConnectionToClient.java:223) [ocsf.jar:?]
+15:52:27.647 server.EchoServer.sendToAllClients(EchoServer.java:54) [Thread-4] DEBUG server.EchoServer - Total number sent is 0
+15:52:27.648 server.EchoServer.handleDisconnect(EchoServer.java:1435) [Thread-4] INFO  server.EchoServer - inform to all clients about disconnect is success.
+15:52:27.648 server.EchoServer.handleDisconnect(EchoServer.java:1442) [Thread-4] DEBUG server.EchoServer - The client bob is "".

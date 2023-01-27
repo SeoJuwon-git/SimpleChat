@@ -1,0 +1,30 @@
+16:19:34.185 ServerConsole.main(ServerConsole.java:43) [main] INFO  ServerConsole - ServerConsole Program start.
+16:19:34.191 ServerConsole.main(ServerConsole.java:50) [main] INFO  ServerConsole - args[0] does not exist: 5555
+java.lang.ArrayIndexOutOfBoundsException: 0
+	at ServerConsole.main(ServerConsole.java:46) [bin/:?]
+16:19:34.215 server.EchoServer.<init>(EchoServer.java:34) [main] DEBUG server.EchoServer - EchoServer's Cunstructor initializes.
+16:19:34.220 ServerConsole.<init>(ServerConsole.java:19) [main] DEBUG ServerConsole - ServerConsole's Cunstructor initializes.
+16:19:34.220 server.EchoServer.serverStarted(EchoServer.java:344) [Thread-1] INFO  server.EchoServer - server's serverStarted() execute
+16:19:34.221 server.EchoServer.serverStarted(EchoServer.java:349) [Thread-1] INFO  server.EchoServer - server restarted that port: 5555
+16:19:36.531 server.EchoServer.handleMessageFromServerUI(EchoServer.java:130) [main] INFO  server.EchoServer - MessageFromServerUI: #whoison
+16:19:36.531 server.EchoServer.sendListOfClients(EchoServer.java:1243) [main] INFO  server.EchoServer - server or client's sendListOfclient() excute for #whoison.
+16:19:36.532 server.EchoServer.sendListOfClients(EchoServer.java:1247) [main] DEBUG server.EchoServer - How many people on connect? 0
+16:19:36.532 server.EchoServer.sendListOfClients(EchoServer.java:1255) [main] DEBUG server.EchoServer - Total add is 0
+16:19:36.532 server.EchoServer.sendListOfClients(EchoServer.java:1256) [main] DEBUG server.EchoServer - Before sort, []
+16:19:36.533 server.EchoServer.sendListOfClients(EchoServer.java:1258) [main] DEBUG server.EchoServer - After sort, []
+16:19:36.533 server.EchoServer.sendListOfClients(EchoServer.java:1260) [main] DEBUG server.EchoServer - channel exists beacuse clients = 0 or stil listening true
+16:19:51.378 ServerConsole.main(ServerConsole.java:43) [main] INFO  ServerConsole - ServerConsole Program start.
+16:19:51.382 ServerConsole.main(ServerConsole.java:50) [main] INFO  ServerConsole - args[0] does not exist: 5555
+java.lang.ArrayIndexOutOfBoundsException: 0
+	at ServerConsole.main(ServerConsole.java:46) [bin/:?]
+16:19:51.410 server.EchoServer.<init>(EchoServer.java:34) [main] DEBUG server.EchoServer - EchoServer's Cunstructor initializes.
+16:19:51.414 ServerConsole.<init>(ServerConsole.java:19) [main] DEBUG ServerConsole - ServerConsole's Cunstructor initializes.
+16:19:51.415 server.EchoServer.serverStarted(EchoServer.java:344) [Thread-1] INFO  server.EchoServer - server's serverStarted() execute
+16:19:51.415 server.EchoServer.serverStarted(EchoServer.java:349) [Thread-1] INFO  server.EchoServer - server restarted that port: 5555
+16:19:54.588 server.EchoServer.handleMessageFromServerUI(EchoServer.java:130) [main] INFO  server.EchoServer - MessageFromServerUI: #whoison
+16:19:57.045 server.EchoServer.sendListOfClients(EchoServer.java:1243) [main] INFO  server.EchoServer - server or client's sendListOfclient() excute for #whoison.
+16:19:59.156 server.EchoServer.sendListOfClients(EchoServer.java:1247) [main] DEBUG server.EchoServer - How many people on connect? 0
+16:20:02.221 server.EchoServer.sendListOfClients(EchoServer.java:1255) [main] DEBUG server.EchoServer - Total add is 0
+16:20:02.830 server.EchoServer.sendListOfClients(EchoServer.java:1256) [main] DEBUG server.EchoServer - Before sort, []
+16:20:04.160 server.EchoServer.sendListOfClients(EchoServer.java:1258) [main] DEBUG server.EchoServer - After sort, []
+16:20:05.337 server.EchoServer.sendListOfClients(EchoServer.java:1260) [main] DEBUG server.EchoServer - channel exists beacuse clients = 0 or stil listening true

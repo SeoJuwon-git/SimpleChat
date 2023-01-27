@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="WARN">
   <Properties>
+    <Property name="logFileName">log4j2$${date:YYYY-MM-dd HH-mm}</Property>
     <Property name="layoutPattern">%d{HH:mm:ss.SSS} %l [%t] %-5level %logger{36} - %msg%n</Property>
   </Properties>
   <Appenders>
@@ -12,7 +13,7 @@
     </Console>
   -->
     
-    <File name="File" fileName="./log/log4j2.log" append="true"> <!--append는 덮어쓰기가 아니라 뒤에 추가-->>
+    <File name="File" fileName="../log/${logFileName}.log" append="true"> <!--append는 덮어쓰기가 아니라 뒤에 추가-->>
       <PatternLayout>
         <Pattern>${layoutPattern}</Pattern>
       </PatternLayout>
